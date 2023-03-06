@@ -1,0 +1,38 @@
+// Personalizar los colores de bootstrap que se utilzar el proyecto
+
+$primary: #5D8FC3;
+$secondary: #47C47F;
+$tertiary: #455351;
+$body-color-dark: #000000;
+
+@import "./../../node_modules/bootstrap/scss/functions";
+
+@import "./../../node_modules/bootstrap/scss/variables";
+
+
+
+// 4. Include any default map overrides here
+
+// 5. Include remainder of required parts
+@import "./../../node_modules/bootstrap/scss/maps";
+@import "./../../node_modules/bootstrap/scss/mixins";
+@import "./../../node_modules/bootstrap/scss/root";
+// Custom.scss
+// Option A: Include all of Bootstrap
+
+.bg-complementario {
+    background-color: $tertiary;
+}
+
+
+$custom-colors: (
+    'complementario': $tertiary
+    );
+    
+    $theme-colors: map-merge($map1: $theme-colors, $map2:$custom-colors );
+    // $theme-colors: map-merge($map1: $theme-colors, $map2:$custom-colors);
+    
+@import "./../../node_modules/bootstrap/scss/containers";
+    // Include any default variable overrides here (though functions won't be available)
+@import "./../../node_modules/bootstrap/scss/bootstrap";
+
