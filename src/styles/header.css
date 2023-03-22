@@ -1,0 +1,18 @@
+@import url('./__root.css');
+
+@media screen and (max-width: 1300px) {
+    .responsive__nav .item-custom > a , .font-1{
+        font-size: 0.85rem !important;
+    }
+  }
+  @media screen and (max-width: 1105px) {
+    .responsive__nav .item-custom > a , .font-1{
+        font-size: 0.75rem !important;
+    }
+  }
+  
+a.item-activo {
+    background-color: var(--color-secundario);
+    color: white !important;
+    border-radius: 0.5rem;
+}

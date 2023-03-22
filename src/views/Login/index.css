@@ -1,0 +1,32 @@
+.container__min{
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.item__end{
+    align-self : end;
+    margin-right: 3rem;
+    margin-bottom: 0.5rem;
+}
+.formulario-init{
+    border-radius: 0.5rem;
+}
+.formulario-init input,select {
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    outline: none;
+    border-width: 0;
+}
+.img__form{
+    width: 10rem;
+    height: 10rem;
+    background-color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.w-35{
+    width: 35%;
+}
