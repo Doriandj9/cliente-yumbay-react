@@ -1,19 +1,44 @@
 import { useState,useEffect } from "react";
 
 const useFetch =  ({path, method, body=null}) => {
-
-    const [route, setRoute] = useState(null);
-    const [value, setValue] = useState(null);
+    const [loading,setLoading] = useState(true);
+    const [error,setError] = useState(null);
+    const [data, setData] = useState(null);
+    const [controller, setController] = useState(null);
     useEffect( () => {
-        fetch(path,{method,body})
+        const abortController = new AbortController();
+        setLoading(true);
+        setController(abortController);
+        if(body !== null){
+        fetch(path,{method,body,signal: abortController.signal})
         .then(query => query.json())
-        .then(setValue)
-        .catch(console.log)
+        .then(values => {
+            setData(values);
+        })
+        .catch(e => {
+            if(e.name === 'AbortRequest'){
+                console.log(e);
+                return;
+            }
+            setError(e);
+        })
+        .finally(() => {
+            setLoading(false);
+        });
 
-    },[route]);
+        return () => abortController.abort();
+    }else{
+        setLoading(false);
+    }
 
+    },[]);
+    const handleAbortController = () => {
+        if(controller){
+            controller.abort();
+        }
+    }
 
-    return  [value,setRoute];    
+    return  {data,loading,error,handleAbortController};    
 }
 
 export {useFetch};

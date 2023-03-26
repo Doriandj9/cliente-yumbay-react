@@ -16,8 +16,8 @@
  * }]
  */
 
+import { loginUser } from "../../utils/api/login";
 import Login from "../../views/Login/Login";
-
 
 /**
  * Contine la ruta principal
