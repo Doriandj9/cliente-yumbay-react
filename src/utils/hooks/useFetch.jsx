@@ -6,10 +6,10 @@ const useFetch =  ({path, method, body=null}) => {
     const [data, setData] = useState(null);
     const [controller, setController] = useState(null);
     useEffect( () => {
-        const abortController = new AbortController();
         setLoading(true);
+        const abortController = new AbortController();
         setController(abortController);
-        if(body !== null){
+        if(path !== null){
         fetch(path,{method,body,signal: abortController.signal})
         .then(query => query.json())
         .then(values => {
@@ -27,17 +27,13 @@ const useFetch =  ({path, method, body=null}) => {
         });
 
         return () => abortController.abort();
-    }else{
-        setLoading(false);
     }
-
     },[]);
     const handleAbortController = () => {
         if(controller){
             controller.abort();
         }
     }
-
     return  {data,loading,error,handleAbortController};    
 }
 

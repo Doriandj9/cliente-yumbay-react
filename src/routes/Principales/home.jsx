@@ -18,7 +18,6 @@
 
 import App from "../../App";
 import Contacto from "../../views/Home/Contacto/Contacto";
-import Home from "../../views/Home/Home";
 import Nosotros from "../../views/Home/Nosotros/Nosotros";
 import Servicios from "../../views/Home/Servicios/Servicios";
 

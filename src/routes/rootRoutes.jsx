@@ -6,12 +6,13 @@
  * @var {Array} rootRoutes
  */
 
+import routesAdmin from "./Principales/Administrador/admin";
 import { routeCitaMedica } from "./Principales/citaMedica";
 import { routeContacto, routeMain, routeNosotros, routeServicios } from "./Principales/home";
 import { routeLogin } from "./Principales/login";
 
 const rootRoutes = [];
-rootRoutes.push(routeMain,routeNosotros,routeServicios,routeContacto,routeCitaMedica,routeLogin);
+rootRoutes.push(routeMain,routeNosotros,routeServicios,routeContacto,routeCitaMedica,routeLogin,routesAdmin);
 
 export {rootRoutes};
 

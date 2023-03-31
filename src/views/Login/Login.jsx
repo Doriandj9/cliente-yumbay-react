@@ -1,32 +1,44 @@
 import { Form } from 'react-router-dom';
-import Footer from '../../components/Footer';
-import Header from '../../components/Header';
 import logo from './../../assets/imgs/logo.jpg';
 import user from './../../assets/imgs/user.png';
 import Backdrop from '@mui/material/Backdrop';
-import { useDispatch } from 'react-redux';
-import { useFetch } from './../../utils/hooks/useFetch';
-import { login } from '../../redux/userSlice';
-import './index.css';
 import { useEffect, useState } from 'react';
 import { LoadingOne } from '../../components/Loading';
-import Alert from '../../components/Alert';
-
-
+import DialogAlert from '../../components/DialogAlert';
+import DialogContentTexto from '../../components/DialogContentTexto';
+import DialogButtons from '../../components/DialogButtons';
+import {MdOutlineError} from 'react-icons/md';
+import { useNavigate } from 'react-router-dom';
+import { useFetch } from '../../utils/hooks/useFetch';
+import TitleAlert from '../../components/TitleAlert';
+import AlertWeb from '../../components/AlertWeb';
+import { useUserStore } from '../../store/userStore';
+import { pagesWeb } from '../../utils/web/redirectPagesWeb';
 const Login = () => {
-    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const actionLogin = useUserStore((state) => state.login)
+    const [open, setOpen] = useState(true);
     const [login, setLogin] = useState(false);
     const [data, setData] = useState(null);
     const [error, setError] = useState(null);
     const [formRes, setForm] = useState(null);
-    const [alerta, setAlert] = useState(false);
+    const [invalidInp, setInvalidInp] = useState(false);
     const [loading, setLoading] = useState(false);
     useEffect(() => {
         document.title = 'Clinica Yumbay | Iniciar Sesión';
     },[]);
-    
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
     useEffect(() => {
         if(login){
+        setError(null);
         fetch('http://127.0.0.1:8000/api/aut',{
             method: 'POST',
             body: login ? new FormData(formRes) : null,
@@ -47,23 +59,45 @@ const Login = () => {
     
     const handleSubmit = (e) => {
         e.preventDefault();
+        const [cedulaInp, claveInp] = e.target.querySelectorAll('input');
+        const rolInp = e.target.querySelector('select');
+        if(cedulaInp.value.trim() === '' ||
+        claveInp.value.trim() === '' ||
+        rolInp.value == 'none'
+        ){
+            setInvalidInp(true);
+            return;
+        }
+        setInvalidInp(false);
         setForm(e.target);
         setLogin(true);
         setLoading(true);
+        setOpen(true);
     }
 
     if(data){
         if(data.ident){
-            // redireccion
-            console.log(login);
+            const {permisos, playload,token} = data.body;
+            actionLogin(playload);
+           sessionStorage.setItem('__tok',token);
+           const path = pagesWeb(permisos);
+           navigate(path);
         }
     }
 
+    const {data:dataEs, error:eEs, loading:carga} = useFetch({
+        path:'http://localhost:8000/api/especialidades',
+        method:'GET'
+    });
 
     return (
         <>
-        <div className="container__min">
-            <Header></Header>
+        {invalidInp &&  <AlertWeb 
+            buttonOpen={null}
+            opened={true}
+            severity='warning'
+            menssageAlert='Algunos de los campos de ingreso estan vacios'
+            />}
             <div className="flex-grow-1">
                 <div className='d-flex justify-content-around'>
                     <div className='w-50 ms-5'>
@@ -88,11 +122,59 @@ const Login = () => {
                             </Backdrop>
                          }
                         {
-                          (!login && data && data.ident == 0) ? <Alert opened={true}  /> : ''
+                          (!login && data && data.ident == 0) ? <DialogAlert
+                          bottonDialgo={false}
+                          textBotton = ''
+                          open={open}
+                          handleClickOpen={handleClickOpen}
+                          handleClose={handleClose}
+                          >
+                            {/* <TitleAlert
+                            title={''}
+                            /> */}
+                            <DialogContentTexto
+                            textContent={
+                            <span className='d-flex pt-4 flex-column align-items-center text-black'>
+                                <MdOutlineError className='display-1 text-danger' /> 
+                                {data.mensaje} 
+                            </span>}
+                            css="p-3"
+                            cssCont='text-white ps-2 pe-2'
+                            />
+                            <DialogButtons
+                                handleClose={handleClose}
+                                btnClose={true}
+                                btnTextClose='Regresar'
+                                variantBtnClose='outlined'
+                                colorBtnClose='error'
+                            />
+                          </DialogAlert> : ''
                         }
                          {
-                          error && <Alert opened={true}  />
-                         }
+                          error && <DialogAlert
+                          bottonDialgo={false}
+                          open={open}
+                          handleClickOpen={handleClickOpen}
+                          handleClose={handleClose}
+                          >
+                            <TitleAlert title={'Error de servidor (500)'} />
+                            <DialogContentTexto textContent={
+                                <span className='d-flex pt-4 flex-column align-items-center text-black'>
+                                    <MdOutlineError className='display-1 text-danger' /> 
+                                    Lo sentimos mucho a ocurrido un error desconocido,
+                                    por favor intentelo más tarde.
+                                </span>
+                            } />
+                            <DialogButtons 
+                            handleClose={handleClose}
+                            btnClose={true}
+                            btnTextClose='Cerrar'
+                            colorBtnClose='error'
+                            variantBtnClose='outlined'
+                            />
+                          </DialogAlert>
+                        }
+                        
                         <Form onSubmit={handleSubmit}
                          className='bg-primary gap-2 formulario-init w-75 p-4 d-flex flex-column align-items-center'>
                         <h6 className='fw-bold'>INICIO DE SESIÓN</h6>
@@ -102,9 +184,23 @@ const Login = () => {
                             <input className='w-75' name='cedula' type="text" placeholder='Ingrese su número de cédula'/>
                             <input className='w-75' name='clave' type="password" placeholder='Ingrese su contraseña'/>
                             <select name='rol' className='w-75' id="">
-                                <option value="none">Especialidad/Cargo</option>
-                                <option value="1">Odontologia</option>
-                                <option value="16">Administrador</option>    
+                                {carga && (<option value="none">Cargando...</option>)}
+                                
+                                {
+                                    (dataEs && dataEs.ident) && (
+                                        <>
+                                            <option value="none">Especialidad/Cargo</option>
+                                            <option value="user:16">Administrador</option>  
+                                            {
+                                                dataEs.data.map(value => {
+                                                    return (
+                                                        <option key={value.id} value={'doc:' + value.id}>{value.nombre}</option>  
+                                                    );
+                                                })
+                                            }     
+                                        </>
+                                    )
+                                }    
                             </select>
                             <p className=' mt-2 item__end'>
                                <a href="#" className='text-white'>Recuperar contraseña</a> 
@@ -116,8 +212,6 @@ const Login = () => {
                     </div>
                 </div>
             </div>
-            <Footer></Footer>
-        </div>
         </>
     );
 }

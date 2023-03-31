@@ -16,17 +16,18 @@
  * }]
  */
 
-import App from "../../views/Login/App";
+import App from "../../../views/Administrador/App";
 
-/**
- * Contine la ruta principal
- * 
- * @param {Object} routeLogin
- */
 
-const routeLogin = {
-    path: '/login',
-    element:  <App />
+const routesAdmin = {
+    path: 'admin',
+    element: <App />,
+    children:[
+        {
+
+        }
+    ]
+
 }
 
-export {routeLogin};
+export default routesAdmin;
