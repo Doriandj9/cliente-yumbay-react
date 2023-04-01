@@ -31,7 +31,8 @@ durationHide=6000,severity='success',menssageAlert='Sin mensaje'
       { buttonOpen && <Button variant={variantBtn} onClick={handleClick}>
         {btnMenssage}
       </Button> }
-      <Snackbar open={open} autoHideDuration={durationHide} onClose={handleClose}>
+      <Snackbar anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      open={open} autoHideDuration={durationHide} onClose={handleClose}>
         <Alert onClose={handleClose} severity={severity} sx={{ width: '100%' }}>
           {menssageAlert}
         </Alert>

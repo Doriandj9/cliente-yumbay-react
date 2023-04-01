@@ -1,0 +1,48 @@
+.container__nav{
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+}
+.container__description{
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    height: 10rem;
+    font-family:Verdana, Geneva, Tahoma, sans-serif;
+}
+
+.container__description ul {
+    list-style: none;
+    color: white;
+}
+
+.icon__doctor{
+    width: 100px;
+    height: 100px;
+}
+.container__icon{
+    margin-left: 1.25rem;
+}
+
+.container_menu li  img {
+    width: 35px;
+    height: 39px;
+    margin-left: 1.5rem;
+}
+
+.container_menu li {
+    border-top: 1px solid white;
+    transition: all 0.25s;
+}
+
+
+.container_menu li:hover {
+    background-color: var(--color-secundario);
+}
+.container_menu li:last-child {
+    border-bottom: 1px solid white;
+}
+.menu__item__active{
+    background-color: var(--color-secundario);
+    color: #000000ce;
+}

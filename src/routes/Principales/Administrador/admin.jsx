@@ -24,7 +24,8 @@ const routesAdmin = {
     element: <App />,
     children:[
         {
-
+            path: 'registro-paciente',
+            element: (<><p>registro</p></>)
         }
     ]
 

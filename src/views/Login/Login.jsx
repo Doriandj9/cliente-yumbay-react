@@ -14,6 +14,13 @@ import TitleAlert from '../../components/TitleAlert';
 import AlertWeb from '../../components/AlertWeb';
 import { useUserStore } from '../../store/userStore';
 import { pagesWeb } from '../../utils/web/redirectPagesWeb';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import Box from '@mui/material/Box';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+
 const Login = () => {
     const navigate = useNavigate();
     const actionLogin = useUserStore((state) => state.login)
@@ -24,6 +31,8 @@ const Login = () => {
     const [formRes, setForm] = useState(null);
     const [invalidInp, setInvalidInp] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [userSelect,setUserSelect] = useState('');
+
     useEffect(() => {
         document.title = 'Clinica Yumbay | Iniciar Sesión';
     },[]);
@@ -35,7 +44,9 @@ const Login = () => {
   const handleClose = () => {
     setOpen(false);
   };
-
+  const handleChange = (e) => {
+    setUserSelect(e.target.value);
+}
     useEffect(() => {
         if(login){
         setError(null);
@@ -60,10 +71,9 @@ const Login = () => {
     const handleSubmit = (e) => {
         e.preventDefault();
         const [cedulaInp, claveInp] = e.target.querySelectorAll('input');
-        const rolInp = e.target.querySelector('select');
         if(cedulaInp.value.trim() === '' ||
         claveInp.value.trim() === '' ||
-        rolInp.value == 'none'
+        userSelect == ''
         ){
             setInvalidInp(true);
             return;
@@ -89,14 +99,13 @@ const Login = () => {
         path:'http://localhost:8000/api/especialidades',
         method:'GET'
     });
-
     return (
         <>
         {invalidInp &&  <AlertWeb 
             buttonOpen={null}
             opened={true}
-            severity='warning'
-            menssageAlert='Algunos de los campos de ingreso estan vacios'
+            severity='info'
+            menssageAlert='Por favor, ingrese todos los campos para iniciar sesión.'
             />}
             <div className="flex-grow-1">
                 <div className='d-flex justify-content-around'>
@@ -183,25 +192,36 @@ const Login = () => {
                         </div>
                             <input className='w-75' name='cedula' type="text" placeholder='Ingrese su número de cédula'/>
                             <input className='w-75' name='clave' type="password" placeholder='Ingrese su contraseña'/>
-                            <select name='rol' className='w-75' id="">
-                                {carga && (<option value="none">Cargando...</option>)}
                                 
                                 {
-                                    (dataEs && dataEs.ident) && (
-                                        <>
-                                            <option value="none">Especialidad/Cargo</option>
-                                            <option value="user:16">Administrador</option>  
-                                            {
-                                                dataEs.data.map(value => {
-                                                    return (
-                                                        <option key={value.id} value={'doc:' + value.id}>{value.nombre}</option>  
-                                                    );
-                                                })
-                                            }     
-                                        </>
+                                    (dataEs && dataEs.ident) ? (
+
+                                        <FormSelect
+                                        handleChange={handleChange}
+                                        userSelect={userSelect}
+                                        data={dataEs.data}
+                                        />
+                                    ) : (
+                                        <Box sx={{ width: '75%', borderRadius:1 }} >
+                                            <FormControl style={{
+                                                                    border: 'none',
+                                                                    outline: 'none',
+                                                                    borderRadius: '0.5rem'
+                                                                }}
+                                            className='w-10 bg-white' fullWidth>
+                                                <InputLabel id="demo-simple-select-label">Cargando...</InputLabel>
+                                                <Select
+                                                labelId="demo-simple-select-label"
+                                                id="demo-simple-select"
+                                                value={''}
+                                                label="Age"
+                                                >
+                                                </Select>
+                                            </FormControl> 
+                                        </Box>
                                     )
                                 }    
-                            </select>
+                            {/* </select> */}
                             <p className=' mt-2 item__end'>
                                <a href="#" className='text-white'>Recuperar contraseña</a> 
                             </p> 
@@ -215,5 +235,49 @@ const Login = () => {
         </>
     );
 }
+
+
+const FormSelect = ({data , handleChange,userSelect}) => {
+
+const theme = createTheme({
+    palette: {
+      neutral: {
+        main: '#000000ce',
+        contrastText: '#fff',
+      },
+    },
+  });
+
+    return (<>
+      <FormControl variant="filled" className='w-75 bg-white' style={{
+        border: 'none',
+        outline: 'none',
+        borderRadius: '0.5rem'
+      }} >
+      <ThemeProvider theme={theme}>
+        <InputLabel required id="demo-simple-select-standard-label">Especialidad o Cargo</InputLabel>
+        </ThemeProvider>
+        <Select name='rol' 
+          labelId="demo-simple-select-standard-label"
+          value={userSelect}
+          onChange={handleChange}
+          label="Age"
+          style={
+            {
+                border: 'none',
+                outline: 'none'
+            }
+          }
+        >
+            <MenuItem key='000-0' value='user:16'>Administrdor</MenuItem>
+            <MenuItem key='000-1' value='user:1'>Recepcionista</MenuItem>
+        {
+            data.map((value) => (<MenuItem key={value.id} value={'doc' + value.id}>{value.nombre}</MenuItem>))
+        }
+        </Select>
+      </FormControl>
+    </>);
+}
+
 
 export default Login;
