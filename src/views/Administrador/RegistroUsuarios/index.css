@@ -1,0 +1,33 @@
+.op__user {
+    width: 19.5rem;
+    border: 1px solid #ddd;
+    display: flex;
+    list-style: none;
+    margin: 0 !important;
+    padding: 0 !important;
+    justify-content: start;
+}
+.op__user > li{
+    margin: 0;
+}
+.op__user > li:first-child {
+    border-right: 1px solid #ddd;
+}
+
+.nav__user_add {
+    padding: 0.5rem;
+}
+.op__user a {
+    text-decoration: none;
+    color: #8f8f8f;
+    transition: 0.25ms;
+}
+.op__user a:hover{
+    background-color: #eee;
+    color: #8f8f8f;
+}
+
+.op__user a.nav__user_add__active {
+    background-color: var(--color-primario);
+    color: white;
+}

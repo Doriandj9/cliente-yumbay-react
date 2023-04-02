@@ -3,7 +3,7 @@ const pagesWeb = (permisos = null) => {
     const routesAndPermision = {
         1: '/recepcion',
         4: '/doctores',
-        16: '/admin',
+        16: '/director',
         0: '/',
         'default': '/page-not-found'
     };

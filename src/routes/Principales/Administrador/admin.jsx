@@ -16,16 +16,29 @@
  * }]
  */
 
+import { Outlet } from "react-router-dom";
 import App from "../../../views/Administrador/App";
-
+import AppRegistro from './../../../views/Administrador/RegistroUsuarios/App';
+import Medicos from "../../../views/Administrador/RegistroUsuarios/Medicos";
+import Recepcionistas from "../../../views/Administrador/RegistroUsuarios/Recepcionistas";
 
 const routesAdmin = {
-    path: 'admin',
+    path: 'director',
     element: <App />,
     children:[
         {
-            path: 'registro-paciente',
-            element: (<><p>registro</p></>)
+            path: 'registro',
+            element: (<AppRegistro /> ),
+            children: [
+                {
+                    path: 'medico',
+                    element: (<Medicos />)
+                },
+                {
+                    path: 'recepcionista',
+                    element: (<Recepcionistas />)
+                }
+            ]
         }
     ]
 

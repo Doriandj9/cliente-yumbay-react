@@ -28,8 +28,14 @@
     width: 35px;
     height: 39px;
     margin-left: 1.5rem;
+    object-fit: cover;
 }
-
+.img__icons{
+    width: 37px;
+    height: 39px;
+    margin-left: 1.5rem;
+    object-fit: cover;
+}
 .container_menu li {
     border-top: 1px solid white;
     transition: all 0.25s;
@@ -44,5 +50,4 @@
 }
 .menu__item__active{
     background-color: var(--color-secundario);
-    color: #000000ce;
 }
