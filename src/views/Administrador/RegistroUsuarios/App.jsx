@@ -33,7 +33,13 @@ const App = () => {
                 </NavLink>
             </li>
             <li className="flex-grow-1">
-            <NavLink className='nav__user_add d-flex flex-column align-items-center gap-1' to='recepcionista'>
+            <NavLink className={({isActive}) => {
+                return isActive ? 'nav__user_add nav__user_add__active d-flex flex-column align-items-center gap-1'
+                :
+                'nav__user_add d-flex flex-column align-items-center gap-1'
+            }
+             }
+            to='recepcionista'>
                 <FaNotesMedical style={{ fontSize: '1.5rem' }} />
                 Registrar Recionistas
             </NavLink>
