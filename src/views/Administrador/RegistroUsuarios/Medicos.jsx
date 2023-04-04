@@ -16,6 +16,7 @@ import DialogButtons from '../../../components/DialogButtons';
 import { Form } from 'react-router-dom';
 import { Button } from '@mui/material';
 import {MdSend} from 'react-icons/md';
+import { LoadingOne } from '../../../components/Loading';
 
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -28,8 +29,10 @@ const Item = styled(Paper)(({ theme }) => ({
 
 const Medicos = () => {
     const [data, setData] = useState(null);
-    const [objectInfo, setObjectInfoOne] = useState({})
-    const [objectInfoTwo, setObjectInfoTwo] = useState({})
+    const [response,setReponse] = useState(null);
+    const [send, setSend] = useState(false);
+    const [open, setOpen] = useState(true);
+    const [formData, setFormData] = useState(null);
     const [especialidades, setEspecialidades] = useState([]);
     const configApp = useAppConfig((state) => state.app);
     useEffect(()=>{
@@ -39,16 +42,80 @@ const Medicos = () => {
         .catch(console.log);
     },[])
 
+    // envio de datos de usuario
+    useEffect(() => {
+        if(send){
+            fetch(configApp.hostServer + 'api/add/user/medico',{
+                method: 'POST',
+                body: formData
+            })
+            .then(query => query.json())
+            .then(setReponse)
+            .catch(console.log)
+            .finally(() => {
+                setSend(null);
+            })
+        }
+    },[send]);
+
     const handleSubmit = (e) => {
         e.preventDefault();
-        const formData = new FormData(e.target);
-        formData.append('especialidades',especialidades)
-        console.log([...formData]);
-        
+        const form = new FormData(e.target);
+        form.append('especialidades',especialidades)
+        setFormData(form);
+        setSend(true);        
     }
-
+    const handleOpen = () => {
+        setOpen(true);
+    }
+    const handleClose = () => {
+        setOpen(false);
+    }
+    console.log(response);
     return (
         <>
+        {/* carga un loading si envio los datos */}
+
+        { send && (<LoadingOne />) } 
+        {/* cargamos los errores de validacion del backend en una alerta */}
+        { (response && response.ident === 0 ) && (
+            <DialogAlert
+            open={open}
+            handleClose={handleClose}
+            handleClickOpen={handleOpen}
+            >
+                <TitleAlert
+                title={'Errores al ingresar un nuevo usuario'}
+                css='text-danger ps-4 pe-4 pt-2 text-center'
+                />
+                <DialogContentTexto 
+                textContent={
+                <>
+                <span className='h5 text-dark-50 m-0'> Lista de errores </span>
+                <ul className='list-group'>
+                    {Object.entries(response.errores)
+                    .map(([key,values],i) => {
+                        return (
+                            <li className='list-group-item d-flex justify-content-between align-items-center' key={i}>
+                                {values[0]}
+                                <span class="badge bg-danger rounded-pill ms-4">1</span>
+                            </li>
+                        ); 
+                    })}
+                </ul>
+                </>
+                }
+                />
+                <DialogButtons 
+                handleClose={handleClose}
+                btnClose={true}
+                btnTextClose='Regresar'
+                css='mb-3'
+                variantBtnClose='outlined'
+                colorBtnClose='error'
+                />
+            </DialogAlert>
+        )}
        <h3 className="text-center">Registrar Médico</h3>
       <Form 
       onSubmit={handleSubmit}
@@ -57,11 +124,11 @@ const Medicos = () => {
         <Grid container spacing={0.25}>
             <Grid xs={6}>
             <Item>
-                {<FormOne setObjectInfo={setObjectInfoOne} />}
+                {<FormOne  />}
             </Item>
             </Grid>
             <Grid xs={6}>
-            <Item>{<FormTwo data={data} setObjectInfo={setObjectInfoTwo} boxEspe={setEspecialidades} />}</Item>
+            <Item>{<FormTwo data={data} boxEspe={setEspecialidades} />}</Item>
             </Grid>
             <Grid xs={12}>
             <Item>{
@@ -102,13 +169,11 @@ const FormOne = ({setObjectInfo}) => {
                 ...verificaciones,
                 [e.target.name]: true
             })
-            setObjectInfo(verificaciones)
         }else{
             setVerificaciones({
                 ...verificaciones,
                 [e.target.name]: false
             })
-            setObjectInfo(verificaciones)
         }
     }
     
@@ -118,13 +183,11 @@ const FormOne = ({setObjectInfo}) => {
                 ...verificaciones,
                 [e.target.name]: true
             })
-            setObjectInfo(verificaciones)
         }else{
             setVerificaciones({
                 ...verificaciones,
                 [e.target.name]: false
             })
-            setObjectInfo(verificaciones)
         }
     }
     return (<>
@@ -176,20 +239,17 @@ const FormTwo = ({data,boxEspe,setObjectInfo}) => {
                     ...verificaciones,
                     [e.target.name]: true
                 })
-            setObjectInfo(verificaciones)
             }else{
                 setVerificaciones({
                     ...verificaciones,
                     [e.target.name]: false
                 })
-            setObjectInfo(verificaciones)
             }
         }else{
             setVerificaciones({
                 ...verificaciones,
                 [e.target.name]: true
             })
-            setObjectInfo(verificaciones)
         }
     }
     const handleCorreo = (e) => {
@@ -198,14 +258,12 @@ const FormTwo = ({data,boxEspe,setObjectInfo}) => {
                     ...verificaciones,
                     [e.target.name]: true
                 })
-            setObjectInfo(verificaciones)
 
             }else{
                 setVerificaciones({
                     ...verificaciones,
                     [e.target.name]: false
                 })
-            setObjectInfo(verificaciones)
             }
     }
     const handleInputEmpty = (e) => {
@@ -214,27 +272,23 @@ const FormTwo = ({data,boxEspe,setObjectInfo}) => {
                 ...verificaciones,
                 [e.target.name]: true
             })
-            setObjectInfo(verificaciones)
 
         }else{
             setVerificaciones({
                 ...verificaciones,
                 [e.target.name]: false
             })
-            setObjectInfo(verificaciones)
 
         }
     }
 
     const handleEspecialidades = (e) => {
         setValueEs('');
-        setOpened(true);
-        setObjectInfo(verificaciones)
+        setOpened(true)
 
     }
     const handleCloseEspecialidades = (e) => {
-        setOpened(false);
-        setObjectInfo(verificaciones)        
+        setOpened(false)        
     }
     const handleSave = (e) =>{
         const options = document.querySelectorAll('input[type=checkbox]:checked');
@@ -249,14 +303,12 @@ const FormTwo = ({data,boxEspe,setObjectInfo}) => {
                 ...verificaciones,
                 especialidadesV: true
             })
-            setObjectInfo(verificaciones)
 
         }else {
             setVerificaciones({
                 ...verificaciones,
                 especialidadesV: false
             })
-            setObjectInfo(verificaciones)
 
         }
         setOpened(false);
