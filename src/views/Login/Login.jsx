@@ -1,7 +1,6 @@
 import { Form } from 'react-router-dom';
 import logo from './../../assets/imgs/logo.jpg';
 import user from './../../assets/imgs/user.png';
-import Backdrop from '@mui/material/Backdrop';
 import { useEffect, useState } from 'react';
 import { LoadingOne } from '../../components/Loading';
 import DialogAlert from '../../components/DialogAlert';
@@ -121,14 +120,9 @@ const Login = () => {
                         alt="" />
                     </div>
                     <div className='w-35 d-flex align-items-center me-5'>
-                        {(login && loading) && <Backdrop
-                                    sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 ,flexDirection: 'column'}}
-                                    open={true}
-                                                        >
-                                {/* <CircularProgress color="inherit" /> */}
-                                <p>Cargando...</p>
-                                <LoadingOne ancho='50%'  />
-                            </Backdrop>
+                        {(login && loading) && <LoadingOne 
+                        ancho={'50%'}
+                        />
                          }
                         {
                           (!login && data && data.ident == 0) ? <DialogAlert
@@ -269,7 +263,7 @@ const theme = createTheme({
             }
           }
         >
-            <MenuItem key='000-0' value='user:16'>Administrdor</MenuItem>
+            <MenuItem key='000-0' value='user:16'>Director</MenuItem>
             <MenuItem key='000-1' value='user:1'>Recepcionista</MenuItem>
         {
             data.map((value) => (<MenuItem key={value.id} value={'doc' + value.id}>{value.nombre}</MenuItem>))

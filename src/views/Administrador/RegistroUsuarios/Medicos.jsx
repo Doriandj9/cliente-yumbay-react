@@ -17,6 +17,8 @@ import { Form } from 'react-router-dom';
 import { Button } from '@mui/material';
 import {MdSend} from 'react-icons/md';
 import { LoadingOne } from '../../../components/Loading';
+import {IoIosCheckmarkCircle} from 'react-icons/io';
+import {MdOutlineError} from 'react-icons/md';
 
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -54,6 +56,7 @@ const Medicos = () => {
             .catch(console.log)
             .finally(() => {
                 setSend(null);
+                setOpen(true);
             })
         }
     },[send]);
@@ -70,29 +73,33 @@ const Medicos = () => {
     }
     const handleClose = () => {
         setOpen(false);
+        setReponse(null);
     }
-    console.log(response);
+    const handleClean = (e) => {
+        document.querySelector('form')
+        .querySelectorAll('input')
+        .forEach(inp => inp.value = '');
+        setOpen(false);
+        setReponse(null);
+    }
     return (
         <>
         {/* carga un loading si envio los datos */}
 
-        { send && (<LoadingOne />) } 
+        { send && (<LoadingOne ancho={'50%'} />) } 
         {/* cargamos los errores de validacion del backend en una alerta */}
-        { (response && response.ident === 0 ) && (
+        { (response && response.ident === 0 && response.errores ) && (
             <DialogAlert
             open={open}
             handleClose={handleClose}
             handleClickOpen={handleOpen}
             >
-                <TitleAlert
-                title={'Errores al ingresar un nuevo usuario'}
-                css='text-danger ps-4 pe-4 pt-2 text-center'
-                />
                 <DialogContentTexto 
                 textContent={
                 <>
-                <span className='h5 text-dark-50 m-0'> Lista de errores </span>
-                <ul className='list-group'>
+                <MdOutlineError className='display-1 text-danger m-auto d-block' />
+                <span className='h5 text-dark-50 m-0 ps-2 pe-5 '> Lista de errores </span>
+                <ul className='list-group ps-2 pe-5 '>
                     {Object.entries(response.errores)
                     .map(([key,values],i) => {
                         return (
@@ -105,6 +112,7 @@ const Medicos = () => {
                 </ul>
                 </>
                 }
+                cssCont='ps-4 pe-4'
                 />
                 <DialogButtons 
                 handleClose={handleClose}
@@ -115,7 +123,64 @@ const Medicos = () => {
                 colorBtnClose='error'
                 />
             </DialogAlert>
-        )}
+        )
+    }
+    {
+     (response && response.ident === 0 && response.atributos)  && (
+            <DialogAlert
+            open={open}
+            handleClose={handleClose}
+            handleClickOpen={handleOpen}
+            >
+            <DialogContentTexto
+            textContent={
+                <span className='d-flex pt-4 flex-column align-items-center text-black'>
+                    <MdOutlineError className='display-1 text-danger' /> 
+                    {response.atributos[0] === '23000' ? 'El usuario ya existe en la base de datos': response.mensaje} 
+                </span>
+                }
+                cssCont='pe-5 ps-5'
+            />
+             <DialogButtons 
+                handleClose={handleClose}
+                btnClose={true}
+                btnTextClose='Regresar'
+                css='mb-3'
+                variantBtnClose='outlined'
+                colorBtnClose='error'
+                />
+            </DialogAlert>
+        )
+    }
+        {/* Rederiamos una alerta de que se ingreso correctamente el usuario  */}
+        {
+            (response && response.ident) && (
+                <DialogAlert
+                open={open}
+                handleClose={handleClean}
+                handleClickOpen={handleOpen}
+                >
+                <DialogContentTexto
+                textContent={(
+                    <>
+                    <IoIosCheckmarkCircle style={{ fontSize: '5rem' }}
+                    className='text-success' />
+                    <span className='ps-5 pe-5'> {response.mensaje} </span>
+                    </>
+                    )}
+                cssCont='d-flex flex-column gap-2 align-items-center'
+                css='ps-4 pe-4'
+                />
+                <DialogButtons 
+                btnClose={true}
+                btnTextClose='Aceptar'
+                variantBtnClose='contained'
+                colorBtnClose='success'
+                handleClose={handleClean}
+                />
+                </DialogAlert>
+            )
+        }
        <h3 className="text-center">Registrar Médico</h3>
       <Form 
       onSubmit={handleSubmit}
@@ -229,7 +294,7 @@ const FormTwo = ({data,boxEspe,setObjectInfo}) => {
         correo: null,
         especialidadesV: null,
         horario: null,
-        celular_emergencia: null
+        numero_emergencia: null
     })
     const [valueEs, setValueEs] = useState('');
     const handleCelular = (e) => {
@@ -347,7 +412,7 @@ const FormTwo = ({data,boxEspe,setObjectInfo}) => {
         name='correo'
         />
 
-        <TextField className='w-100 mb-2' placeholder=''
+        <TextField className='w-100 mb-2' placeholder='(Click por favor)'
         label="Selecione una o más especialidades" variant="outlined" 
         onClick={handleEspecialidades}
         error={verificaciones.especialidadesV === false ? true : false}
@@ -367,8 +432,8 @@ const FormTwo = ({data,boxEspe,setObjectInfo}) => {
         label="Ingrese el número de emergencia del médico" variant="outlined"
         onInput={handleCelular}
         required
-        error={verificaciones.celular_emergencia === false ? true : false}
-        name='celular_emergencia'
+        error={verificaciones.numero_emergencia === false ? true : false}
+        name='numero_emergencia'
         />
     </>)
 }

@@ -45,8 +45,6 @@ const App = () => {
             </NavLink>
             </li>
         </ul>
-
-
         <Outlet />
     </>);
 }
