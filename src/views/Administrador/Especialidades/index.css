@@ -1,0 +1,8 @@
+
+.input__file{
+    border: 1px solid #ccc;
+    padding: 1rem .5rem;
+    width: 100%;
+    display: block;
+    border-radius: 0.25rem;
+}

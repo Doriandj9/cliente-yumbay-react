@@ -1,6 +1,7 @@
 import './../../styles/navbar.css';
 import doctor from './../../assets/imgs/doctorIcon.png';
 import addUserIcon from './../../assets/imgs/doctorIconMenu.png';
+import espcialidadesMedicas from './../../assets/imgs/doctorEspecialidades.png';
 import { NavLink } from 'react-router-dom';
 import { FcBusinessman } from 'react-icons/fc';
 const NavbarAdmin = () => {
@@ -24,18 +25,18 @@ const NavbarAdmin = () => {
                         return isActive ? 'nav-link text-white d-flex align-items-center gap-2 menu__item__active' 
                         : 'nav-link text-white d-flex align-items-center gap-2'
                     }}>
-                        <img src={ addUserIcon } alt="" />
+                        <img src={ addUserIcon } alt="nuevo usuarios" />
                         <span>Registrar nuevos usuarios</span>
                     </NavLink>
                 </li>
                 <li className='nav-item'>
-                    <NavLink to='otro'
+                    <NavLink to='especialidades'
                     className={({isActive}) => {
                         return isActive ? 'nav-link text-white d-flex align-items-center gap-2 menu__item__active' 
                         : 'nav-link text-white d-flex align-items-center gap-2'
                     }}>
-                        <img src={addUserIcon}  alt="" />
-                        <span>Registrar paciente</span>
+                        <img src={espcialidadesMedicas}  alt="especialidades" />
+                        <span>Especialidades medicas</span>
                     </NavLink>
                 </li>
                 <li className='nav-item'>

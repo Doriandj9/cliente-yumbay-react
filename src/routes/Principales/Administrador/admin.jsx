@@ -21,7 +21,7 @@ import App from "../../../views/Administrador/App";
 import AppRegistro from './../../../views/Administrador/RegistroUsuarios/App';
 import Medicos from "../../../views/Administrador/RegistroUsuarios/Medicos";
 import Recepcionistas from "../../../views/Administrador/RegistroUsuarios/Recepcionistas";
-
+import AppEspecialidades from "../../../views/Administrador/Especialidades/App";
 const routesAdmin = {
     path: 'director',
     element: <App />,
@@ -39,6 +39,10 @@ const routesAdmin = {
                     element: (<Recepcionistas />)
                 }
             ]
+        },
+        {
+            path: 'especialidades',
+            element: <AppEspecialidades />
         }
     ]
 
