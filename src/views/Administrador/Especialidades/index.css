@@ -6,3 +6,17 @@
     display: block;
     border-radius: 0.25rem;
 }
+
+.day__select {
+    cursor: pointer;
+    transition: all .5ms;
+}
+.day__select:hover {
+    color: var(--color-primario);
+    transform: scale(1.025);
+    background-color: #ddd;
+}
+.selected__day{
+    background-color: var(--color-secundario) !important;
+    color: white !important;
+}

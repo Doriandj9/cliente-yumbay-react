@@ -1,14 +1,10 @@
 import { useEffect,useState } from "react";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
-import Box from '@mui/material/Box';
-import BottomNavigation from '@mui/material/BottomNavigation';
-import BottomNavigationAction from '@mui/material/BottomNavigationAction';
 import {AiFillMedicineBox} from 'react-icons/ai';
 import { FaNotesMedical } from 'react-icons/fa';
 import './index.css';
 const App = () => {
     const navigate = useNavigate();
-    const [value, setValue] = useState(0);
     useEffect(() => {
         navigate('medico');
     },[])

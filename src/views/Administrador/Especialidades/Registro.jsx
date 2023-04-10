@@ -7,6 +7,14 @@ import {MdSend} from 'react-icons/md';
 import { styled } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import { useState } from 'react';
+import Horario from './Horario';
+
+
+import dayjs from 'dayjs';
+import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -19,7 +27,7 @@ const Item = styled(Paper)(({ theme }) => ({
 
 const Registro = () => {
     const [img, setImage] = useState(null);
-
+    const [value, setValue] = useState(dayjs('2022-04-17T15:30'));
     const handleChange = (e) => {
         const file = e.target.files[0];
         const fileReader = new FileReader();
@@ -45,18 +53,32 @@ const Registro = () => {
         <Grid container spacing={0.25}>
             <Grid xs={6}>
             <Item>
-            <TextField className='w-100 mb-2'  placeholder='Por ejemplo: 0989354012'
+            <TextField className='w-100 mb-2'  placeholder='Por ejemplo: Odontología'
                 label="Ingrese el nombre de la especialidad" variant="outlined"
                 name='celular'
                 />
              <TextField
-          id="outlined-textarea"
-          className='w-100 mb-2' 
-          label="Ingrese la descripción de la especialidad"
-          placeholder="¿ Qué es esa especialiadad ? (Se presentará en el inicio)"
-          multiline
-        />
+            id="outlined-textarea"
+            className='w-100 mb-2' 
+            label="Ingrese la descripción de la especialidad"
+            placeholder="¿ Qué es esa especialiadad ? (Se presentará en el inicio)"
+            multiline
+            />
+            <Horario />
+            {/* Time input */}
+            <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DemoContainer components={['TimePicker', 'TimePicker']}>
+                    <TimePicker
+                    label="Ingrese la hora de partida"
+                    />
+                    <TimePicker
+                    label="Ingrese la hora de limite"
+                    />
+                </DemoContainer>
+            </LocalizationProvider>
+
             </Item>
+
             </Grid>
             <Grid xs={6}>
             <Item>
