@@ -6,15 +6,16 @@ import { Button } from '@mui/material';
 import {MdSend} from 'react-icons/md';
 import { styled } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Horario from './Horario';
-
+import { useAppConfig } from './../../../store/configAppStore';
 
 import dayjs from 'dayjs';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+import AlertWeb from '../../../components/AlertWeb';
 
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -27,7 +28,26 @@ const Item = styled(Paper)(({ theme }) => ({
 
 const Registro = () => {
     const [img, setImage] = useState(null);
-    const [value, setValue] = useState(dayjs('2022-04-17T15:30'));
+  const [formData, setFormData] = useState(null);
+    const [messageWarning, setMessageWarning] = useState(null);
+    const [open,setOpen] = useState(false);
+    const [data,setData] = useState(null);
+    const [error, setError] = useState(null);
+    const [send, setSend] = useState(null);
+    const [times, setTimes] = useState({
+        start: null,
+        end:null
+    });
+    const [days, setDays] = useState(new Set());
+    const configApp = useAppConfig((state) => state.app);
+    useEffect(() => {
+        if(send){
+            fetch(configApp.hostServer + 'api/add/especialidad',{method: 'POST', body: formData})
+            .then(query => query.json())
+            .then(setData)
+            .catch(console.log)
+        }
+    },[send])
     const handleChange = (e) => {
         const file = e.target.files[0];
         const fileReader = new FileReader();
@@ -38,8 +58,72 @@ const Registro = () => {
             setImage(url);
         }
     }
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const dataForm = new FormData(e.target);
+        const daysValues = [...days].join('-');
+        if(dataForm.get('nombre').trim() === ''){
+            setMessageWarning('Por favor, ingrese el campo nombre en el formulario.');
+            setOpen(true);
+            return;
+        }
+        if(dataForm.get('descripcion').trim() === ''){
+            setMessageWarning('Por favor, ingrese el campo descripción en el formulario.');
+            setOpen(true);
+            return;
+        }
 
+        if(daysValues === ''){
+            setMessageWarning('Por favor, ingrese el horario de la especialidad, selecione los dias laborales.');
+            setOpen(true);
+            return;
+        }
+        if(!times.start){
+            setMessageWarning('Por favor, registre la hora de ingreso de los dias laborales.');
+            setOpen(true);
+            return;
+        }
+        if(!times.end){
+            setMessageWarning('Por favor, registre la hora de salida de los dias laborales.');
+            setOpen(true);
+            return;
+        }
+        if(dataForm.get('imagen').size <= 0){
+            setMessageWarning('Por favor, selecione una imagen para la especialiadad.');
+            setOpen(true);
+            return;
+        }
+        
+        dataForm.append('dias',daysValues.toUpperCase());
+        dataForm.append('hora_ingreso',times.start);
+        dataForm.append('hora_salida',times.end);
+        console.log([...dataForm]);
+        setFormData(dataForm);
+        setSend(true);
+
+    }
+    const handleTimes = (value,context,name) => {
+        setTimes({
+           ...times,
+           [name]: context.validationError === null ? dayjs(value).format('HH:mm') : null
+        })
+    }
+
+    const handleClickClose = () => {
+        setOpen(false);
+    }
     return <>
+    {/* Alertas si no ingreso correctamente un dato del formulario */}
+    {messageWarning && (
+        <>
+        <AlertWeb 
+        opened={open}
+        menssageAlert={messageWarning}
+        severity='info'
+        handleCloseAlert={handleClickClose}
+        />
+        </>
+    )}
     <Box sx={ { margin: 2 } }>
         <Grid  spacing={0.5} >
             <Item className='text-center'>
@@ -47,7 +131,7 @@ const Registro = () => {
             </Item>
         </Grid>
     </Box>
-    <Form 
+    <Form onSubmit={handleSubmit}
       >
         <Box sx={{ flexGrow: 1 }}>
         <Grid container spacing={0.25}>
@@ -55,7 +139,7 @@ const Registro = () => {
             <Item>
             <TextField className='w-100 mb-2'  placeholder='Por ejemplo: Odontología'
                 label="Ingrese el nombre de la especialidad" variant="outlined"
-                name='celular'
+                name='nombre'
                 />
              <TextField
             id="outlined-textarea"
@@ -63,16 +147,21 @@ const Registro = () => {
             label="Ingrese la descripción de la especialidad"
             placeholder="¿ Qué es esa especialiadad ? (Se presentará en el inicio)"
             multiline
+            name='descripcion'
             />
-            <Horario />
+            <Horario setDays={setDays} days={days} />
             {/* Time input */}
             <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DemoContainer components={['TimePicker', 'TimePicker']}>
                     <TimePicker
-                    label="Ingrese la hora de partida"
+                    label="Registre la hora de ingreso"
+                    onChange={(newValue,validator) => handleTimes(newValue,validator,'start')}
+                    name='start'
                     />
                     <TimePicker
-                    label="Ingrese la hora de limite"
+                    label="Registre la hora de salida"
+                    onChange={(newValue,validator) => handleTimes(newValue,validator,'end')}
+                    name='end'
                     />
                 </DemoContainer>
             </LocalizationProvider>
@@ -84,7 +173,7 @@ const Registro = () => {
             <Item>
             <label className='text-start d-block mb-2' style={{fontSize: '1.05rem' }}  
             htmlFor="">Selecione una imagen que represente la especialidad</label>
-            <input onChange={handleChange} type="file" accept='image/*' className='input__file' />
+            <input onChange={handleChange} type="file" accept='image/*' name='imagen' className='input__file' />
             <Box component="div" sx={
                 { p: 2, border: '1px dashed grey', 
                  width: '12rem', height: '8rem', margin: 'auto',marginTop: '0.5rem' }

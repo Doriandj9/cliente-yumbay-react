@@ -10,7 +10,7 @@ const Item = styled(Paper)(({ theme }) => ({
     textAlign: 'center',
     color: theme.palette.text.secondary,
   }));
-const Horario = () => {
+const Horario = ({setDays,days}) => {
     const [select, setSelect] = useState({
         lunes: false,
         martes: false,
@@ -25,7 +25,8 @@ const Horario = () => {
         const containerOptions = document.getElementById('container-options');
         const nameInput = e.target.getAttribute('valor').toLowerCase();
         const element = e.target.parentElement;
-       
+        const dataDays = new Set([...days]);
+
         if(!select[nameInput]){
 
             containerSelected.append(element);
@@ -34,6 +35,8 @@ const Horario = () => {
                 ...select,
                 [nameInput]: true
             })
+            dataDays.add(nameInput);
+            setDays(dataDays);
         }else{
 
             containerOptions.append(element);
@@ -42,6 +45,8 @@ const Horario = () => {
                 ...select,
                 [nameInput]: false
             })
+            dataDays.delete(nameInput);
+            setDays(dataDays);
         }
         
     }   

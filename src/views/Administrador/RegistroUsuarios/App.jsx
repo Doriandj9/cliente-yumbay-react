@@ -37,7 +37,7 @@ const App = () => {
              }
             to='recepcionista'>
                 <FaNotesMedical style={{ fontSize: '1.5rem' }} />
-                Registrar Recionistas
+                Registrar Recepcionista
             </NavLink>
             </li>
         </ul>
