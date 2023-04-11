@@ -25,7 +25,7 @@ const App = () => {
              }
               to='medico'>
                 <AiFillMedicineBox style={{ fontSize: '1.5rem' }} />
-               Registrar Medicos   
+               Registrar Medicos   arr
                 </NavLink>
             </li>
             <li className="flex-grow-1">
