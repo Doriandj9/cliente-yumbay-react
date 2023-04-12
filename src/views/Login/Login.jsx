@@ -106,20 +106,8 @@ const Login = () => {
             severity='info'
             menssageAlert='Por favor, ingrese todos los campos para iniciar sesión.'
             />}
-            <div className="flex-grow-1">
-                <div className='d-flex justify-content-around'>
-                    <div className='w-50 ms-5'>
-                        <img src={logo} 
-                            style={
-                                {
-                                    width: 500,
-                                    height: 500,
-                                    maxWidth: '100%'
-                                }
-                            }
-                        alt="" />
-                    </div>
-                    <div className='w-35 d-flex align-items-center me-5'>
+            <div className="container__login_app">
+                <div className='d-flex justify-content-center align-items-center w-100 h-100'>
                         {(login && loading) && <LoadingOne 
                         ancho={'50%'}
                         />
@@ -179,7 +167,7 @@ const Login = () => {
                         }
                         
                         <Form onSubmit={handleSubmit}
-                         className='bg-primary gap-2 formulario-init w-75 p-4 d-flex flex-column align-items-center'>
+                         className='bg-primary gap-2 formulario-init container__login p-4 d-flex flex-column align-items-center'>
                         <h6 className='fw-bold'>INICIO DE SESIÓN</h6>
                         <div className='img__form'>
                             <img src={user} alt="" />
@@ -223,7 +211,6 @@ const Login = () => {
                                 Ingresar
                             </button>
                         </Form>
-                    </div>
                 </div>
             </div>
         </>

@@ -8,11 +8,11 @@
 
 import routesAdmin from "./Principales/Administrador/admin";
 import { routeCitaMedica } from "./Principales/citaMedica";
-import { routeContacto, routeMain, routeNosotros, routeServicios } from "./Principales/home";
+import { routeMain, routeNosotros, routeServicios } from "./Principales/home";
 import { routeLogin } from "./Principales/login";
 
 const rootRoutes = [];
-rootRoutes.push(routeMain,routeNosotros,routeServicios,routeContacto,routeCitaMedica,routeLogin,routesAdmin);
+rootRoutes.push(routeMain,routeNosotros,routeServicios,routeCitaMedica,routeLogin,routesAdmin);
 
 export {rootRoutes};
 

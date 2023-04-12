@@ -4,50 +4,13 @@ body,html{
     margin: 0;
     box-sizing: border-box;
 }
-.item-custom{
-    transition: background-color 300ms ease-out;
-    border-radius: 0.5rem;
-}
-.item-custom > a{
-    transition: all 0.300s ease-out;
-}
-.item-custom:hover{
-    background-color: var(--color-primario);
-    border-radius: 0.5rem;
-}
-.item-custom:hover > a{
-    color: white !important;
-}
-.font-1 {
-    font-size: 1.5rem;
-}
-.item-active {
-    background-color: var(--color-secundario);
-}
-.item-custom.item-active > a {
-    color: white !important;
-}
-.item-active {
-    color: white !important;
-}
-
-.pointer-none{
-    user-select: none;
-    cursor: none;
-}
 
 .fondo{
     width: 100%;
     max-width: 100%;
     height: 75vh;
 }
-.containers__cards {
-    margin-top: -4rem;
-}
-a.nav-link:target {
-    background-color: var(--color-secundario);
-    color: white !important;
-}
+
 .contact-icon {
     background-color: var(--color-secundario);
     padding: 0.25rem 0.5rem 0.5rem 0.5rem;
@@ -56,7 +19,7 @@ a.nav-link:target {
 .card > img {
     box-sizing: border-box;
     max-width: 100% !important;
-    height: 15.5125rem;
+    height: 8.5125rem;
     padding: 0.15rem;
 }
 .fonty-2 {
@@ -76,3 +39,17 @@ a.nav-link:target {
     color: white;
     border-radius: 0.5rem;
 }
+
+.card-title{
+    font-size: 1rem;
+    font-weight: 700;
+}
+.card-text{
+    font-size: 0.85rem;
+}
+
+.altura__1{
+    height: 8rem;
+    overflow-y: auto;
+}
+

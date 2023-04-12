@@ -20,102 +20,91 @@ const Header = () => {
     },[])
     return (
         <>
-            <nav className="navbar bg-white navbar-expand-lg bg-light p-0 m-0 responsive__nav">
-                
-            <div className="container-fluid p-0 m-0">
-                <div className='d-flex justify-content-between align-items-center w-100'>
-                    <div className=''>
+            <header>
+            <div className=''>
                         <img  className='img-thumbnail'
                         style={{
-                            width: 300,
-                            height: 80,
+                            width: 600,
+                            height: 120,
                             marginRight: '1rem'
                         }}
                         src={logo} alt="logo" />
                     </div>
-
-                    <div className='me-5'>
-                        <ul className='navbar-nav'>
-                        <li className="nav-item item-custom">
-                            <NavLink 
-                            className={({isActive}) => {
-                                return isActive ? 
-                                'nav-link text-primary d-flex align-items-center gap-1 item-activo':
-                                'nav-link text-primary d-flex align-items-center gap-1';
-                            }} 
-                            aria-current="page" 
-                            to='/' >
-                                <AiFillHome className='font-1 pointer-none'></AiFillHome>
-                                INICIO
-                            </NavLink>
-                        </li>
-                        <li className="nav-item item-custom">
-                            <NavLink
-                            className={({isActive}) => {
-                                return isActive ? 
-                                'nav-link text-primary d-flex align-items-center gap-1 item-activo':
-                                'nav-link text-primary d-flex align-items-center gap-1';
-                            }} 
-                             aria-current="page"
-                             to="/nosotros">
-                                <HiUserGroup className='font-1 pointer-none'></HiUserGroup> 
-                                SOBRE NOSOTROS</NavLink>
-                        </li>
-                        <li className="nav-item item-custom">
-                            <NavLink className={({isActive}) => {
-                                return isActive ? 
-                                'nav-link text-primary d-flex align-items-center gap-1 item-activo':
-                                'nav-link text-primary d-flex align-items-center gap-1';
-                            }}  
-                            aria-current="page" 
-                            to="/servicios">
-                               <MdMedicalServices className='font-1 pointer-none'></MdMedicalServices>
-                               SERVICIOS</NavLink>
-                        </li>
-                        <li className="nav-item item-custom">
-                            <NavLink className={({isActive}) => {
-                                return isActive ? 
-                                'nav-link text-primary d-flex align-items-center gap-1 item-activo':
-                                'nav-link text-primary d-flex align-items-center gap-1';
-                            }} 
-                            aria-current="page" 
-                            to="/contacto">
-                               <MdContactMail className='font-1 pointer-none'></MdContactMail>
-                               CONTACTO</NavLink>
-                        </li>
-                        <li className="nav-item item-custom">
-                            <NavLink className={({isActive}) => {
-                                return isActive ? 
-                                'nav-link text-primary d-flex align-items-center gap-1 item-activo':
-                                'nav-link text-primary d-flex align-items-center gap-1';
-                            }} 
-                            aria-current="page" 
-                            to="/cita-medica">
-                               <FaHandHoldingMedical className='font-1 pointer-none'></FaHandHoldingMedical>
-                               AGENDAR CITA MÉDICA</NavLink>
-                        </li>
-                        <li className="nav-item item-custom">
-                            {
-                                menuApp ? 
-                                (<LinkMenu to={pagesWeb(menuApp.permisos)}
-                                className='nav-link text-primary d-flex align-items-center gap-1'>
-                                <MdSpaceDashboard className='font-1 pointer-none'></MdSpaceDashboard>
-                                MENU DE APLICACIÓN
-                                </LinkMenu>) :
-                            (<NavLink className={({isActive}) => {
-                                return isActive ? 
-                                'nav-link text-primary d-flex align-items-center gap-1 item-activo':
-                                'nav-link text-primary d-flex align-items-center gap-1';
-                            }} 
-                            aria-current="page" 
-                            to="/login">
-                               <FiLogIn className='font-1 pointer-none'></FiLogIn>
-                               INICIAR SESIÓN</NavLink>)
-                            }
-                        </li>
+            </header>
+            <nav className="p-0 m-0 responsive__nav">
+            <div className="container-fluid p-0 m-0">
+                        <ul className='m-0 bg-primary w-100 d-flex flex-row flex-wrap justify-content-around'>
+                            <div className='navbar-nav d-flex flex-row'>
+                                <li className="nav-item">
+                                    <NavLink 
+                                    className={({isActive}) => {
+                                        return isActive ? 
+                                        'nav-link d-flex align-items-center gap-1 item-activo item-custom':
+                                        'nav-link d-flex align-items-center gap-1 item-custom';
+                                    }} 
+                                    aria-current="page" 
+                                    to='/' >
+                                        <AiFillHome className='font-1 pointer-none'></AiFillHome>
+                                        INICIO
+                                    </NavLink>
+                                </li>
+                                <li className="nav-item">
+                                    <NavLink
+                                    className={({isActive}) => {
+                                        return isActive ? 
+                                        'nav-link d-flex align-items-center gap-1 item-activo item-custom':
+                                        'nav-link d-flex align-items-center gap-1 item-custom';
+                                    }} 
+                                    aria-current="page"
+                                    to="/nosotros">
+                                        <HiUserGroup className='font-1 pointer-none'></HiUserGroup> 
+                                        SOBRE NOSOTROS</NavLink>
+                                </li>
+                                <li className="nav-item">
+                                    <NavLink className={({isActive}) => {
+                                        return isActive ? 
+                                        'nav-link d-flex align-items-center gap-1 item-activo item-custom':
+                                        'nav-link d-flex align-items-center gap-1 item-custom';
+                                    }}  
+                                    aria-current="page" 
+                                    to="/servicios">
+                                    <MdMedicalServices className='font-1 pointer-none'></MdMedicalServices>
+                                    SERVICIOS</NavLink>
+                                </li>
+                                <li className="nav-item">
+                                    {
+                                        menuApp ? 
+                                        (<LinkMenu to={pagesWeb(menuApp.permisos)}
+                                        className='nav-link d-flex align-items-center gap-1 item-custom'>
+                                        <MdSpaceDashboard className='font-1 pointer-none'></MdSpaceDashboard>
+                                        MENU DE APLICACIÓN
+                                        </LinkMenu>) :
+                                    (<NavLink className={({isActive}) => {
+                                        return isActive ? 
+                                        'nav-link d-flex align-items-center gap-1 item-activo item-custom':
+                                        'nav-link d-flex align-items-center gap-1 item-custom';
+                                    }} 
+                                    aria-current="page" 
+                                    to="/login">
+                                    <FiLogIn className='font-1 pointer-none'></FiLogIn>
+                                    INICIAR SESIÓN</NavLink>)
+                                    }
+                                </li>
+                            </div>
+                            <div className='navbar-nav d-flex flex-row'>
+                                <li className="nav-item d-flex align-items-center">
+                                    <NavLink className={({isActive}) => {
+                                        return isActive ? 
+                                        'nav-link d-flex align-items-center gap-1 item-unique item-activo-unique':
+                                        'nav-link d-flex align-items-center gap-1 item-unique';
+                                    }} 
+                                    aria-current="page" 
+                                    to="/cita-medica">
+                                    <FaHandHoldingMedical className='font-1 pointer-none'></FaHandHoldingMedical>
+                                    AGENDAR CITA MÉDICA</NavLink>
+                                </li>
+                            </div>
                         </ul>
-                    </div>
-                </div>
             </div>
         </nav>
         </>

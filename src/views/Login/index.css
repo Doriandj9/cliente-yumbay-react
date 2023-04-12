@@ -6,7 +6,7 @@
 
 .item__end{
     align-self : end;
-    margin-right: 3rem;
+    margin-right: 0;
     margin-bottom: 0.5rem;
 }
 .formulario-init{
@@ -30,3 +30,26 @@
 .w-35{
     width: 35%;
 }
+.container__login_app{
+    background-size: cover;
+    background-image: url('./../../assets/imgs/fondo.jpg');
+    padding: 0.5rem;
+    width: 100%;
+    height: 75vh !important;
+    margin: 0;
+}
+.container__login{
+    width: 30%;
+}
+@media screen and (max-width: 1075px) {
+    .container__login{
+        width: 35%;
+    }
+    
+  } 
+@media screen and (max-width: 828px) {
+    .container__login{
+        width: 50%;
+    }
+    
+  }
