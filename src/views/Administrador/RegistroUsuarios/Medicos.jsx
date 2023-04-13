@@ -19,6 +19,9 @@ import {MdSend} from 'react-icons/md';
 import { LoadingOne } from '../../../components/Loading';
 import {IoIosCheckmarkCircle} from 'react-icons/io';
 import {MdOutlineError} from 'react-icons/md';
+import Horario from './Horario';
+import dayjs from 'dayjs';
+
 
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -37,6 +40,11 @@ const Medicos = () => {
     const [formData, setFormData] = useState(null);
     const [especialidades, setEspecialidades] = useState([]);
     const configApp = useAppConfig((state) => state.app);
+    const [times, setTimes] = useState({
+        start: null,
+        end:null
+    });
+  const [days, setDays] = useState(new Set());
     useEffect(()=>{
         fetch(configApp.hostServer + 'api/especialidades')
         .then(query => query.json())
@@ -81,6 +89,12 @@ const Medicos = () => {
         .forEach(inp => inp.value = '');
         setOpen(false);
         setReponse(null);
+    }
+    const handleTimes = (value,context,name) => {
+        setTimes({
+           ...times,
+           [name]: context.validationError === null ? dayjs(value).format('HH:mm') : null
+        })
     }
     return (
         <>
@@ -193,7 +207,13 @@ const Medicos = () => {
             </Item>
             </Grid>
             <Grid xs={6}>
-            <Item>{<FormTwo data={data} boxEspe={setEspecialidades} />}</Item>
+            <Item>{<FormTwo 
+            data={data} 
+            boxEspe={setEspecialidades} 
+            setDays={setDays}
+            days={days}
+            handleTimes={handleTimes}
+            />}</Item>
             </Grid>
             <Grid xs={12}>
             <Item>{
@@ -222,7 +242,9 @@ const FormOne = ({setObjectInfo}) => {
         cedula: null,
         nombres: null,
         apellidos: null,
-        direccion: null
+        direccion: null,
+        celular: true,
+        correo: null,
     })
     /**
      * 
@@ -255,6 +277,41 @@ const FormOne = ({setObjectInfo}) => {
             })
         }
     }
+    const handleCorreo = (e) => {
+        if(EMAIL_REG_EXPRE.test(e.target.value.trim())){
+            setVerificaciones({
+                ...verificaciones,
+                [e.target.name]: true
+            })
+
+        }else{
+            setVerificaciones({
+                ...verificaciones,
+                [e.target.name]: false
+            })
+        }
+}
+
+const handleCelular = (e) => {
+    if(e.target.value.trim() !== ''){
+        if(NUMBER_REG_EXPRE.test(e.target.value.trim())){
+            setVerificaciones({
+                ...verificaciones,
+                [e.target.name]: true
+            })
+        }else{
+            setVerificaciones({
+                ...verificaciones,
+                [e.target.name]: false
+            })
+        }
+    }else{
+        setVerificaciones({
+            ...verificaciones,
+            [e.target.name]: true
+        })
+    }
+}
     return (<>
         <TextField className='w-100 mb-2' required placeholder='Por ejemplo: 0250123456'
         onInput={handleCedula}
@@ -283,54 +340,33 @@ const FormOne = ({setObjectInfo}) => {
         <TextField className='w-100 mb-2' placeholder='Por ejemplo: 24518766'
         name='telefono'
         label="Ingrese el número de telefono del médico" variant="outlined" />
+         <TextField className='w-100 mb-2'  placeholder='Por ejemplo: 0989354012'
+        label="Ingrese el número de celular del médico" variant="outlined"
+        onInput={handleCelular}
+        error={verificaciones.celular === false ? true : false}
+        name='celular'
+        />
+        <TextField className='w-100 mb-2' placeholder='Por ejemplo: ejemplo@gmail.com'
+        label="Ingrese el correo electronico del médico" variant="outlined" 
+        required
+        error={verificaciones.correo === false ? true : false}
+        onInput={handleCorreo}
+        name='correo'
+        />
     </>)
 }
 
 
-const FormTwo = ({data,boxEspe,setObjectInfo}) => {
+const FormTwo = ({data,boxEspe,setDays,days,handleTimes}) => {
     const [opened, setOpened] = useState(false);
     const [verificaciones, setVerificaciones] = useState({
-        celular: true,
-        correo: null,
         especialidadesV: null,
         horario: null,
         numero_emergencia: null
     })
     const [valueEs, setValueEs] = useState('');
-    const handleCelular = (e) => {
-        if(e.target.value.trim() !== ''){
-            if(NUMBER_REG_EXPRE.test(e.target.value.trim())){
-                setVerificaciones({
-                    ...verificaciones,
-                    [e.target.name]: true
-                })
-            }else{
-                setVerificaciones({
-                    ...verificaciones,
-                    [e.target.name]: false
-                })
-            }
-        }else{
-            setVerificaciones({
-                ...verificaciones,
-                [e.target.name]: true
-            })
-        }
-    }
-    const handleCorreo = (e) => {
-            if(EMAIL_REG_EXPRE.test(e.target.value.trim())){
-                setVerificaciones({
-                    ...verificaciones,
-                    [e.target.name]: true
-                })
-
-            }else{
-                setVerificaciones({
-                    ...verificaciones,
-                    [e.target.name]: false
-                })
-            }
-    }
+  
+  
     const handleInputEmpty = (e) => {
         if(e.target.value.trim() !== ''){
             setVerificaciones({
@@ -378,6 +414,26 @@ const FormTwo = ({data,boxEspe,setObjectInfo}) => {
         }
         setOpened(false);
     }
+    const handleCelular = (e) => {
+        if(e.target.value.trim() !== ''){
+            if(NUMBER_REG_EXPRE.test(e.target.value.trim())){
+                setVerificaciones({
+                    ...verificaciones,
+                    [e.target.name]: true
+                })
+            }else{
+                setVerificaciones({
+                    ...verificaciones,
+                    [e.target.name]: false
+                })
+            }
+        }else{
+            setVerificaciones({
+                ...verificaciones,
+                [e.target.name]: true
+            })
+        }
+    }
     return (<>
     <DialogAlert 
         open={opened}
@@ -398,21 +454,7 @@ const FormTwo = ({data,boxEspe,setObjectInfo}) => {
         btnTextSave='Guardar'
         />
     </DialogAlert>
-     <TextField className='w-100 mb-2'  placeholder='Por ejemplo: 0989354012'
-        label="Ingrese el número de celular del médico" variant="outlined"
-        onInput={handleCelular}
-        error={verificaciones.celular === false ? true : false}
-        name='celular'
-        />
-        <TextField className='w-100 mb-2' placeholder='Por ejemplo: ejemplo@gmail.com'
-        label="Ingrese el correo electronico del médico" variant="outlined" 
-        required
-        error={verificaciones.correo === false ? true : false}
-        onInput={handleCorreo}
-        name='correo'
-        />
-
-        <TextField className='w-100 mb-2' placeholder='(Click por favor)'
+       <TextField className='w-100 mb-2' placeholder='(Click por favor)'
         label="Selecione una o más especialidades" variant="outlined" 
         onClick={handleEspecialidades}
         error={verificaciones.especialidadesV === false ? true : false}
@@ -420,14 +462,6 @@ const FormTwo = ({data,boxEspe,setObjectInfo}) => {
         value={valueEs}
         required
         />
-
-        <TextField className='w-100 mb-2' placeholder='Por ejemplo: ...Pendiente'
-        label="Ingrese el horario del médico" variant="outlined"
-        onInput={handleInputEmpty}
-        required
-        error={verificaciones.horario === false ? true : false}
-        name='horario'
-         />
         <TextField className='w-100 mb-2' placeholder='Por ejemplo: 0986538564'
         label="Ingrese el número de emergencia del médico" variant="outlined"
         onInput={handleCelular}
@@ -435,6 +469,7 @@ const FormTwo = ({data,boxEspe,setObjectInfo}) => {
         error={verificaciones.numero_emergencia === false ? true : false}
         name='numero_emergencia'
         />
+         <Horario setDays={setDays} days={days} handleTimes={handleTimes} />
     </>)
 }
 

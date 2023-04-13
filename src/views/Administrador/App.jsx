@@ -7,16 +7,16 @@ import { useNavigate } from 'react-router-dom';
 const App = () => {
     const user = useUserStore((state) => state.user);
     const navigate = useNavigate();
-    useEffect(() => {
-        if(!user){
-            //si no enviamos los permisos nos envia a ruta page-not-found
-            navigate(pagesWeb());
-        }
-        //si no tiene los permisos tambien se le redirige a un page-not-permision 
-        if(user && user.permisos !== 16){
-            navigate(pagesWeb());
-        }
-    },[])
+    // useEffect(() => {
+    //     if(!user){
+    //         //si no enviamos los permisos nos envia a ruta page-not-found
+    //         navigate(pagesWeb());
+    //     }
+    //     //si no tiene los permisos tambien se le redirige a un page-not-permision 
+    //     if(user && user.permisos !== 16){
+    //         navigate(pagesWeb());
+    //     }
+    // },[])
     return (
         <Home></Home>
     );

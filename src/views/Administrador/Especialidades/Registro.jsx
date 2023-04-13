@@ -7,7 +7,6 @@ import {MdSend} from 'react-icons/md';
 import { styled } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import { useEffect, useState } from 'react';
-import Horario from './Horario';
 import { useAppConfig } from './../../../store/configAppStore';
 
 import dayjs from 'dayjs';
@@ -15,6 +14,7 @@ import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
+
 import AlertWeb from '../../../components/AlertWeb';
 
 
@@ -149,9 +149,9 @@ const Registro = () => {
             multiline
             name='descripcion'
             />
-            <Horario setDays={setDays} days={days} />
+            {/* <Horario setDays={setDays} days={days} /> */}
             {/* Time input */}
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
+            {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DemoContainer components={['TimePicker', 'TimePicker']}>
                     <TimePicker
                     label="Registre la hora de ingreso"
@@ -164,7 +164,7 @@ const Registro = () => {
                     name='end'
                     />
                 </DemoContainer>
-            </LocalizationProvider>
+            </LocalizationProvider> */}
 
             </Item>
 
