@@ -2,6 +2,10 @@ import './../../styles/navbar.css';
 import doctor from './../../assets/imgs/doctorIcon.png';
 import addUserIcon from './../../assets/imgs/doctorIconMenu.png';
 import espcialidadesMedicas from './../../assets/imgs/doctorEspecialidades.png';
+import pdfimg from './../../assets/imgs/pdf.png';
+import apagadoImg from './../../assets/imgs/apagado.png';
+
+
 import { NavLink } from 'react-router-dom';
 import { FcBusinessman } from 'react-icons/fc';
 const NavbarAdmin = () => {
@@ -45,28 +49,18 @@ const NavbarAdmin = () => {
                         return isActive ? 'nav-link text-white d-flex align-items-center gap-2 menu__item__active' 
                         : 'nav-link text-white d-flex align-items-center gap-2'
                     }}>
-                        <img src={addUserIcon}  alt="" />
-                        <span>Registrar paciente</span>
+                        <img src={pdfimg}  alt="" />
+                        <span>Realizar reportes</span>
                     </NavLink>
                 </li>
                 <li className='nav-item'>
-                    <NavLink to='otro'
+                    <NavLink to='/salir'
                     className={({isActive}) => {
                         return isActive ? 'nav-link text-white d-flex align-items-center gap-2 menu__item__active' 
                         : 'nav-link text-white d-flex align-items-center gap-2'
                     }}>
-                        <img src={addUserIcon}  alt="" />
-                        <span>Registrar paciente</span>
-                    </NavLink>
-                </li>
-                <li className='nav-item'>
-                    <NavLink to='otro'
-                    className={({isActive}) => {
-                        return isActive ? 'nav-link text-white d-flex align-items-center gap-2 menu__item__active' 
-                        : 'nav-link text-white d-flex align-items-center gap-2'
-                    }}>
-                        <img src={addUserIcon}  alt="" />
-                        <span>Registrar paciente</span>
+                        <img src={apagadoImg}  alt="" />
+                        <span>Salir</span>
                     </NavLink>
                 </li>
             </ul>

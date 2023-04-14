@@ -6,11 +6,11 @@ import {FaClinicMedical} from 'react-icons/fa';
 import {BsTelephoneFill} from 'react-icons/bs';
 import {MdEmail} from 'react-icons/md';
 import {HiLocationMarker} from 'react-icons/hi';
-const Footer = () => {
+const Footer = ({className=''}) => {
 
     return (
         <>
-<footer className="bg-t__footer py-3 py-md-3">
+<footer className={"bg-t__footer py-3 py-md-3 " + className}>
   <div className="container py-3 py-md-3 px-3 px-md-3">
     <div className="row">
       <div className="col-sm-12 col-lg-2 mb-3">

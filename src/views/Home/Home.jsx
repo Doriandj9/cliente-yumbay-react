@@ -16,8 +16,9 @@ const Home = () => {
         </div>
         <div>
             <h2 className='text-primary fw-900 text-center'> Algo Mas </h2>
+            <p>texto informativo</p>
         </div>
-        <Footer />
+        <Footer className='mt-5' />
     </>
     );
 }

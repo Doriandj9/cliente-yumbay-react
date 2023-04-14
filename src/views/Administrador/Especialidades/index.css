@@ -20,3 +20,17 @@
     background-color: var(--color-secundario) !important;
     color: white !important;
 }
+
+.add__new{
+    position: absolute;
+    top: 50%;
+    right: 4rem;
+    transform: translateY(-50%);
+    font-size: 2rem;
+    color: var(--color-primario);
+    transition: all 0.25s;
+    cursor: pointer;
+}
+.add__new:hover{
+   color: var(--color-secundario);
+}

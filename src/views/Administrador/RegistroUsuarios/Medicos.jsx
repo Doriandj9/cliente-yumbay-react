@@ -40,6 +40,7 @@ const Medicos = () => {
     const [formData, setFormData] = useState(null);
     const [especialidades, setEspecialidades] = useState([]);
     const configApp = useAppConfig((state) => state.app);
+
     const [times, setTimes] = useState({
         start: null,
         end:null
@@ -96,6 +97,7 @@ const Medicos = () => {
            [name]: context.validationError === null ? dayjs(value).format('HH:mm') : null
         })
     }
+   
     return (
         <>
         {/* carga un loading si envio los datos */}
@@ -365,6 +367,7 @@ const FormTwo = ({data,boxEspe,setDays,days,handleTimes}) => {
         numero_emergencia: null
     })
     const [valueEs, setValueEs] = useState('');
+    const [img, setImage] = useState(null);
   
   
     const handleInputEmpty = (e) => {
@@ -434,6 +437,16 @@ const FormTwo = ({data,boxEspe,setDays,days,handleTimes}) => {
             })
         }
     }
+    const handleChange = (e) => {
+        const file = e.target.files[0];
+        const fileReader = new FileReader();
+        fileReader.readAsDataURL(file);
+
+        fileReader.onload = () => {
+            const url = fileReader.result;
+            setImage(url);
+        }
+    }
     return (<>
     <DialogAlert 
         open={opened}
@@ -470,6 +483,18 @@ const FormTwo = ({data,boxEspe,setDays,days,handleTimes}) => {
         name='numero_emergencia'
         />
          <Horario setDays={setDays} days={days} handleTimes={handleTimes} />
+         <label className='text-start d-block mb-2' style={{fontSize: '1.05rem' }}  
+            htmlFor="">Selecione una imagen que represente la especialidad</label>
+            <input onChange={handleChange} type="file" accept='image/*' name='imagen' className='input__file' />
+            <Box component="div" sx={
+                { p: 2, border: '1px dashed grey', 
+                 width: '12rem', height: '8rem', margin: 'auto',marginTop: '0.5rem' }
+        }>
+              { img ? (<img src={img} alt="preve" style={{ maxWidth: '100%' , maxHeight: '100%' , width: '100%',height:'100%'}} />)
+              :  (<p className='w-100 h-100 d-flex justify-content-center align-items-center'>
+                    Aquí se presentará un previsualización de la imagen selecionada. 
+               </p>)}
+            </Box>
     </>)
 }
 

@@ -149,25 +149,7 @@ const Registro = () => {
             multiline
             name='descripcion'
             />
-            {/* <Horario setDays={setDays} days={days} /> */}
-            {/* Time input */}
-            {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DemoContainer components={['TimePicker', 'TimePicker']}>
-                    <TimePicker
-                    label="Registre la hora de ingreso"
-                    onChange={(newValue,validator) => handleTimes(newValue,validator,'start')}
-                    name='start'
-                    />
-                    <TimePicker
-                    label="Registre la hora de salida"
-                    onChange={(newValue,validator) => handleTimes(newValue,validator,'end')}
-                    name='end'
-                    />
-                </DemoContainer>
-            </LocalizationProvider> */}
-
             </Item>
-
             </Grid>
             <Grid xs={6}>
             <Item>

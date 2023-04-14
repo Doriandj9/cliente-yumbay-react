@@ -337,13 +337,13 @@ const FormTwo = () => {
     }
     
     return (<>
-     <TextField className='w-100 mb-2'  placeholder='Por ejemplo: 0989354012'
+     <TextField className='w-100 mb-4'  placeholder='Por ejemplo: 0989354012'
         label="Ingrese el número de celular de la recepcionista" variant="outlined"
         onInput={handleCelular}
         error={verificaciones.celular === false ? true : false}
         name='celular'
         />
-        <TextField className='w-100 mb-2' placeholder='Por ejemplo: ejemplo@gmail.com'
+        <TextField className='w-100 mb-4' placeholder='Por ejemplo: ejemplo@gmail.com'
         label="Ingrese el correo electronico de la recepcionista" variant="outlined" 
         required
         error={verificaciones.correo === false ? true : false}
@@ -351,22 +351,14 @@ const FormTwo = () => {
         name='correo'
         />
 
-        <TextField className='w-100 mb-2' placeholder='Por ejemplo: Lic. Algo'
+        <TextField className='w-100 mb-4' placeholder='Por ejemplo: Lic. Algo'
         label="Ingrese el título de la recepcionista" variant="outlined" 
         onInput={handleInputEmpty}
         error={verificaciones.titulo === false ? true : false}
         name='titulo'
         required
         />
-
-        <TextField className='w-100 mb-2' placeholder='Por ejemplo: ...Pendiente'
-        label="Ingrese el horario de la recepcionista" variant="outlined"
-        onInput={handleInputEmpty}
-        required
-        error={verificaciones.horario === false ? true : false}
-        name='horario'
-         />
-        <TextField className='w-100 mb-2' placeholder='Por ejemplo: 0986538564'
+        <TextField className='w-100 mb-4' placeholder='Por ejemplo: 0986538564'
         label="Ingrese el número de emergencia de la recepcionista" variant="outlined"
         onInput={handleCelular}
         required

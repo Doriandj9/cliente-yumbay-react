@@ -26,9 +26,10 @@
 
 .container_menu li  img {
     width: 35px;
-    height: 39px;
+    height: 35px;
     margin-left: 1.5rem;
     object-fit: cover;
+    aspect-ratio: 4/3;
 }
 .img__icons{
     width: 37px;

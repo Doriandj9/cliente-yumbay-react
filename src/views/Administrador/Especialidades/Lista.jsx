@@ -14,6 +14,8 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Unstable_Grid2';
 import { styled } from '@mui/material/styles';
 import Stack from '@mui/material/Stack';
+import {MdOutlineAddCircle} from 'react-icons/md';
+import {NavLink} from 'react-router-dom';
 import { Edit } from '@mui/icons-material'
 import Button from '@mui/material/Button';
 const Item = styled(Paper)(({ theme }) => ({
@@ -57,7 +59,11 @@ const Lista = () =>{
         <TableHead>
           <TableRow>
             <TableCell align='center'>Nº</TableCell>
-            <TableCell align="left">Nombre de especialiadad</TableCell>
+            <TableCell style={{ position: 'relative' }}  align="left">Nombre de especialiadad
+            <NavLink to='/director/especialidades/registro'>
+                <MdOutlineAddCircle className='add__new' title='Agregar una nueva especialidad' />
+                </NavLink>
+            </TableCell>
             <TableCell align="left">Descripción de especialiadad</TableCell>
             <TableCell align="left">Editar de especialiadad</TableCell>
           </TableRow>
@@ -68,8 +74,9 @@ const Lista = () =>{
               key={row.id}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
-              <TableCell  component="th" scope="row">
+              <TableCell component="th" scope="row">
                 {i + 1}
+               
               </TableCell>
               <TableCell align="left">{row.nombre}</TableCell>
               <TableCell align="left">{row.descripcion}</TableCell>

@@ -8,7 +8,7 @@ import './index.css';
 const App = () => {
     const navigate = useNavigate();
     useEffect(() => {
-        navigate('registro');
+        navigate('lista');
     },[])
     return (
         <>
@@ -21,10 +21,10 @@ const App = () => {
                 'nav__user_add d-flex flex-column align-items-center gap-1'
             }
              }
-              to='registro'>
-                <MdOutlineAddCircle style={{ fontSize: '1.5rem' }} />
-                Registrar   
-                </NavLink>
+            to='lista'>
+                <FaList style={{ fontSize: '1.5rem' }} />
+                Listar
+            </NavLink>
             </li>
             <li className="flex-grow-1">
             <NavLink className={({isActive}) => {
@@ -33,10 +33,10 @@ const App = () => {
                 'nav__user_add d-flex flex-column align-items-center gap-1'
             }
              }
-            to='lista'>
-                <FaList style={{ fontSize: '1.5rem' }} />
-                Listar
-            </NavLink>
+              to='registro'>
+                <MdOutlineAddCircle style={{ fontSize: '1.5rem' }} />
+                Registrar   
+                </NavLink>
             </li>
         </ul>
         <Outlet />

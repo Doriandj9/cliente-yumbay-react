@@ -116,19 +116,23 @@ const [select, setSelect] = useState({
              >
             </Grid>
             </Box>
-
-
             <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DemoContainer components={['TimePicker', 'TimePicker']}>
+                <DemoContainer sx={{ 
+                    justifyContent: 'space-around',
+                    display: 'flex',
+                    }} components={['TimePicker', 'TimePicker']}>
                     <TimePicker
                     label="Registre la hora de ingreso"
                     onChange={(newValue,validator) => handleTimes(newValue,validator,'start')}
                     name='start'
+                    className='w-100'
                     />
                     <TimePicker
                     label="Registre la hora de salida"
                     onChange={(newValue,validator) => handleTimes(newValue,validator,'end')}
                     name='end'
+                    className='w-100'
+
                     />
                 </DemoContainer>
             </LocalizationProvider>

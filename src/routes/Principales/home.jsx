@@ -17,6 +17,7 @@
  */
 
 import App from "../../App";
+import Logout from "../../components/Logout";
 import Nosotros from "../../views/Home/Nosotros/Nosotros";
 import Servicios from "../../views/Home/Servicios/Servicios";
 
@@ -39,8 +40,12 @@ const routeNosotros = {
     path: '/nosotros',
     element: <Nosotros />
 }
+const routeLogout = {
+    path: '/salir',
+    element: <Logout />
+}
 const routeServicios = {
     path: '/servicios',
     element: <Servicios />
 }
-export {routeMain,routeNosotros,routeServicios};
+export {routeMain,routeNosotros,routeServicios,routeLogout};
