@@ -15,7 +15,7 @@ const Item = styled(Paper)(({ theme }) => ({
     color: theme.palette.text.secondary,
   }));
 
-const Horario = ({setDays,days,handleTimes}) =>{
+const Horario = ({setDays,days,handleTimes,reboot}) =>{
 const [select, setSelect] = useState({
         lunes: false,
         martes: false,
@@ -55,12 +55,25 @@ const [select, setSelect] = useState({
         }
         
     }   
-
+    if(reboot){
+        const containerSelected = document.getElementById('container-selected');
+        const containerOptions = document.getElementById('container-options');
+        containerSelected.children.forEach(inp => {
+            containerOptions.append(inp);
+        });
+        setSelect({lunes: false,
+            martes: false,
+            miercoles: false,
+            jueves: false,
+            viernes: false,
+            sabado:false,
+            domingo: false});
+    }
     return (
         <>
             <Box width={'100%'}>
                 <label className='text-start d-block mb-2' style={{fontSize: '1.05rem' }}  
-            htmlFor="">Selecione los días laborales de la especialiadad</label>
+            htmlFor="">Selecione los días laborales del médico</label>
             <Grid id='container-options' style={{ gridAutoRows: 'auto' }}
              width={'100%'} container spacing={0.5}
              columnSpacing={0.5} alignContent={'center'} alignSelf={'center'}

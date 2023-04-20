@@ -40,6 +40,7 @@ const Medicos = () => {
     const [formData, setFormData] = useState(null);
     const [especialidades, setEspecialidades] = useState([]);
     const configApp = useAppConfig((state) => state.app);
+    const [reboot,setReboot] = useState(false);
 
     const [times, setTimes] = useState({
         start: null,
@@ -72,8 +73,12 @@ const Medicos = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        const daysValues = [...days].join('-');
         const form = new FormData(e.target);
         form.append('especialidades',especialidades)
+        form.append('dias',daysValues.toUpperCase());
+        form.append('hora_ingreso',times.start);
+        form.append('hora_salida',times.end);
         setFormData(form);
         setSend(true);        
     }
@@ -215,6 +220,7 @@ const Medicos = () => {
             setDays={setDays}
             days={days}
             handleTimes={handleTimes}
+            reboot={reboot}
             />}</Item>
             </Grid>
             <Grid xs={12}>
@@ -315,40 +321,40 @@ const handleCelular = (e) => {
     }
 }
     return (<>
-        <TextField className='w-100 mb-2' required placeholder='Por ejemplo: 0250123456'
+        <TextField className='w-100 mb-4' required placeholder='Por ejemplo: 0250123456'
         onInput={handleCedula}
         error={verificaciones.cedula === false ? true : false}
         label="Ingrese el número de cédula del médico" variant="outlined"
         name='cedula'
         />
-        <TextField className='w-100 mb-2' placeholder='Por ejemplo: Dario Jose'
+        <TextField className='w-100 mb-4' placeholder='Por ejemplo: Dario Jose'
         required
         error={verificaciones.nombres === false ? true : false}
         onInput={handleInputEmpty}
         name='nombres'
         label="Ingrese los nombres del médico" variant="outlined" />
-        <TextField className='w-100 mb-2' placeholder='Por ejemplo: Gaibor Torres'
+        <TextField className='w-100 mb-4' placeholder='Por ejemplo: Gaibor Torres'
         onInput={handleInputEmpty}
         error={verificaciones.apellidos === false ? true : false}
         name='apellidos'
         required
         label="Ingrese los apellidos del médico" variant="outlined" />
-        <TextField className='w-100 mb-2' placeholder='Por ejemplo: Guaranda, Av Guayaquil y Puerto Arregui'
+        <TextField className='w-100 mb-4' placeholder='Por ejemplo: Guaranda, Av Guayaquil y Puerto Arregui'
         onInput={handleInputEmpty}
         required
         error={verificaciones.direccion === false ? true : false}
         name='direccion'
         label="Ingrese la dirección del médico" variant="outlined" />
-        <TextField className='w-100 mb-2' placeholder='Por ejemplo: 24518766'
+        <TextField className='w-100 mb-4' placeholder='Por ejemplo: 24518766'
         name='telefono'
         label="Ingrese el número de telefono del médico" variant="outlined" />
-         <TextField className='w-100 mb-2'  placeholder='Por ejemplo: 0989354012'
+         <TextField className='w-100 mb-4'  placeholder='Por ejemplo: 0989354012'
         label="Ingrese el número de celular del médico" variant="outlined"
         onInput={handleCelular}
         error={verificaciones.celular === false ? true : false}
         name='celular'
         />
-        <TextField className='w-100 mb-2' placeholder='Por ejemplo: ejemplo@gmail.com'
+        <TextField className='w-100 mb-5 mt-2' placeholder='Por ejemplo: ejemplo@gmail.com'
         label="Ingrese el correo electronico del médico" variant="outlined" 
         required
         error={verificaciones.correo === false ? true : false}
@@ -359,7 +365,7 @@ const handleCelular = (e) => {
 }
 
 
-const FormTwo = ({data,boxEspe,setDays,days,handleTimes}) => {
+const FormTwo = ({data,boxEspe,setDays,days,handleTimes,reboot}) => {
     const [opened, setOpened] = useState(false);
     const [verificaciones, setVerificaciones] = useState({
         especialidadesV: null,
@@ -447,6 +453,10 @@ const FormTwo = ({data,boxEspe,setDays,days,handleTimes}) => {
             setImage(url);
         }
     }
+
+    if(reboot){
+        setImage(null);
+    }
     return (<>
     <DialogAlert 
         open={opened}
@@ -482,10 +492,10 @@ const FormTwo = ({data,boxEspe,setDays,days,handleTimes}) => {
         error={verificaciones.numero_emergencia === false ? true : false}
         name='numero_emergencia'
         />
-         <Horario setDays={setDays} days={days} handleTimes={handleTimes} />
+         <Horario setDays={setDays} days={days} handleTimes={handleTimes} reboot={reboot} />
          <label className='text-start d-block mb-2' style={{fontSize: '1.05rem' }}  
-            htmlFor="">Selecione una imagen que represente la especialidad</label>
-            <input onChange={handleChange} type="file" accept='image/*' name='imagen' className='input__file' />
+            htmlFor="">Selecione una imagen del médico a registrar</label>
+            <input onChange={handleChange} type="file" accept='image/*' required name='imagen' className='input__file' />
             <Box component="div" sx={
                 { p: 2, border: '1px dashed grey', 
                  width: '12rem', height: '8rem', margin: 'auto',marginTop: '0.5rem' }

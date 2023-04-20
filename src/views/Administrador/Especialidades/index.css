@@ -24,7 +24,7 @@
 .add__new{
     position: absolute;
     top: 50%;
-    right: 4rem;
+    right: 0;
     transform: translateY(-50%);
     font-size: 2rem;
     color: var(--color-primario);
@@ -33,4 +33,10 @@
 }
 .add__new:hover{
    color: var(--color-secundario);
+}
+
+.img__table{
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
 }

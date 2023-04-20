@@ -1,21 +1,16 @@
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Unstable_Grid2';
-import { Form } from 'react-router-dom';
+import { Form, useNavigate } from 'react-router-dom';
 import { Button } from '@mui/material';
 import {MdSend} from 'react-icons/md';
 import { styled } from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import { useEffect, useState } from 'react';
 import { useAppConfig } from './../../../store/configAppStore';
-
-import dayjs from 'dayjs';
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { TimePicker } from '@mui/x-date-pickers/TimePicker';
-
 import AlertWeb from '../../../components/AlertWeb';
+import { LoadingOne } from '../../../components/Loading';
+import AlertaExito from '../../../components/AlertaExito';
 
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -31,37 +26,27 @@ const Registro = () => {
   const [formData, setFormData] = useState(null);
     const [messageWarning, setMessageWarning] = useState(null);
     const [open,setOpen] = useState(false);
+    const [openAlert, setOpenAlert] = useState(false);
     const [data,setData] = useState(null);
     const [error, setError] = useState(null);
     const [send, setSend] = useState(null);
-    const [times, setTimes] = useState({
-        start: null,
-        end:null
-    });
-    const [days, setDays] = useState(new Set());
     const configApp = useAppConfig((state) => state.app);
+    const navigate = useNavigate();
     useEffect(() => {
         if(send){
-            fetch(configApp.hostServer + 'api/add/especialidad',{method: 'POST', body: formData})
+            fetch(configApp.hostServer + 'api/add/especialidades',{method: 'POST', body: formData})
             .then(query => query.json())
             .then(setData)
             .catch(console.log)
+            .finally(() => {
+                setSend(null);
+                setOpenAlert(true);
+            })
         }
     },[send])
-    const handleChange = (e) => {
-        const file = e.target.files[0];
-        const fileReader = new FileReader();
-        fileReader.readAsDataURL(file);
-
-        fileReader.onload = () => {
-            const url = fileReader.result;
-            setImage(url);
-        }
-    }
     const handleSubmit = (e) => {
         e.preventDefault();
         const dataForm = new FormData(e.target);
-        const daysValues = [...days].join('-');
         if(dataForm.get('nombre').trim() === ''){
             setMessageWarning('Por favor, ingrese el campo nombre en el formulario.');
             setOpen(true);
@@ -72,46 +57,37 @@ const Registro = () => {
             setOpen(true);
             return;
         }
-
-        if(daysValues === ''){
-            setMessageWarning('Por favor, ingrese el horario de la especialidad, selecione los dias laborales.');
-            setOpen(true);
-            return;
-        }
-        if(!times.start){
-            setMessageWarning('Por favor, registre la hora de ingreso de los dias laborales.');
-            setOpen(true);
-            return;
-        }
-        if(!times.end){
-            setMessageWarning('Por favor, registre la hora de salida de los dias laborales.');
-            setOpen(true);
-            return;
-        }
         if(dataForm.get('imagen').size <= 0){
             setMessageWarning('Por favor, selecione una imagen para la especialiadad.');
             setOpen(true);
             return;
         }
-        
-        dataForm.append('dias',daysValues.toUpperCase());
-        dataForm.append('hora_ingreso',times.start);
-        dataForm.append('hora_salida',times.end);
         console.log([...dataForm]);
         setFormData(dataForm);
         setSend(true);
 
     }
-    const handleTimes = (value,context,name) => {
-        setTimes({
-           ...times,
-           [name]: context.validationError === null ? dayjs(value).format('HH:mm') : null
-        })
-    }
+    const handleChange = (e) => {
+        const file = e.target.files[0];
+        const fileReader = new FileReader();
+        fileReader.readAsDataURL(file);
 
+        fileReader.onload = () => {
+            const url = fileReader.result;
+            setImage(url);
+        }
+    }
+    const handleOpenAlert = () => {
+        setOpenAlert(true);
+    }
+    const handleCloseAlert = () => {
+        setOpenAlert(false);
+        navigate('/director/especialidades/lista');
+    }
     const handleClickClose = () => {
         setOpen(false);
     }
+    
     return <>
     {/* Alertas si no ingreso correctamente un dato del formulario */}
     {messageWarning && (
@@ -124,6 +100,18 @@ const Registro = () => {
         />
         </>
     )}
+    {
+        send && (<LoadingOne textInner='Cargando' ancho={'50%'} />) 
+    }
+
+    {
+        (data && data.ident) && (<AlertaExito 
+        open={openAlert}
+        handleClose={handleCloseAlert}
+        handleOpen={handleOpenAlert}
+        message={data.mensaje}
+        />)
+    }
     <Box sx={ { margin: 2 } }>
         <Grid  spacing={0.5} >
             <Item className='text-center'>

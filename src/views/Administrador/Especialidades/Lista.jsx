@@ -65,6 +65,7 @@ const Lista = () =>{
                 </NavLink>
             </TableCell>
             <TableCell align="left">Descripción de especialiadad</TableCell>
+            <TableCell align="left">Imagen</TableCell>
             <TableCell align="left">Editar de especialiadad</TableCell>
           </TableRow>
         </TableHead>
@@ -80,6 +81,9 @@ const Lista = () =>{
               </TableCell>
               <TableCell align="left">{row.nombre}</TableCell>
               <TableCell align="left">{row.descripcion}</TableCell>
+              <TableCell align="left">
+               <img src={row.img} alt={ 'imagen  '+ row.nombre} className='img__table' />
+                </TableCell>
               <TableCell align="center">  
                   <Button variant="outlined" startIcon={<Edit />}>
                     Editar
