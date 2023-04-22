@@ -13,7 +13,6 @@ import { Button } from '@mui/material';
 import {MdSend} from 'react-icons/md';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
@@ -60,6 +59,7 @@ const CitaMedica = () => {
     const handleChange = (newValue) => {
         setHora(newValue)
     }
+    console.log(hora);
     return (
         <>
         <div className="container__min">
@@ -125,26 +125,7 @@ const CitaMedica = () => {
                     <Item>
                     <label className='text-start d-block mb-2' style={{fontSize: '1.05rem' }}  
                         htmlFor="">Selecione la fecha para la cita medica en el calendario</label>
-                        
                     <Calendario />
-                        <FormSelect 
-                        data={datas}
-                        handleChange={handleChange}
-                        userSelect={hora}
-                        label='Selecione la hora disponible para la cita'
-                        />
-                        <FormSelect 
-                        data={datas}
-                        handleChange={handleChange}
-                        userSelect={hora}
-                        label='Selecione la especialiadad para su cita'
-                        />
-                        <FormSelect 
-                        data={datas}
-                        handleChange={handleChange}
-                        userSelect={hora}
-                        label='Selecione al doctor'
-                        />
                     </Item>
                     </Grid>
                     <Grid xs={12}>
@@ -175,33 +156,33 @@ const CitaMedica = () => {
 
 
 
-const FormSelect = ({data , handleChange,userSelect,label}) => {
-        return (<>
-          <FormControl variant="outlined" className='w-100 mb-2' style={{
-            // border: 'none',
-            // outline: 'none',
-            // borderRadius: '0.5rem'
-          }} >
-            <InputLabel required id="demo-simple-select-standard-label">{label}</InputLabel>
-            <Select name='hora' 
-              labelId="demo-simple-select-standard-label"
-              value={userSelect}
-              onChange={handleChange}
-              label={label}
-              style={
-                {
-                    border: 'none',
-                    outline: 'none'
-                }
-              }
-            >
-            {
-                data.map((value) => (<MenuItem key={value.id} value={value.id}>{value.start} a {value.end}</MenuItem>))
-            }
-            </Select>
-          </FormControl>
-        </>);
-    }
+// const FormSelect = ({data , handleChange,userSelect,label}) => {
+//         return (<>
+//           <FormControl variant="outlined" className='w-100 mb-2' style={{
+//             // border: 'none',
+//             // outline: 'none',
+//             // borderRadius: '0.5rem'
+//           }} >
+//             <InputLabel required id="demo-simple-select-standard-label">{label}</InputLabel>
+//             <Select name='hora' 
+//               labelId="demo-simple-select-standard-label"
+//               value={userSelect}
+//               onChange={handleChange}
+//               label={label}
+//               style={
+//                 {
+//                     border: 'none',
+//                     outline: 'none'
+//                 }
+//               }
+//             >
+//             {
+//                 data.map((value) => (<MenuItem key={value.id} value={value.id}>{value.start} a {value.end}</MenuItem>))
+//             }
+//             </Select>
+//           </FormControl>
+//         </>);
+//     }
     
 
 export default CitaMedica;

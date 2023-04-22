@@ -242,7 +242,7 @@ const theme = createTheme({
           labelId="demo-simple-select-standard-label"
           value={userSelect}
           onChange={handleChange}
-          label="Age"
+          label="Especialidad o Cargo"
           style={
             {
                 border: 'none',
