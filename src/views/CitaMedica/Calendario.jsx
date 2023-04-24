@@ -14,15 +14,10 @@ const [valueDef, setValueDef] = useState(null);
     }
     useEffect(()=>{
       if(reset.signal){  
-        setValue(dayjs().format('YYYY/MM/DD'))
-       setValueDef(null);
-       setReset({
-        ...reset,
-        signal: false
-       })
+        setValue(null);
+        setValueDef(null);
       }
     },[reset.signal])
-    console.log(reset);
     return (
       <>
         <LocalizationProvider
@@ -32,7 +27,10 @@ const [valueDef, setValueDef] = useState(null);
           onChange={handelChange}
           />
         </LocalizationProvider>
-        <SelectEspecialidades fecha={value}/>
+        <SelectEspecialidades fecha={value}
+        reset={reset}
+        setReset={setReset}
+        />
       </>
       );
     

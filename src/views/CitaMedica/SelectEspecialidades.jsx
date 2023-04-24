@@ -7,13 +7,14 @@ import MenuItem from '@mui/material/MenuItem';
 import { TextField } from '@mui/material';
 import SelectDoctor from './SelectDoctor';
 
-const SelectEspecialidades = ({fecha}) => {
+const SelectEspecialidades = ({fecha,reset,setReset}) => {
   const [loading, setLoading] = useState(false) ;
     const [data, setData] = useState(null) ;
     const [error, setError] = useState(false);
     const [value, setValue] = useState(null);
  const configApp = useAppConfig((state) => state.app);
     useEffect(() => {
+      if(fecha){
         fetch( configApp.hostServer + 'api/especialidades')
         .then(query => query.json())
         .then(setData)
@@ -21,7 +22,18 @@ const SelectEspecialidades = ({fecha}) => {
         .finally(() => {
           setLoading(false);
         });
+      }
     },[fecha])
+    useEffect(() => {
+      if(reset.signal){
+        setData(null);
+        setReset({
+          ...reset,
+          signal: false
+         })
+      }
+    },[reset.signal])
+
     const handleChange = (e) => {
       setValue(e.target.value);
     }
@@ -53,13 +65,14 @@ const SelectEspecialidades = ({fecha}) => {
           </Select>
         </FormControl>
         ) : <TextField 
-          label='Cargando..'
+          label={fecha ? 'Cargando...' : 'Selecione la especialidad'}
           disabled
-          className='w-100'
+          className='w-100 mb-2'
         />
   }
   <SelectDoctor 
   fecha={fecha}
+  reset={reset}
   especialidad={value}
   />
       </>);

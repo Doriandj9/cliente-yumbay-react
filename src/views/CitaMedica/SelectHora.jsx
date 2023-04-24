@@ -9,7 +9,7 @@ import { getDatesHabilitis } from '../../utils/web/rangeDates';
 import { TextField } from '@mui/material';
 import AlertWeb from '../../components/AlertWeb';
 
-const SelectHora = ({fecha,info,especialidad}) => {
+const SelectHora = ({fecha,info,especialidad,reset}) => {
   const [loading, setLoading] = useState(true) ;
     const [data, setData] = useState(null) ;
     const [error, setError] = useState(false);
@@ -54,6 +54,16 @@ useEffect(()=>{
   }
 },[fecha,horario,data])
 
+useEffect(() => {
+  if(reset.signal){
+    setHoras(null);
+    // setReset({
+    //   ...reset,
+    //   signal: false
+    //  })
+  }
+},[reset.signal])
+
   const handleChange = (e) => {
     setValue(e.target.value);
   }
@@ -78,7 +88,7 @@ useEffect(()=>{
           // outline: 'none',
           // borderRadius: '0.5rem'
         }} >
-          <input type="hidden" name='fecha' value={fecha.replaceAll('/','-')} />
+          <input type="hidden" name='fecha' value={fecha ? fecha.replaceAll('/','-') : ''} />
           <InputLabel required id="demo-simple-select-standard-label">Selecione la hora</InputLabel>
           <Select name='horas' 
           className='text-start'

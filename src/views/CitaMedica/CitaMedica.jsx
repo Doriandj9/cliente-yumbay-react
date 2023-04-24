@@ -106,9 +106,9 @@ const CitaMedica = () => {
     }
 
     useEffect(()=>{
-        if(info){
+        if(info && info.ident){
             const datos = info.paciente;
-            console.log(datos.fecha_nacimiento);
+            //console.log(datos.fecha_nacimiento);
             setInputsDatas({
                 cedula: datos?.cedula ?? '',
                 nombres: datos?.nombres ?? '',
@@ -184,7 +184,7 @@ const CitaMedica = () => {
                 <Grid container spacing={0.25}>
                     <Grid xs={6}>
                     <Item>
-                    <TextField className="w-100 mb-2"
+                    <TextField className="w-100 mb-4"
                         label='Ingrese su número de cédula'
                         placeholder="Por ejemplo: 01234556789"
                         name="cedula"
@@ -192,7 +192,7 @@ const CitaMedica = () => {
                         required
                         onChange={handleChange}
                         />
-                        <TextField className="w-100 mb-2"
+                        <TextField className="w-100 mb-3"
                         label='Ingrese sus nombres'
                         required
                         placeholder="Por ejemplo: Juan Lucas"
@@ -200,7 +200,7 @@ const CitaMedica = () => {
                         onChange={handleChangeInput}
                         value={inputsDatas.nombres}
                         />
-                        <TextField className="w-100 mb-2"
+                        <TextField className="w-100 mb-3"
                         label='Ingrese sus apellidos'
                         required
                         placeholder="Por ejemplo: Arias Segura"
@@ -212,28 +212,28 @@ const CitaMedica = () => {
                         <DemoContainer
                          components={['DatePicker']}>
                             <DatePicker onChange={handleChangeDate}
-                             className="w-100 mb-2"
+                             className="w-100 mb-3"
                              value={inputsDatas.fecha_nacimiento}
                             label="Ingrese su fecha de nacimiento" />
                         </DemoContainer>
                         </LocalizationProvider>
                         <input type="hidden" name="fecha_nacimiento"
                          value={dayjs(inputsDatas.fecha_nacimiento).format('YYYY-MM-DD')} />
-                        <TextField className="w-100 mb-2"
+                        <TextField className="w-100 mb-3"
                         label='Ingrese su correo electronico'
                         placeholder="Por ejemplo: ejemplo@mail.com"
                         onChange={handleChangeInput}
                         name="correo"
                         value={inputsDatas.correo}
                         />
-                        <TextField className="w-100 mb-2"
+                        <TextField className="w-100 mb-3"
                         label='Ingrese su dirección'
                         onChange={handleChangeInput}
                         value={inputsDatas.direccion}
                         placeholder="Por ejemplo: Guaranda, Av. Los Trigales"
                         name="direccion"
                         />
-                        <TextField className="w-100 mb-2"
+                        <TextField className="w-100 mb-3"
                         label='Ingrese su número de celular'
                         placeholder="Por ejemplo: 098776543"    
                         onChange={handleChangeInput}
@@ -241,7 +241,7 @@ const CitaMedica = () => {
                         required
                         name="celular"
                         />
-                        <TextField className="w-100 mb-5"
+                        <TextField className="w-100 mb-2"
                         required
                         label='Ingrese su contraseña'
                         name="clave"
@@ -288,7 +288,7 @@ const CitaMedica = () => {
 
 // const FormSelect = ({data , handleChange,userSelect,label}) => {
 //         return (<>
-//           <FormControl variant="outlined" className='w-100 mb-2' style={{
+//           <FormControl variant="outlined" className='w-100 mb-3' style={{
 //             // border: 'none',
 //             // outline: 'none',
 //             // borderRadius: '0.5rem'

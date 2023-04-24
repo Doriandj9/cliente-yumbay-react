@@ -7,7 +7,7 @@ import MenuItem from '@mui/material/MenuItem';
 import { TextField } from '@mui/material';
 import SelectHora from './SelectHora';
 
-const SelectDoctor = ({fecha,especialidad}) => {
+const SelectDoctor = ({fecha,especialidad,reset}) => {
     const [loading, setLoading] = useState(false) ;
     const [data, setData] = useState(null) ;
     const [error, setError] = useState(false);
@@ -27,6 +27,16 @@ const SelectDoctor = ({fecha,especialidad}) => {
         });
       }
     },[especialidad])
+    useEffect(() => {
+      if(reset.signal){
+        setValue(null);
+        setData(null);
+        // setReset({
+        //   ...reset,
+        //   signal: false
+        //  })
+      }
+    },[reset.signal])
     const handleChange = (e) => {
       setValue(e.target.value);
     }
@@ -62,7 +72,7 @@ const SelectDoctor = ({fecha,especialidad}) => {
         </FormControl>
         ) : (
         <TextField 
-        label={especialidad ? 'Cargando...' : 'Selecione al doctor'}
+        label={data ? 'Cargando...' : 'Selecione al doctor'}
         disabled
         className='w-100 mb-2'
         />
@@ -71,6 +81,7 @@ const SelectDoctor = ({fecha,especialidad}) => {
       <SelectHora 
       fecha={fecha}
       info={value}
+      reset={reset}
       especialidad={especialidad}
 />
       </>);
