@@ -7,20 +7,28 @@ import { useEffect, useState } from 'react';
 
 const Calendario = ({reset,setReset}) => {
 const [value, setValue] = useState(null);
+const [valueDef, setValueDef] = useState(null);
     const handelChange = (value) => {
         setValue(dayjs(value).format('YYYY/MM/DD'));
+        setValueDef(value);
     }
-    // useEffect(()=>{
-    //   if(reset){  
-    //    // setValue(null);
-    //     //setReset(false)
-    //   }
-    // },[reset])
+    useEffect(()=>{
+      if(reset.signal){  
+        setValue(dayjs().format('YYYY/MM/DD'))
+       setValueDef(null);
+       setReset({
+        ...reset,
+        signal: false
+       })
+      }
+    },[reset.signal])
+    console.log(reset);
     return (
       <>
         <LocalizationProvider
         dateAdapter={AdapterDayjs}>
           <DateCalendar
+          value={valueDef}
           onChange={handelChange}
           />
         </LocalizationProvider>

@@ -47,11 +47,12 @@ const CitaMedica = () => {
         cedula: '',
         nombres: '',
         apellidos: '',
-        fecha_nacimiento: '',
+        fecha_nacimiento: dayjs(),
         correo: '',
         direccion: '',
         celular: '',
-        clave: ''
+        clave: '',
+        signal: false
     });
     const appConfing = useAppConfig(state => state.app);
     useEffect(() => {
@@ -115,7 +116,9 @@ const CitaMedica = () => {
                 fecha_nacimiento: dayjs(datos?.fecha_nacimiento) ?? '',
                 correo: datos?.email ?? '',
                 direccion: datos?.direccion ?? '',
-                celular: datos?.celular ?? ''
+                celular: datos?.celular ?? '',
+                clave: '',
+                signal: false
             })
             setInfo(null);
         }
@@ -132,18 +135,18 @@ const CitaMedica = () => {
             fecha_nacimiento: value
         })
    }
-    console.log(info,inputsDatas);  
     const handleClose = () => {
         setAlertSend(false);
         setInputsDatas({
             cedula: '',
             nombres: '',
             apellidos: '',
-            fecha_nacimiento: '',
+            fecha_nacimiento: dayjs(),
             correo: '',
             direccion: '',
             celular: '',
-            clave: ''
+            clave: '',
+            signal: true
         });
     }
     return (
@@ -252,7 +255,7 @@ const CitaMedica = () => {
                     <Item>
                     <label className='text-start d-block mb-2' style={{fontSize: '1.05rem' }}  
                         htmlFor="">Selecione la fecha para la cita medica en el calendario</label>
-                    <Calendario />
+                    <Calendario reset={inputsDatas} setReset={setInputsDatas}  />
                     </Item>
                     </Grid>
                     <Grid xs={12}>
