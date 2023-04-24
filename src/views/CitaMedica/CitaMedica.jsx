@@ -19,29 +19,11 @@ import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-
-const datas = [
-    {
-        id: 1,
-        start: '8:00',
-        end: '8:30'
-    },
-    {
-        id: 2,
-        start: '8:30',
-        end: '9:00'
-    },
-    {
-        id: 3,
-        start: '9:00',
-        end: '9:30'
-    },
-    {
-        id: 4,
-        start: '9:30',
-        end: '10:00'
-    }
-]
+import { useAppConfig } from "../../store/configAppStore";
+import { CEDULA_REG_EXPRE } from './../../utils/web/componentes/ConstExpres';
+import dayjs from "dayjs";
+import { LoadingOne } from "../../components/Loading";
+import AlertaExito from "../../components/AlertaExito";
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
     ...theme.typography.body2,
@@ -51,17 +33,137 @@ const Item = styled(Paper)(({ theme }) => ({
   }));
 
 const CitaMedica = () => {
-    const [hora, setHora] = useState(null);
+    const [value, setValue] = useState(null);
+    const [consulta, setConsulta] = useState(null);
+    const [info, setInfo] = useState(null);
+    const [error, setError] = useState(null);
+    const [errorCita,setErrorCita] = useState(null);
+    const [alertSend,setAlertSend] = useState(false);
+    const [data,setData] = useState(null);
+    const [send,setSend] = useState(null);
+    const [formData,setFormData] = useState(null);
+    const {reset, setReset} = useState(false);
+    const [inputsDatas, setInputsDatas] = useState({
+        cedula: '',
+        nombres: '',
+        apellidos: '',
+        fecha_nacimiento: '',
+        correo: '',
+        direccion: '',
+        celular: '',
+        clave: ''
+    });
+    const appConfing = useAppConfig(state => state.app);
     useEffect(() => {
         document.title = 'Clinica Yumbay | Cita Medica';
     },[])
 
-    const handleChange = (newValue) => {
-        setHora(newValue)
+    useEffect(() => {
+        if(consulta){
+            fetch(appConfing.hostServer + 'api/info/paciente/' + value)
+            .then(query => query.json())
+            .then(setInfo)
+            .catch(setError)
+            .finally(() =>{
+                setConsulta(false);
+            })
+        }
+    },[consulta])
+
+    useEffect(()=>{
+        if(send){
+            fetch(appConfing.hostServer + 'api/cita-medica/save',{
+                method: 'POST',
+                body: formData
+            })
+            .then(query => query.json())
+            .then(setData)
+            .catch(setErrorCita)
+            .finally(()=>{
+                setSend(false);
+                setAlertSend(true);
+            })
+        }
+    },[send])
+    const handleChange = (e) => {
+        if(CEDULA_REG_EXPRE.test(e.target.value.trim())){
+            setValue(e.target.value.trim());
+            setConsulta(true);
+        }
+
+        setInputsDatas({
+            ...inputsDatas,
+            cedula: e.target.value.trim()
+        })
     }
-    console.log(hora);
+    
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const form = new FormData(e.target);
+        setFormData(form);
+        setSend(true);
+    }
+
+    useEffect(()=>{
+        if(info){
+            const datos = info.paciente;
+            console.log(datos.fecha_nacimiento);
+            setInputsDatas({
+                cedula: datos?.cedula ?? '',
+                nombres: datos?.nombres ?? '',
+                apellidos: datos?.apellidos ?? '',
+                fecha_nacimiento: dayjs(datos?.fecha_nacimiento) ?? '',
+                correo: datos?.email ?? '',
+                direccion: datos?.direccion ?? '',
+                celular: datos?.celular ?? ''
+            })
+            setInfo(null);
+        }
+    },[info])
+   const handleChangeInput = (e) => {
+        setInputsDatas({
+            ...inputsDatas,
+            [e.target.name]: e.target.value
+        })
+   }
+   const handleChangeDate = (value,validation) => {
+        setInputsDatas({
+            ...inputsDatas,
+            fecha_nacimiento: value
+        })
+   }
+    console.log(info,inputsDatas);  
+    const handleClose = () => {
+        setAlertSend(false);
+        setInputsDatas({
+            cedula: '',
+            nombres: '',
+            apellidos: '',
+            fecha_nacimiento: '',
+            correo: '',
+            direccion: '',
+            celular: '',
+            clave: ''
+        });
+    }
     return (
         <>
+        {/* cargando de ui */}
+        {
+            send && (<LoadingOne 
+                ancho={'50%'}
+                textInner="Agendando cita médica, espere por favor..."
+            />)
+        }
+        {/*ALertas de exitos o errores */}
+        {
+            (data && data.ident) && (<AlertaExito 
+                message={data.mensaje}
+                open={alertSend}
+                handleClose={handleClose}
+            />)
+        }
+
         <div className="container__min">
             <Header></Header>
             <div className="flex-grow-1">
@@ -73,7 +175,8 @@ const CitaMedica = () => {
                 </Item>
             </Grid>
             </Box>
-            <Form className="w-75 m-auto">
+            <Form onSubmit={handleSubmit}
+             className="w-75 m-auto">
             <Box sx={{ flexGrow: 1 }}>
                 <Grid container spacing={0.25}>
                     <Grid xs={6}>
@@ -82,41 +185,65 @@ const CitaMedica = () => {
                         label='Ingrese su número de cédula'
                         placeholder="Por ejemplo: 01234556789"
                         name="cedula"
+                        value={inputsDatas.cedula}
+                        required
+                        onChange={handleChange}
                         />
                         <TextField className="w-100 mb-2"
                         label='Ingrese sus nombres'
+                        required
                         placeholder="Por ejemplo: Juan Lucas"
                         name="nombres"
+                        onChange={handleChangeInput}
+                        value={inputsDatas.nombres}
                         />
                         <TextField className="w-100 mb-2"
                         label='Ingrese sus apellidos'
+                        required
                         placeholder="Por ejemplo: Arias Segura"
+                        onChange={handleChangeInput}
                         name="apellidos"
+                        value={inputsDatas.apellidos}
                         />
                         <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <DemoContainer components={['DatePicker']}>
-                            <DatePicker className="w-100 mb-2"
+                        <DemoContainer
+                         components={['DatePicker']}>
+                            <DatePicker onChange={handleChangeDate}
+                             className="w-100 mb-2"
+                             value={inputsDatas.fecha_nacimiento}
                             label="Ingrese su fecha de nacimiento" />
                         </DemoContainer>
                         </LocalizationProvider>
+                        <input type="hidden" name="fecha_nacimiento"
+                         value={dayjs(inputsDatas.fecha_nacimiento).format('YYYY-MM-DD')} />
                         <TextField className="w-100 mb-2"
                         label='Ingrese su correo electronico'
                         placeholder="Por ejemplo: ejemplo@mail.com"
+                        onChange={handleChangeInput}
                         name="correo"
+                        value={inputsDatas.correo}
                         />
                         <TextField className="w-100 mb-2"
                         label='Ingrese su dirección'
+                        onChange={handleChangeInput}
+                        value={inputsDatas.direccion}
                         placeholder="Por ejemplo: Guaranda, Av. Los Trigales"
                         name="direccion"
                         />
                         <TextField className="w-100 mb-2"
-                        label='Ingrese su número de telefono'
-                        placeholder="Por ejemplo: 098776543"
-                        name="telefono"
+                        label='Ingrese su número de celular'
+                        placeholder="Por ejemplo: 098776543"    
+                        onChange={handleChangeInput}
+                        value={inputsDatas.celular}
+                        required
+                        name="celular"
                         />
                         <TextField className="w-100 mb-5"
+                        required
                         label='Ingrese su contraseña'
                         name="clave"
+                        onChange={handleChangeInput}
+                        value={inputsDatas.clave}
                         type="password"
                         />
                     </Item>

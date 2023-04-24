@@ -3,7 +3,7 @@ import DialogContentTexto from "./DialogContentTexto";
 import DialogButtons from "./DialogButtons";
 import {IoIosCheckmarkCircle} from 'react-icons/io';
 
-const AlertaExito = ({message,open,handleClose,handleOpen}) => {
+const AlertaExito = ({message,open,handleClose,handleOpen = () =>{}}) => {
     return (<>
         <DialogAlert
                 open={open}

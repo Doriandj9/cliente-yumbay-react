@@ -56,7 +56,7 @@ const SelectDoctor = ({fecha,especialidad}) => {
             data.data.length === 0 ? 
               (<MenuItem selected key='0' value='none'> Lo sentimos no existen doctores en está especialiadad.</MenuItem>)
             :  data.data.map((value) => 
-              (<MenuItem key={value.id} value={value.horario}>{value.nombres+ ' ' + value.apellidos.split(' ')[0]}</MenuItem>))
+              (<MenuItem key={value.id} value={value.horario + '&&' + value.cedula}>{value.nombres+ ' ' + value.apellidos.split(' ')[0]}</MenuItem>))
           }
           </Select>
         </FormControl>
@@ -64,13 +64,14 @@ const SelectDoctor = ({fecha,especialidad}) => {
         <TextField 
         label={especialidad ? 'Cargando...' : 'Selecione al doctor'}
         disabled
-        className='w-100'
+        className='w-100 mb-2'
         />
         )
       }
       <SelectHora 
       fecha={fecha}
-      horario={value}
+      info={value}
+      especialidad={especialidad}
 />
       </>);
 }
