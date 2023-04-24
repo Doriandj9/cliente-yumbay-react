@@ -6,7 +6,8 @@ import pdfimg from './../../assets/imgs/pdf.png';
 import apagadoImg from './../../assets/imgs/apagado.png';
 import { NavLink } from 'react-router-dom';
 
-const NavbarAdmin = () => {
+
+const NavbarDoctores = () => {
     return (<>
         <div className="container__nav">
         <div className="container__description">
@@ -28,7 +29,7 @@ const NavbarAdmin = () => {
                         : 'nav-link text-white d-flex align-items-center gap-2'
                     }}>
                         <img src={ addUserIcon } alt="nuevo usuarios" />
-                        <span>Registrar nuevos usuarios</span>
+                        <span>Citas médicas</span>
                     </NavLink>
                 </li>
                 <li className='nav-item'>
@@ -38,7 +39,7 @@ const NavbarAdmin = () => {
                         : 'nav-link text-white d-flex align-items-center gap-2'
                     }}>
                         <img src={espcialidadesMedicas}  alt="especialidades" />
-                        <span>Especialidades medicas</span>
+                        <span>Registrar nuevos pacientes</span>
                     </NavLink>
                 </li>
                 <li className='nav-item'>
@@ -48,7 +49,17 @@ const NavbarAdmin = () => {
                         : 'nav-link text-white d-flex align-items-center gap-2'
                     }}>
                         <img src={pdfimg}  alt="" />
-                        <span>Realizar reportes</span>
+                        <span>Registro de signos vitales</span>
+                    </NavLink>
+                </li>
+                <li className='nav-item'>
+                    <NavLink to='otro'
+                    className={({isActive}) => {
+                        return isActive ? 'nav-link text-white d-flex align-items-center gap-2 menu__item__active' 
+                        : 'nav-link text-white d-flex align-items-center gap-2'
+                    }}>
+                        <img src={pdfimg}  alt="" />
+                        <span>Diagnostico</span>
                     </NavLink>
                 </li>
                 <li className='nav-item'>
@@ -68,4 +79,5 @@ const NavbarAdmin = () => {
     </>);
 }
 
-export default NavbarAdmin;
+
+export default NavbarDoctores;

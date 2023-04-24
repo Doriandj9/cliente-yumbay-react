@@ -324,7 +324,7 @@ const handleCelular = (e) => {
         <TextField className='w-100 mb-4' required placeholder='Por ejemplo: 0250123456'
         onInput={handleCedula}
         error={verificaciones.cedula === false ? true : false}
-        label="Ingrese el número de cédula del médico" variant="outlined"
+        label="Número de cédula del médico" variant="outlined"
         name='cedula'
         />
         <TextField className='w-100 mb-4' placeholder='Por ejemplo: Dario Jose'
@@ -332,30 +332,30 @@ const handleCelular = (e) => {
         error={verificaciones.nombres === false ? true : false}
         onInput={handleInputEmpty}
         name='nombres'
-        label="Ingrese los nombres del médico" variant="outlined" />
+        label="Nombres del médico" variant="outlined" />
         <TextField className='w-100 mb-4' placeholder='Por ejemplo: Gaibor Torres'
         onInput={handleInputEmpty}
         error={verificaciones.apellidos === false ? true : false}
         name='apellidos'
         required
-        label="Ingrese los apellidos del médico" variant="outlined" />
+        label="Apellidos del médico" variant="outlined" />
         <TextField className='w-100 mb-4' placeholder='Por ejemplo: Guaranda, Av Guayaquil y Puerto Arregui'
         onInput={handleInputEmpty}
         required
         error={verificaciones.direccion === false ? true : false}
         name='direccion'
-        label="Ingrese la dirección del médico" variant="outlined" />
+        label="Dirección del médico" variant="outlined" />
         <TextField className='w-100 mb-4' placeholder='Por ejemplo: 24518766'
         name='telefono'
-        label="Ingrese el número de telefono del médico" variant="outlined" />
+        label="Número de telefono del médico" variant="outlined" />
          <TextField className='w-100 mb-4'  placeholder='Por ejemplo: 0989354012'
-        label="Ingrese el número de celular del médico" variant="outlined"
+        label="Número de celular del médico" variant="outlined"
         onInput={handleCelular}
         error={verificaciones.celular === false ? true : false}
         name='celular'
         />
         <TextField className='w-100 mb-5 mt-2' placeholder='Por ejemplo: ejemplo@gmail.com'
-        label="Ingrese el correo electronico del médico" variant="outlined" 
+        label="Correo electronico del médico" variant="outlined" 
         required
         error={verificaciones.correo === false ? true : false}
         onInput={handleCorreo}

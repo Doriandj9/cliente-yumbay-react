@@ -7,12 +7,16 @@
  */
 
 import routesAdmin from "./Principales/Administrador/admin";
+import routesDoctor from "./Principales/Doctores/doctor";
 import { routeCitaMedica } from "./Principales/citaMedica";
 import { routeMain, routeNosotros, routeServicios,routeLogout } from "./Principales/home";
 import { routeLogin } from "./Principales/login";
 
 const rootRoutes = [];
-rootRoutes.push(routeMain,routeNosotros,routeServicios,routeCitaMedica,routeLogin,routesAdmin,routeLogout);
+rootRoutes.push(
+    routeMain,routeNosotros,routeServicios, routesDoctor,
+    routeCitaMedica,routeLogin,routesAdmin,routeLogout
+    );
 
 export {rootRoutes};
 

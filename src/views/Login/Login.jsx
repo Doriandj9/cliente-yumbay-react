@@ -253,7 +253,7 @@ const theme = createTheme({
             <MenuItem key='000-0' value='user:16'>Director</MenuItem>
             <MenuItem key='000-1' value='user:1'>Recepcionista</MenuItem>
         {
-            data.map((value) => (<MenuItem key={value.id} value={'doc' + value.id}>{value.nombre}</MenuItem>))
+            data.map((value) => (<MenuItem key={value.id} value={'doc:' + value.id}>{value.nombre}</MenuItem>))
         }
         </Select>
       </FormControl>
