@@ -19,8 +19,21 @@
 .selected__day{
     background-color: var(--color-secundario) !important;
     color: white !important;
+    position: relative;
 }
-
+.selected__day::after{
+    position: absolute;
+    top: 0;
+    right: 0;
+    content: 'x';
+    line-height: 1rem;
+    width: 1rem;
+    height: 1rem;
+    font-weight: 800;
+    background-color: red;
+    border-radius: 0.25rem;
+    color: white;
+}
 .add__new{
     position: absolute;
     top: 50%;

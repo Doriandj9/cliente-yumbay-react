@@ -110,11 +110,11 @@ const [select, setSelect] = useState({
                 Sábado
                 </Item>
             </Grid>
-            <Grid  onClick={handleSelect} item xs={2} >
+            {/* <Grid  onClick={handleSelect} item xs={2} >
                 <Item  valor='Domingo' className='text-uppercase day__select' >
                 Domingo
                 </Item>
-            </Grid>
+            </Grid> */}
             </Grid>
             <label className='text-start d-block mb-2' style={{fontSize: '1.05rem' }}  
             htmlFor="">Días selecionados de la especialiadad</label>
