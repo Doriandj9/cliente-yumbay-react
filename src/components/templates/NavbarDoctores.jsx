@@ -4,10 +4,12 @@ import addUserIcon from './../../assets/imgs/doctorIconMenu.png';
 import espcialidadesMedicas from './../../assets/imgs/doctorEspecialidades.png';
 import pdfimg from './../../assets/imgs/pdf.png';
 import apagadoImg from './../../assets/imgs/apagado.png';
+import diagnostico  from './../../assets/imgs/diagnostico.png';
 import { NavLink } from 'react-router-dom';
 
 
-const NavbarDoctores = () => {
+const NavbarDoctores = ({info}) => {
+    console.log(info);
     return (<>
         <div className="container__nav">
         <div className="container__description">
@@ -15,15 +17,15 @@ const NavbarDoctores = () => {
             <img className='icon__doctor' src={doctor} alt="" />
             </div>
             <ul className='navbar-nav'>
-                <li>Jose Perez</li>
-                <li>Odontologi</li>
-                <li>algo</li>
+                <li>{info.nombres}</li>
+                <li>{info.cedula}</li>
+                <li>{info.nombre_especialidad}</li>
             </ul>
         </div>
         <nav className="container_menu">
             <ul className='navbar-nav'>
                 <li className='nav-item'>
-                    <NavLink to='registro'
+                    <NavLink to='agenda'
                     className={({isActive}) => {
                         return isActive ? 'nav-link text-white d-flex align-items-center gap-2 menu__item__active' 
                         : 'nav-link text-white d-flex align-items-center gap-2'
@@ -33,33 +35,34 @@ const NavbarDoctores = () => {
                     </NavLink>
                 </li>
                 <li className='nav-item'>
-                    <NavLink to='especialidades'
+                    <NavLink to='diagnostico'
+                    className={({isActive}) => {
+                        return isActive ? 'nav-link text-white d-flex align-items-center gap-2 menu__item__active' 
+                        : 'nav-link text-white d-flex align-items-center gap-2'
+                    }}>
+                        <img src={diagnostico}  alt="" />
+                        <span>Diagnostico</span>
+                    </NavLink>
+                </li>
+                <li className='nav-item'>
+                    <NavLink to='consultas'
                     className={({isActive}) => {
                         return isActive ? 'nav-link text-white d-flex align-items-center gap-2 menu__item__active' 
                         : 'nav-link text-white d-flex align-items-center gap-2'
                     }}>
                         <img src={espcialidadesMedicas}  alt="especialidades" />
-                        <span>Registrar nuevos pacientes</span>
+                        <span>Consultas de pacientes</span>
                     </NavLink>
                 </li>
+             
                 <li className='nav-item'>
-                    <NavLink to='otro'
+                    <NavLink to='reportes'
                     className={({isActive}) => {
                         return isActive ? 'nav-link text-white d-flex align-items-center gap-2 menu__item__active' 
                         : 'nav-link text-white d-flex align-items-center gap-2'
                     }}>
                         <img src={pdfimg}  alt="" />
-                        <span>Registro de signos vitales</span>
-                    </NavLink>
-                </li>
-                <li className='nav-item'>
-                    <NavLink to='otro'
-                    className={({isActive}) => {
-                        return isActive ? 'nav-link text-white d-flex align-items-center gap-2 menu__item__active' 
-                        : 'nav-link text-white d-flex align-items-center gap-2'
-                    }}>
-                        <img src={pdfimg}  alt="" />
-                        <span>Diagnostico</span>
+                        <span>Reportes</span>
                     </NavLink>
                 </li>
                 <li className='nav-item'>

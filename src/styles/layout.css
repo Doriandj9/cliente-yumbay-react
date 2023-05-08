@@ -57,6 +57,11 @@ body,html{
     cursor: pointer;
 }
 
+@media screen and (max-width: 1232px) {
+    .content-width{
+        min-width: 30%;
+    }
+}
 
 @media screen and (max-width: 1060px) {
     .content-width{
@@ -74,6 +79,7 @@ body,html{
     }
     .navbar__layout{
         height: 94.5%;
+        z-index: 999;
         overflow-x: auto;
     }
     .content-width{
@@ -83,6 +89,7 @@ body,html{
     }
     .navbar__responsive{
         display: flex;
+        z-index: 999;
     }
     
 }

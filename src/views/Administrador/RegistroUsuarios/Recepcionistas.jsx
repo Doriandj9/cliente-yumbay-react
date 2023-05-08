@@ -247,33 +247,33 @@ const FormOne = () => {
         }
     }
     return (<>
-        <TextField className='w-100 mb-2' required placeholder='Por ejemplo: 0250123456'
+        <TextField className='w-100 mb-4' required placeholder='Por ejemplo: 0250123456'
         onInput={handleCedula}
         error={verificaciones.cedula === false ? true : false}
-        label="Ingrese el número de cédula de la recepcionista" variant="outlined"
+        label="Número de cédula de la recepcionista" variant="outlined"
         name='cedula'
         />
-        <TextField className='w-100 mb-2' placeholder='Por ejemplo: Dario Jose'
+        <TextField className='w-100 mb-4' placeholder='Por ejemplo: Dario Jose'
         required
         error={verificaciones.nombres === false ? true : false}
         onInput={handleInputEmpty}
         name='nombres'
-        label="Ingrese los nombres de la recepcionista" variant="outlined" />
-        <TextField className='w-100 mb-2' placeholder='Por ejemplo: Gaibor Torres'
+        label="Nombres de la recepcionista" variant="outlined" />
+        <TextField className='w-100 mb-4' placeholder='Por ejemplo: Gaibor Torres'
         onInput={handleInputEmpty}
         error={verificaciones.apellidos === false ? true : false}
         name='apellidos'
         required
-        label="Ingrese los apellidos de la recepcionista" variant="outlined" />
-        <TextField className='w-100 mb-2' placeholder='Por ejemplo: Guaranda, Av Guayaquil y Puerto Arregui'
+        label="Apellidos de la recepcionista" variant="outlined" />
+        <TextField className='w-100 mb-4' placeholder='Por ejemplo: Guaranda, Av Guayaquil y Puerto Arregui'
         onInput={handleInputEmpty}
         required
         error={verificaciones.direccion === false ? true : false}
         name='direccion'
-        label="Ingrese la dirección de la recepcionista" variant="outlined" />
-        <TextField className='w-100 mb-2' placeholder='Por ejemplo: 24518766'
+        label="Dirección de la recepcionista" variant="outlined" />
+        <TextField className='w-100 mb-5' placeholder='Por ejemplo: 24518766'
         name='telefono'
-        label="Ingrese el número de telefono de la recepcionista" variant="outlined" />
+        label="Número de telefono de la recepcionista" variant="outlined" />
     </>)
 }
 
@@ -286,6 +286,8 @@ const FormTwo = () => {
         titulo: null,
         numero_emergencia: null
     })
+    const [img, setImage] = useState(null);
+
     const handleCelular = (e) => {
         if(e.target.value.trim() !== ''){
             if(NUMBER_REG_EXPRE.test(e.target.value.trim())){
@@ -335,16 +337,25 @@ const FormTwo = () => {
 
         }
     }
-    
+    const handleChange = (e) => {
+        const file = e.target.files[0];
+        const fileReader = new FileReader();
+        fileReader.readAsDataURL(file);
+
+        fileReader.onload = () => {
+            const url = fileReader.result;
+            setImage(url);
+        }
+    }
     return (<>
      <TextField className='w-100 mb-4'  placeholder='Por ejemplo: 0989354012'
-        label="Ingrese el número de celular de la recepcionista" variant="outlined"
+        label="Número de celular de la recepcionista" variant="outlined"
         onInput={handleCelular}
         error={verificaciones.celular === false ? true : false}
         name='celular'
         />
         <TextField className='w-100 mb-4' placeholder='Por ejemplo: ejemplo@gmail.com'
-        label="Ingrese el correo electronico de la recepcionista" variant="outlined" 
+        label="Correo electronico de la recepcionista" variant="outlined" 
         required
         error={verificaciones.correo === false ? true : false}
         onInput={handleCorreo}
@@ -352,19 +363,24 @@ const FormTwo = () => {
         />
 
         <TextField className='w-100 mb-4' placeholder='Por ejemplo: Lic. Algo'
-        label="Ingrese el título de la recepcionista" variant="outlined" 
+        label="Título de la recepcionista" variant="outlined" 
         onInput={handleInputEmpty}
         error={verificaciones.titulo === false ? true : false}
         name='titulo'
         required
         />
-        <TextField className='w-100 mb-4' placeholder='Por ejemplo: 0986538564'
-        label="Ingrese el número de emergencia de la recepcionista" variant="outlined"
-        onInput={handleCelular}
-        required
-        error={verificaciones.numero_emergencia === false ? true : false}
-        name='numero_emergencia'
-        />
+        <label className='text-start d-block mb-2' style={{fontSize: '1.05rem' }}  
+            htmlFor="">Selecione una imagen del médico a registrar</label>
+            <input onChange={handleChange} type="file" accept='image/*' required name='imagen' className='input__file' />
+            <Box component="div" sx={
+                { p: 2, border: '1px dashed grey', 
+                 width: '12rem', height: '8rem', margin: 'auto',marginTop: '0.5rem' }
+        }>
+              { img ? (<img src={img} alt="preve" style={{ maxWidth: '100%' , maxHeight: '100%' , width: '100%',height:'100%'}} />)
+              :  (<p className='w-100 h-100 d-flex justify-content-center align-items-center'>
+                    Aquí se presentará un previsualización de la imagen selecionada. 
+               </p>)}
+            </Box>
     </>)
 }
 

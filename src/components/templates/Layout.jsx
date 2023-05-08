@@ -13,25 +13,31 @@ const Layout = ({navbar,content}) => {
     }
     return (
         <>
-            <div className="container__layout">
-                <div className="navbar__responsive">
+            <div key={'lay-lay-001'}
+             className="container__layout">
+                <div  key={'lay-cont-001'}
+                 className="navbar__responsive">
                    { movil ? (<AiOutlineClose onClick={handleClose} className='icon__menu' />) :
                     <BsListUl onClick={handleMenu} className='icon__menu'></BsListUl>
                     }
                 </div>
-                <div className={ movil ? 'navbar__layout content-width w-75 d-block animate__animated animate__fadeInLeft animate__faster' 
+                <div key={'lay-cont-002'}
+                className={ movil ? 'navbar__layout content-width w-75 d-block animate__animated animate__fadeInLeft animate__faster' 
                 : "navbar__layout content-width"}>
                     {navbar}
                 </div>
-                <main className="main_layout">
-                    <div className="content-width">
+                <main key={'lay-main-001'}
+                 className="main_layout">
+                    <div key={'lay-001'}
+                     className="content-width">
 
                     </div>
-                    <div className="content__layout">
+                    <div key={'lay-002'}
+                     className="content__layout">
                         {content}
                     </div>
                 </main>
-                <img src={logo} className='img__layout' alt="" />
+                {/* <img src={logo} className='img__layout' alt="" /> */}
             </div>
         </>
     );

@@ -19,7 +19,7 @@ const App = () => {
     },[])
     return (
         <>
-            <Home />
+            <Home datos={user} />
         </>
     );
 }

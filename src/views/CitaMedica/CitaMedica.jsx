@@ -241,14 +241,6 @@ const CitaMedica = () => {
                         required
                         name="celular"
                         />
-                        {/* <TextField className="w-100 mb-2"
-                        required
-                        label='Ingrese su contraseña'
-                        name="clave"
-                        onChange={handleChangeInput}
-                        value={inputsDatas.clave}
-                        type="password"
-                        /> */}
                     </Item>
                     </Grid>
                     <Grid xs={6}>
