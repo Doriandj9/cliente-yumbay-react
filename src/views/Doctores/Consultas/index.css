@@ -1,0 +1,23 @@
+
+.title-list{
+    border-bottom: 3px solid var(--color-secundario);
+    padding: 1rem 0.25rem 0.25rem 0.25rem;
+    font-size: 1.5rem;
+}
+
+.busqueda{
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    box-shadow: 1px 1px 3px var(--color-secundario);
+    padding: 0.25rem;
+    transition: all 1s ease-in-out;
+}
+.busqueda input {
+    border: none;
+    outline: none;
+    transition: all 1s ease-in-out;   
+}
+.busqueda input:focus{
+    width: 500px;
+}

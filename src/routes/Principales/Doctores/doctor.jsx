@@ -22,6 +22,7 @@ import AppConsultas from "../../../views/Doctores/Consultas/App";
 import AppReportes from "../../../views/Doctores/Reportes/App";
 import AppDiagnostico from "../../../views/Doctores/Diagnostico/App";
 import AppReceta from '../../../views/Doctores/Diagnostico/Reporte/App';
+import AppFichas from '../../../views/Doctores/Consultas/Ficha/App';
 const routesDoctor = {
     path: '/doctores',
     element: <App />,
@@ -36,7 +37,11 @@ const routesDoctor = {
         },
         {
             path: 'consultas',
-            element: <AppConsultas />
+            element: <AppConsultas />,
+        },
+        {
+            path: 'consultas/ficha-medica',
+            element: <AppFichas />,
         },
         {
             path: 'reportes',
