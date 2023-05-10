@@ -21,6 +21,7 @@ import AppAgenda from "../../../views/Doctores/Agenda/App";
 import AppConsultas from "../../../views/Doctores/Consultas/App";
 import AppReportes from "../../../views/Doctores/Reportes/App";
 import AppDiagnostico from "../../../views/Doctores/Diagnostico/App";
+import AppReceta from '../../../views/Doctores/Diagnostico/Reporte/App';
 const routesDoctor = {
     path: '/doctores',
     element: <App />,
@@ -43,5 +44,10 @@ const routesDoctor = {
         }
     ]
 };
+const routeDoctorCita = {
+    path: '/doctores/cita-medica/reporte',
+    element: <AppReceta />
+}
 
+export { routeDoctorCita }
 export default routesDoctor;

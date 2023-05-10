@@ -391,7 +391,7 @@ const Cinco = ({state1,state2,state3,state4}) => {
                 </div>
             </div>
             {/* Datsos unidos de los medicamentos y los tratamientos */}
-            <input type="hidden" name='medicamentos' value={backendValues} />
+            <input id='medicamentos-results' type="hidden" name='medicamentos' value={backendValues} />
             {
 
             }

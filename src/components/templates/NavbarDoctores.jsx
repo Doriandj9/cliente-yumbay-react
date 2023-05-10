@@ -9,7 +9,6 @@ import { NavLink } from 'react-router-dom';
 
 
 const NavbarDoctores = ({info}) => {
-    console.log(info);
     return (<>
         <div className="container__nav">
         <div className="container__description">

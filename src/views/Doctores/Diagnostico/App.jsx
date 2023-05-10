@@ -15,7 +15,14 @@ import { useAppConfig } from './../../../store/configAppStore';
 import { PDFViewer } from '@react-pdf/renderer';
 import RecetaMedica from './Pasos/RecetaMedica';
 import { LoadingOne } from '../../../components/Loading';
+
 import AlertaExito from '../../../components/AlertaExito';
+import AppReporte from './Reporte/App';
+import DialogAlert from '../../../components/DialogAlert';
+import TitleAlert from '../../../components/TitleAlert';
+import DialogContentTexto from '../../../components/DialogContentTexto';
+import DialogButtons from '../../../components/DialogButtons';
+import {MdOutlineError} from 'react-icons/md';
 
 const steps = ['REGISTRO DE ADMISIÓN', 'HISTORIA CLÍNICA', 'EXAMEN FÍSICO','PLAN DE TRATAMIENTO','FICHA'];
 const App = () => {
@@ -33,6 +40,8 @@ const App = () => {
     const [loading, setLoading] = useState(false);
     const [formData,setFormData] = useState(null);
     const [open,setOpen] = useState(false);
+    const [pdf ,setPdf] = useState(false);
+    const [datosReport,setDatosReport] = useState(null);
     const elementos = [<PasoUno state={state1} setState={setState1} />,
      <PasoDos state={state2} setState={setState2} />,
       <PasoTres state={state3} setState={setState3} />, 
@@ -42,7 +51,6 @@ const App = () => {
       state3={state3}
       state4={state4}
       />];
-
     const appConfig = useAppConfig((state) => state.app);
     const isStepOptional = (step) => {
       return step >= 1 && step < steps.length - 1;
@@ -98,6 +106,11 @@ const App = () => {
   
     const handleReset = () => {
       setActiveStep(0);
+      setPdf(false);
+      setState1(null);
+      setState2(null);
+      setState3(null);
+      setState4(null);
     };
     
     useEffect(() => {
@@ -116,12 +129,38 @@ const App = () => {
     },[send])
 
     const handleClose = () => {
+      const medicamentos= document.getElementById('medicamentos-results');
       setOpen(false);
-      
+      if(data && data.ident){
+        setPdf(true);
+        const datos = {
+          nombres: state1.nombres,
+          apellidos: state1.apellidos,
+          edad: state1.edad,
+          sexo: state1.sexo,
+          cedula: state1.cedula,
+          medicamentos: medicamentos.value
+        };
+        setDatosReport(datos);
+        let newSkipped = skipped;
+        if (isStepSkipped(activeStep)) {
+          newSkipped = new Set(newSkipped.values());
+          newSkipped.delete(activeStep);
+        }
+    
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        setSkipped(newSkipped);
+      }
     }
-    console.log(data);
+    
     return (
         <>
+        {
+          pdf && (
+            <AppReporte datos={datosReport}
+            setPdf={setPdf} />
+          )
+        }
         {
           loading && (
             <LoadingOne
@@ -130,6 +169,43 @@ const App = () => {
             />
           )
         }
+        {/* cargamos los errores de validacion del backend en una alerta */}
+        { (data && data.ident === 0 && data.errores ) && (
+            <DialogAlert
+            open={open}
+            handleClose={handleClose}
+            >
+                <DialogContentTexto 
+                textContent={
+                <>
+                <MdOutlineError className='display-1 text-danger m-auto d-block' />
+                <span className='h5 text-dark-50 m-0 ps-2 pe-5 '> Lista de errores </span>
+                <ul className='list-group ps-2 pe-5 '>
+                    {Object.entries(data.errores)
+                    .map(([key,values],i) => {
+                        return (
+                            <li className='list-group-item d-flex justify-content-between align-items-center' key={i}>
+                                {values[0]}
+                                <span class="badge bg-danger rounded-pill ms-4">1</span>
+                            </li>
+                        ); 
+                    })}
+                </ul>
+                </>
+                }
+                cssCont='ps-4 pe-4'
+                />
+                <DialogButtons 
+                handleClose={handleClose}
+                btnClose={true}
+                btnTextClose='Regresar'
+                css='mb-3'
+                variantBtnClose='outlined'
+                colorBtnClose='error'
+                />
+            </DialogAlert>
+        )
+    }
         {
           (data && data.ident) && 
           (<>
@@ -212,7 +288,6 @@ const App = () => {
         )}
         </Form>
       </Box>
-           
       </>
 
     );
