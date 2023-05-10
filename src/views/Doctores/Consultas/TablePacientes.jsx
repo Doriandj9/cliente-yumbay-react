@@ -87,7 +87,7 @@ const  TablePacientes = ({data}) =>{
               align="center">{row.celular}</StyledTableCell>
               <StyledTableCell style={{ width: '5px'}}
               align="center">
-                <NavLink to={'ficha-medica'}>
+                <NavLink to={`fichas-medicas/${row.cedula}`}>
                     <FaFileMedical 
                     style={{ fontSize:'1.5rem', padding: 0 ,margin:0,cursor:'pointer'}} className='text-secondary' />     
                 </NavLink>

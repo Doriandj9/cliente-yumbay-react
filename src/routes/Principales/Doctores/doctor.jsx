@@ -40,7 +40,7 @@ const routesDoctor = {
             element: <AppConsultas />,
         },
         {
-            path: 'consultas/ficha-medica',
+            path: 'consultas/fichas-medicas/:cedula',
             element: <AppFichas />,
         },
         {

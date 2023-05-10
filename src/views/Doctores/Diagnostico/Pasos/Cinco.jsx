@@ -50,12 +50,14 @@ const Cinco = ({state1,state2,state3,state4}) => {
                         <h6>UNIDAD OPERATIVA</h6>
                         <section  className='cont'>
                             {user.nombre_especialidad}
+                            <input type="hidden" name='unidad_operativa' value={user.nombre_especialidad} />
                         </section>
                     </article>
                     <article style={{ width: '20%' }}>
                         <h6>CODIGO</h6>
                         <section  className='cont sin-b'>
-                            {user.id_especialidad} 
+                            {user.id_especialidad}
+                            <input type="hidden" name='id_especialidad' value={user.id_especialidad} />
                         </section>
                     </article>
                     <article style={{ width: '30%' }}>
