@@ -152,7 +152,7 @@ const App = () => {
         setSkipped(newSkipped);
       }
     }
-    
+    console.log(data);
     return (
         <>
         {

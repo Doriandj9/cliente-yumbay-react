@@ -1,41 +1,8 @@
-import './index.css';
-import { useUserStore } from './../../../../store/userStore';
 import dayjs from 'dayjs';
-const Cinco = ({state1,state2,state3,state4}) => {
-    const user = useUserStore((state) => state.user);
-    const objt =  {...state4};
-    delete objt.inputs;
-    const keys = Object.keys(objt);
-    const res = keys.map((key,i) => {
-        const index = key.split('_')[1];
-        const residual = keys.filter((keyp) => keyp.includes('_'+index));
-       return residual
-    });
-    let filtrado = [];
-    let before = null;
-    for(let elem of res){
-        if(!before){
-            before = elem;
-            filtrado.push(elem);
-            continue;
-        }
-        const [i,j] = before;
-        if(i === elem[0] && j === elem[1]){
-            continue;
-        }
+import { useUserStore } from './../../../../store/userStore';
 
-        before = elem;
-        filtrado.push(elem);
-    }
-    
-    const medicamentos_tratamientos = filtrado.map((element) => {
-        const [medicamento,tratamiento] = element;
-        return [objt[medicamento],objt[tratamiento]];
-    });
-    const backendValues = medicamentos_tratamientos.reduce((acum,valor) => {
-            const [medi,tra] = valor;
-            return acum + medi + '^^' + tra + '|';        
-    },'').slice(0,-1);
+const Ficha = ({data}) => {
+    const user = useUserStore((state) => state.user);
     return (
         <>
             <div className='contenedor'>
@@ -49,15 +16,13 @@ const Cinco = ({state1,state2,state3,state4}) => {
                     <article style={{ width: '25%' }} >
                         <h6>UNIDAD OPERATIVA</h6>
                         <section  className='cont'>
-                            {user.nombre_especialidad}
-                            <input type="hidden" name='unidad_operativa' value={user.nombre_especialidad} />
+                            {data?.nombre_especialidad}
                         </section>
                     </article>
                     <article style={{ width: '20%' }}>
                         <h6>CODIGO</h6>
                         <section  className='cont sin-b'>
-                            {user.id_especialidad}
-                            <input type="hidden" name='id_especialidad' value={user.id_especialidad} />
+                            {data?.id_especialidad}
                         </section>
                     </article>
                     <article style={{ width: '30%' }}>
@@ -92,7 +57,7 @@ const Cinco = ({state1,state2,state3,state4}) => {
                                 <h6>APELLIDO PATERNO</h6>
                                 <p>
                                     {
-                                        state1?.apellidos?.split(' ')[0] ?? ''
+                                        data?.apellidos?.split(' ')[0] ?? ''
                                     }
                                 </p>
                             </article>
@@ -100,7 +65,7 @@ const Cinco = ({state1,state2,state3,state4}) => {
                                 <h6>APELLIDO MATERNO</h6>
                                 <p>
                                     {
-                                        state1?.apellidos?.split(' ')[1] ?? ''
+                                        data?.apellidos?.split(' ')[1] ?? ''
                                     }
                                 </p>
                             </article>
@@ -108,7 +73,7 @@ const Cinco = ({state1,state2,state3,state4}) => {
                                 <h6>PRIMER NOMBRE</h6>
                                 <p>
                                     {
-                                        state1?.nombres?.split(' ')[0] ?? ''
+                                        data?.nombres?.split(' ')[0] ?? ''
                                     }
                                 </p>
                             </article>
@@ -116,7 +81,7 @@ const Cinco = ({state1,state2,state3,state4}) => {
                                 <h6>SEGUNDO NOMBRE</h6>
                                 <p>
                                     {
-                                        state1?.nombres?.split(' ')[1] ?? ''
+                                        data?.nombres?.split(' ')[1] ?? ''
                                     }
                                 </p>
                             </article>
@@ -124,7 +89,7 @@ const Cinco = ({state1,state2,state3,state4}) => {
                                 <h6>Nº CÉDULA DE CUIDADANÍA</h6>
                                 <p>
                                     {
-                                        state1?.cedula ?? ''
+                                        data?.cedula ?? ''
                                     }
                                 </p>
                             </article>
@@ -134,7 +99,7 @@ const Cinco = ({state1,state2,state3,state4}) => {
                                 <h6>DIRECCIÓN DE RESIDENCIA HABITUAL</h6>
                                 <p>
                                     {
-                                        state1?.direccion ?? ''
+                                        data?.direccion ?? ''
                                     }
                                 </p>
                             </article>
@@ -142,7 +107,7 @@ const Cinco = ({state1,state2,state3,state4}) => {
                                 <h6>Nº TELÉFONO</h6>
                                 <p>
                                     {
-                                        state1?.celular ?? ''
+                                        data?.celular ?? ''
                                     }
                                 </p>
                             </article>
@@ -150,20 +115,16 @@ const Cinco = ({state1,state2,state3,state4}) => {
                                 <h6>FECHA NACIMIENTO</h6>
                                 <p>
                                     {
-                                       state1?.fecha_nacimiento_fake ? state1?.fecha_nacimiento_fake?.format('YYYY/MM/DD') :
-                                       ''
+                                       data?.fecha_nacimiento ?? ''
                                     }
-                                    <input type="hidden" name='fecha_nacimiento' value={
-                                        state1?.fecha_nacimiento_fake ? state1?.fecha_nacimiento_fake?.format('YYYY-MM-DD') :
-                                        ''
-                                    } />
+                                   
                                 </p>
                             </article>
                             <article>
                                 <h6>CORREO ELECTRONICO</h6>
                                 <p>
                                     {
-                                        state1?.correo ?? ''
+                                        data?.email ?? ''
                                     }
                                 </p>
                             </article>
@@ -171,7 +132,7 @@ const Cinco = ({state1,state2,state3,state4}) => {
                                 <h6>EDAD</h6>
                                 <p>
                                     {
-                                        state1?.edad ?? ''
+                                        data?.edad ?? ''
                                     }
                                 </p>
                             </article>
@@ -181,7 +142,7 @@ const Cinco = ({state1,state2,state3,state4}) => {
                                 <h6>SEXO</h6>
                                 <p>
                                     {
-                                        state1?.sexo ?? ''
+                                        data?.sexo ?? ''
                                     }
                                 </p>
                             </article>
@@ -189,7 +150,7 @@ const Cinco = ({state1,state2,state3,state4}) => {
                                 <h6 style={{ borderRight: '2px solid #ccc' }}>ESTADO CIVIL</h6>
                                 <p style={{ borderRight: '2px solid #ccc' }}>
                                     {
-                                        state1?.estado_civil ?? ''
+                                        data?.estado_civil ?? ''
                                     }
                                 </p>
                             </article>
@@ -204,7 +165,7 @@ const Cinco = ({state1,state2,state3,state4}) => {
                             <h6>HORA</h6>
                             <p>
                                 {
-                                    state2?.hora ?? ''
+                                    data?.hora_finalizacion ?? ''
                                 }    
                             </p>
                         </article>
@@ -212,7 +173,7 @@ const Cinco = ({state1,state2,state3,state4}) => {
                             <h6>MOTIVO DE CONSULTA</h6>
                             <p>
                                 {
-                                    state2?.motivo ?? ''
+                                    data?.motivo_consulta ?? ''
                                 }
                             </p>
                         </article>
@@ -222,7 +183,7 @@ const Cinco = ({state1,state2,state3,state4}) => {
                             <h6>ANTECEDENTES MÉDICOS</h6>
                             <p>
                                 {
-                                    state2?.antecendentes ?? ''
+                                    data?.antecendentes_medicos ?? ''
                                 }
                             </p>
                         </article>
@@ -230,7 +191,7 @@ const Cinco = ({state1,state2,state3,state4}) => {
                             <h6>TRATAMIENTO ACTUAL</h6>
                             <p>
                                 {
-                                    state2?.tratamiento ?? ''
+                                    data?.tratamiento_actual ?? ''
                                 }
                             </p>
                         </article>
@@ -240,7 +201,7 @@ const Cinco = ({state1,state2,state3,state4}) => {
                             <h6>ALERGIAS</h6>
                             <p>
                                 {
-                                    state2?.alergias ?? ''
+                                    data?.alergias ?? ''
                                 }
                             </p>
                         </article>
@@ -248,7 +209,7 @@ const Cinco = ({state1,state2,state3,state4}) => {
                             <h6>HÁBITOS TÓXICOS</h6>
                             <p>
                                 {
-                                    state2?.habitos ?? ''
+                                    data?.habitos_toxicos ?? ''
                                 }
                             </p>
                         </article>
@@ -258,7 +219,7 @@ const Cinco = ({state1,state2,state3,state4}) => {
                             <h6>OTROS ANTECEDENTES RELEVANTES</h6>
                             <p>
                                 {
-                                    state2?.otros_antecedentes ?? ''
+                                    data?.otros_antecedentes ?? ''
                                 }
                             </p>
                         </article>
@@ -270,9 +231,9 @@ const Cinco = ({state1,state2,state3,state4}) => {
                     <article>
                         <h6>PRESIÓN ARTERIAL</h6>
                         <p>{
-                            state3?.presion ? state3.presion.split('/')[0] : ''
+                            data?.presion_arterial ? data.presion_arterial.split('/')[0] : ''
                             }<span className='slash'>/</span>{
-                                state3?.presion ? state3.presion.split('/')[1] : ''
+                                data?.presion_arterial ? data.presion_arterial.split('/')[1] : ''
                                 }
                             
                             </p>
@@ -280,31 +241,31 @@ const Cinco = ({state1,state2,state3,state4}) => {
                     <article>
                         <h6>F. CARDIACA <br /> <strong>min</strong></h6>
                         <p>
-                            { state3?.frecuencia ?? '' }
+                            { data?.frecuencia_caridaca ?? '' }
                         </p>
                     </article>
                     <article>
                         <h6>F. RESPIRAT <br /> <strong>min</strong></h6>
                         <p>
-                            { state3?.respiracion ?? '' }
+                            { data?.frecuencia_respiratoria ?? '' }
                         </p>
                     </article>
                     <article>
                         <h6>TEMPERATURA <br /> <strong>ºC</strong></h6>
                         <p>
-                        { state3?.temperatura ?? '' }
+                        { data?.temperatura ?? '' }
                         </p>
                     </article>
                     <article>
                         <h6>PESO <br /> <strong>kg</strong></h6>
                         <p>
-                        { state3?.peso ?? '' }
+                        { data?.peso ?? '' }
                         </p>
                     </article>
                     <article>
                         <h6>TALLA <br /> <strong>m</strong></h6>
                         <p>
-                        { state3?.altura ?? '' }
+                        { data?.talla ?? '' }
                         </p>
                     </article>
                 </div>
@@ -312,13 +273,13 @@ const Cinco = ({state1,state2,state3,state4}) => {
                         <article>
                             <h6 style={ { textTransform: 'uppercase' } }>Auscultación cardiaca</h6>
                             <p>
-                            { state3?.cardiaco ?? '' }
+                            { data?.auscultacion_cardiaca ?? '' }
                             </p>
                         </article>
                         <article className='last'>
                         <h6 style={ { textTransform: 'uppercase' } }>Auscultación pulmonar</h6>
                             <p>
-                            { state3?.pulmonar ?? '' }
+                            { data?.auscultacion_pulmonar ?? '' }
                             </p>
                         </article>
                     </div>
@@ -326,7 +287,7 @@ const Cinco = ({state1,state2,state3,state4}) => {
                         <article>
                             <h6 style={ { textTransform: 'uppercase' } }>Otros hallazgos relevantes</h6>
                             <p>
-                            { state3?.otros_hallasgos ?? '' }
+                            { data?.otros_hallasgos ?? '' }
                             </p>
                         </article>
                     </div>
@@ -338,10 +299,10 @@ const Cinco = ({state1,state2,state3,state4}) => {
                             <h6 style={ { textTransform: 'uppercase' } }>Medicamentos</h6>
                             
                                 {
-                                    medicamentos_tratamientos.map((mt,i) => {
+                                    data?.medicamentos_tratamientos?.map((mt,i) => {
                                         const [medicamento] = mt;
                                         return (
-                                            <p key={i}>
+                                            <p>
                                             <span>{i + 1}</span>
                                                 {medicamento}
                                             </p>
@@ -354,7 +315,7 @@ const Cinco = ({state1,state2,state3,state4}) => {
                         <article>
                             <h6 style={ { textTransform: 'uppercase' } }>Posología</h6>
                             {
-                                    medicamentos_tratamientos.map((mt,i) => {
+                                    data?.medicamentos_tratamientos?.map((mt,i) => {
                                         const [medicamento,tratamiento] = mt;
                                         return (
                                             <p className='ps-2'>
@@ -392,13 +353,9 @@ const Cinco = ({state1,state2,state3,state4}) => {
                 </div>
                 </div>
             </div>
-            {/* Datsos unidos de los medicamentos y los tratamientos */}
-            <input id='medicamentos-results' type="hidden" name='medicamentos' value={backendValues} />
-            {
-
-            }
         </>
     );
 }
 
-export default Cinco;
+
+export default Ficha;
