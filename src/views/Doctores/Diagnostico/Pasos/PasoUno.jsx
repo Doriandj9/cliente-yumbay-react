@@ -16,7 +16,8 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { useAppConfig } from './../../../../store/configAppStore';
 import { CEDULA_REG_EXPRE } from './../../../../utils/web/componentes/ConstExpres';
-
+import { useParams } from 'react-router-dom';
+import { LoadingOne } from "../../../../components/Loading";
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
     ...theme.typography.body2,
@@ -32,15 +33,18 @@ const PasoUno = ({state,setState}) => {
     const [error, setError] = useState(null);
     const appConfing = useAppConfig(state => state.app);
     const [value, setValue] = useState(null);
-
+    const [loading,setLoading] = useState(false);
+    const params = useParams();
     useEffect(() => {
         if(consulta){
+            setLoading(true);
             fetch(appConfing.hostServer + 'api/info/paciente/' + value)
             .then(query => query.json())
             .then(setInfo)
             .catch(setError)
             .finally(() =>{
                 setConsulta(false);
+                setLoading(false);
             })
         }
     },[consulta])
@@ -58,6 +62,12 @@ const PasoUno = ({state,setState}) => {
             sexo: '',
             estado_civil: ''
         });
+    },[])
+    useEffect(()=>{
+        if(params.cedula && !state){
+            setValue(params.cedula);
+            setConsulta(true);
+        }
     },[])
     useEffect(()=>{
         if(info && info.ident){
@@ -102,6 +112,7 @@ const PasoUno = ({state,setState}) => {
    }
     return (
         <>
+        {loading && (<LoadingOne ancho={'100%'} textInner='Espere por favor, cargando los datos del paciente...' />)}
         <Box sx={{ flexGrow: 1 }}>
                 <Grid container spacing={0.25}>
                     <Grid xs={6}>

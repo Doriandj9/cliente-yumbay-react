@@ -59,13 +59,13 @@ const App = () => {
             </div>
             <div className='ps-3 pe-3 m-0'>
                {
-                loading && (<Stack spacing={0.25}>
+                loading && (<Stack width={'100%'} spacing={0.25}>
                     {/* For variant="text", adjust the height via font-size */}
-                    <Skeleton variant="text" width={'100%'} height={80}/>
+                    <Skeleton variant="rectangular" width={'100%'} height={60}/>
                     {/* For other variants, adjust the size with `width` and `height` */}
-                    <Skeleton variant="text" width={'100%'} height={80} />
-                    <Skeleton variant="text" width={'100%'} height={80} />
-                    <Skeleton variant="text" width={'100%'} height={80} />
+                    <Skeleton variant="rectangular" width={'100%'} height={60} />
+                    <Skeleton variant="rectangular" width={'100%'} height={60} />
+                    <Skeleton variant="rectangular" width={'100%'} height={60} />
                   </Stack>)
                }
                {

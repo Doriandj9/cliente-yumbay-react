@@ -16,7 +16,8 @@ const Ficha = ({data}) => {
                     <article style={{ width: '25%' }} >
                         <h6>UNIDAD OPERATIVA</h6>
                         <section  className='cont'>
-                            {data?.nombre_especialidad}
+                            {data?.unidad_operativa
+                            }
                         </section>
                     </article>
                     <article style={{ width: '20%' }}>
@@ -183,7 +184,7 @@ const Ficha = ({data}) => {
                             <h6>ANTECEDENTES MÉDICOS</h6>
                             <p>
                                 {
-                                    data?.antecendentes_medicos ?? ''
+                                    data?.antecedentes_medicos ?? ''
                                 }
                             </p>
                         </article>
@@ -241,7 +242,7 @@ const Ficha = ({data}) => {
                     <article>
                         <h6>F. CARDIACA <br /> <strong>min</strong></h6>
                         <p>
-                            { data?.frecuencia_caridaca ?? '' }
+                            { data?.frecuencia_cardiaca ?? '' }
                         </p>
                     </article>
                     <article>
@@ -287,7 +288,7 @@ const Ficha = ({data}) => {
                         <article>
                             <h6 style={ { textTransform: 'uppercase' } }>Otros hallazgos relevantes</h6>
                             <p>
-                            { data?.otros_hallasgos ?? '' }
+                            { data?.otros_hallazgos ?? '' }
                             </p>
                         </article>
                     </div>
@@ -299,10 +300,10 @@ const Ficha = ({data}) => {
                             <h6 style={ { textTransform: 'uppercase' } }>Medicamentos</h6>
                             
                                 {
-                                    data?.medicamentos_tratamientos?.map((mt,i) => {
-                                        const [medicamento] = mt;
+                                    data?.medicamentos_tratamiento?.split('|')?.map((mt,i) => {
+                                        const [medicamento] = mt.split('^^');
                                         return (
-                                            <p>
+                                            <p key={i}>
                                             <span>{i + 1}</span>
                                                 {medicamento}
                                             </p>
@@ -315,10 +316,10 @@ const Ficha = ({data}) => {
                         <article>
                             <h6 style={ { textTransform: 'uppercase' } }>Posología</h6>
                             {
-                                    data?.medicamentos_tratamientos?.map((mt,i) => {
-                                        const [medicamento,tratamiento] = mt;
+                                    data?.medicamentos_tratamiento?.split('|')?.map((mt,i) => {
+                                        const [medicamento,tratamiento] = mt.split('^^');
                                         return (
-                                            <p className='ps-2'>
+                                            <p className='ps-2' key={i}>
                                                 {tratamiento}
                                             </p>
                                         );
@@ -337,8 +338,7 @@ const Ficha = ({data}) => {
                     </article>
                     <article>
                         <h6>HORA DE FINALIZACIÓN</h6>
-                        <p>{dayjs().format('HH:mm')}</p>
-                        <input type="hidden" name='hora_finalizacion' value={dayjs().format('HH:mm')} />
+                        <p>{data?.hora_finalizacion}</p>
                     </article>
                     <article>
                         <h6>PROFESIONAL Y CÓDIGO</h6>

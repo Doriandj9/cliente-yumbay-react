@@ -36,6 +36,10 @@ const routesDoctor = {
             element: <AppDiagnostico />
         },
         {
+            path: 'diagnostico/:cedula',
+            element: <AppDiagnostico />
+        },
+        {
             path: 'consultas',
             element: <AppConsultas />,
         },

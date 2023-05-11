@@ -9,11 +9,41 @@ import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import dayjs from "dayjs";
 import Ficha from "./Ficha";
 
+import { styled } from '@mui/material/styles';
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell, { tableCellClasses } from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import {FaFileMedical} from 'react-icons/fa';
+
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+    [`&.${tableCellClasses.head}`]: {
+      backgroundColor: theme.palette.common.white,
+      color: theme.palette.common.black,
+    },
+    [`&.${tableCellClasses.body}`]: {
+      fontSize: 14,
+    },
+  }));
+  
+  const StyledTableRow = styled(TableRow)(({ theme }) => ({
+    '&:nth-of-type(odd)': {
+      backgroundColor: theme.palette.action.hover,
+    },
+    // hide last border
+    '&:last-child td, &:last-child th': {
+      border: 0,
+    },
+  }));
 const FichaMedica = () => {
     const [loading,setLoading] = useState(false);
     const [data,setData] = useState(null);
     const [error,setError] = useState(null);
     const [day, setDay] = useState(dayjs());
+    const [dataResult,setDataResult] = useState(null);
    const {cedula} = useParams();
    
   const appConfig = useAppConfig((state) => state.app);
@@ -22,7 +52,10 @@ const FichaMedica = () => {
     setLoading(true);
     fetch(`${appConfig.hostServer}api/doctor/fichas/medicas/${cedula}`)
     .then(query => query.json())
-    .then(setData)
+    .then((res) =>{
+        setData(res)
+        setDataResult(res);
+    })
     .catch(setError)
     .finally(() => {
         setLoading(false);
@@ -31,17 +64,20 @@ const FichaMedica = () => {
    }, []);
    const handleFilter = (value,validation) => {
         setDay(value);
-        const valueRes = data.data.filter((d) => d.fecha === value.format('YYYY-MM-DD'));
-        console.log(valueRes);
+        const valueRes = data.data.filter((d) => d.fecha_control === value.format('YYYY-MM-DD'));
+        setDataResult({
+            ...data,
+            data: valueRes
+        });
     }
   
     return (
         <>
-        <h2 className='title-list'> Listado de fichas médicas </h2>
+        <h2 className='title-list '>Listado de fichas médicas </h2>
 
             <div className='d-flex justify-content-between ps-3 pe-3 pb-2 m-0'>
                 <div>
-                    Total de resultados {data?.data?.length ?? 'ninguna'}
+                    Total de resultados {dataResult?.data?.length ?? 'ninguna'}
                 </div>
                 <div>
                     <div className='busqueda'>
@@ -68,7 +104,56 @@ const FichaMedica = () => {
                     </div>
                 </div>
             </div>
-            {data && (<Ficha data={data.data[0]} />)}
+        { data && (
+    <>  
+    <TableContainer style={{
+      position: 'relative',
+      width: '100%',
+      fontSize: '0.5rem',
+    }} className='mb-3'
+    component={Paper}>
+      <Table sx={{ minWidth: 700 }} aria-label="customized table">
+        <TableHead>
+          <TableRow>
+            <StyledTableCell  style={{ fontSize: '0.75rem' }}  align="center">Fecha de control </StyledTableCell>
+            <StyledTableCell style={{ fontSize: '0.75rem' }} align="center">Cédula</StyledTableCell>
+            <StyledTableCell  style={{ fontSize: '0.75rem' }}  align="center">Nombres</StyledTableCell>
+            <StyledTableCell  style={{ fontSize: '0.7rem5' }}  align="center">Apellidos</StyledTableCell>
+            <StyledTableCell  style={{ fontSize: '0.75rem' }}  align="center">Motivo de consulta</StyledTableCell>
+            <StyledTableCell  style={{ fontSize: '0.75rem' }}  align="center"> </StyledTableCell>
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          {data.data.map((row) => (
+            <StyledTableRow key={row.cedula}>
+                <StyledTableCell style={{borderRight: '1px solid #ccc', fontSize: '0.75rem',height: '1.5rem', padding:0  }} 
+               align="center">{row.fecha_control}</StyledTableCell>
+              <StyledTableCell style={{borderRight: '1px solid #ccc', fontSize: '0.75rem' ,height: '1.5rem', padding:0  }} 
+               align="center">{row.cedula}</StyledTableCell>
+              <StyledTableCell style={{borderRight: '1px solid #ccc', fontSize: '0.75rem' ,height: '1.5rem', padding:0  }}
+              align="center">{row.nombres}</StyledTableCell>
+              <StyledTableCell style={{borderRight: '1px solid #ccc', fontSize: '0.75rem' ,height: '1.5rem', padding:0  }}
+              align="center">{row.apellidos}</StyledTableCell>
+              <StyledTableCell style={{borderRight: '1px solid #ccc', fontSize: '0.75rem'  }}
+              align="center">{row.motivo_consulta}</StyledTableCell>
+              <StyledTableCell style={{ width: '5px', fontSize: '0.75rem' ,height: '1.5rem', padding:0 }}
+              align="center">
+               
+                    <FaFileMedical 
+                    style={{ fontSize:'1.5rem', padding: 0 ,margin:0,cursor:'pointer'}} className='text-secondary' />     
+                    Ver
+                </StyledTableCell>
+            </StyledTableRow>
+            
+            
+          ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
+    <h2 className='title-list mt-2 mb-2'> Información de la ficha médica </h2>
+    </>)
+    }
+            {data && (<Ficha data={dataResult.data[0]} />)}
         </>
     );
 }

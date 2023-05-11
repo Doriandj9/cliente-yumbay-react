@@ -5,6 +5,8 @@ import Skeleton from '@mui/material/Skeleton';
 import Stack from '@mui/material/Stack';
 import { Box } from "@mui/material";
 import { useUserStore } from './../../../store/userStore';
+import {HiInformationCircle} from 'react-icons/hi';
+import {FaLaptopMedical} from 'react-icons/fa';
 
 const App = () => {
     const [loading,setLoading] = useState(false);
@@ -25,6 +27,15 @@ const App = () => {
         })
     },[])
     return (<>
+    <h2 className='title-list'> Listado citas médica pendiente</h2>
+            <h6 className='leyenda'> Leyenda de iconos </h6>
+            <div className='d-flex gap-2'>
+                <p className='d-flex align-items-center gap-1'>
+                    
+                    <FaLaptopMedical style={{ fontSize:'1.5rem' }} className='text-secondary'
+                    /> Le envia a la vista para el realizar el diagnostico con los datos del paciente
+                </p>
+            </div>
     <div className="d-flex justify-content-around gap-2 flex-wrap p-2">
         {
             data && (<DataCards 
@@ -35,14 +46,14 @@ const App = () => {
         loading && (
         <div className="d-flex justify-content-around gap-2 flex-wrap p-2">
         {
-        [1,2,3,4,5,6,7,8,9,10,11,12].map((i) => (
-        <Stack spacing={1} key={i} >
+        [1].map((i) => (
+        <Stack width={'100%'} spacing={0.25} key={i} >
             {/* For variant="text", adjust the height via font-size */}
-            <Skeleton variant="text" sx={{ fontSize: '1rem' }} />
+            <Skeleton variant="rounded" width={'100%'} height={60}  />
             {/* For other variants, adjust the size with `width` and `height` */}
-            <Skeleton variant="circular" width={40} height={40} />
-            <Skeleton variant="rectangular" width={210} height={60} />
-            <Skeleton variant="rounded" width={210} height={60} />
+            <Skeleton variant="rectangular" width={'100%'} height={60}  />
+            <Skeleton variant="rectangular" width={'100%'} height={60} />
+            <Skeleton variant="rectangular" width={'100%'} height={60} />
         </Stack>)
         )
         }
