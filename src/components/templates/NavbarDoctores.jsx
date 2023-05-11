@@ -6,14 +6,15 @@ import pdfimg from './../../assets/imgs/pdf.png';
 import apagadoImg from './../../assets/imgs/apagado.png';
 import diagnostico  from './../../assets/imgs/diagnostico.png';
 import { NavLink } from 'react-router-dom';
-
+import { useAppConfig } from './../../store/configAppStore';
 
 const NavbarDoctores = ({info}) => {
+    const appConfig = useAppConfig((state) => state.app);
     return (<>
         <div className="container__nav">
         <div className="container__description">
             <div className='container__icon'>
-            <img className='icon__doctor' src={doctor} alt="" />
+            <img className='icon__doctor' src={`${appConfig.hostServer}storage/${info.imagen}`} alt="" />
             </div>
             <ul className='navbar-nav'>
                 <li>{info.nombres}</li>
@@ -54,7 +55,7 @@ const NavbarDoctores = ({info}) => {
                     </NavLink>
                 </li>
              
-                <li className='nav-item'>
+                {/* <li className='nav-item'>
                     <NavLink to='reportes'
                     className={({isActive}) => {
                         return isActive ? 'nav-link text-white d-flex align-items-center gap-2 menu__item__active' 
@@ -63,7 +64,7 @@ const NavbarDoctores = ({info}) => {
                         <img src={pdfimg}  alt="" />
                         <span>Reportes</span>
                     </NavLink>
-                </li>
+                </li> */}
                 <li className='nav-item'>
                     <NavLink to='/salir'
                     className={({isActive}) => {

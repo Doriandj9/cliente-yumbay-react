@@ -50,23 +50,38 @@ const Cuatro = ({state,setState}) => {
         <Box sx={{ flexGrow: 1 }}>
                 <Grid container spacing={0.05}>
                     <Grid xs={12}>
-                    <Item className='d-flex gap-2 flex-wrap justify-content-start' style={{ fontSize: '2rem'}}>
-                    <h3 className='flex-grow w-100'>Medicamentos</h3>
-                    <TextField
-                    style={{ fontSize: '1.8rem', width: '20%' }}
-                    label='Medicamento 1'
-                    required
-                    type='text'
-                    className='mb-2'
-                    name='medicamento_0'
-                    onChange={handleChangeInput}
-                    value={state?.medicamento_0 ?? ''}
-                    placeholder='Ejemplo: Paracetamol 500mg'
-                    />
+                    <Item className='d-flex flex-column gap-2 flex-wrap justify-content-start' style={{ fontSize: '2rem'}}>
+                    <h3 className='flex-grow w-100'>Medicamentos y Posología o tratamiento</h3>
+                    <div className='d-flex gap-2'>
+                        <TextField
+                        style={{ fontSize: '1.8rem', width: '50%' }}
+                        label='Medicamento 1'
+                        required
+                        type='text'
+                        className='mb-2'
+                        name='medicamento_0'
+                        onChange={handleChangeInput}
+                        value={state?.medicamento_0 ?? ''}
+                        placeholder='Ejemplo: Paracetamol 500mg'
+                        />
+                        <TextField
+                        style={{ fontSize: '1.8rem', width: '50%' }}
+                        label={`Instrucciones para ${state?.medicamento_0 ?? ''}`}
+                        required
+                        type='text'
+                        className='w-100 mb-2'
+                        onChange={handleChangeInput}
+                        name='tratamiento_0'
+                        value={state?.tratamiento_0 ?? ''}
+                        placeholder='Ejemplo: Tomar una tableta cada 6 horas según sea necesario para el dolor.'
+                        />
+                    </div>
+                    {/* <div className='d-flex gap-2'> */}
                     {inputs && inputs.map((element,i) => {
                         return (
+                    <div className='d-flex gap-2'>
                         <TextField key={element}
-                        style={{ fontSize: '1.8rem', width: '20%' }}
+                        style={{ fontSize: '1.8rem', width: '50%' }}
                         label={`Medicamento ${i + 2}`}
                         required
                         type='text'
@@ -75,14 +90,44 @@ const Cuatro = ({state,setState}) => {
                         onChange={handleChangeInput}
                         value={state[`medicamento${i+2}_${i+1}`] ?? ''}
                         placeholder='Ejemplo: Paracetamol 500mg'
-                        />);
+                        />
+
+                        <TextField key={element + 'tratamiento'}
+                        style={{ fontSize: '1.8rem', width: '50%' }}
+                        label={`Instrucciones para ${state[`medicamento${i+2}_${i+1}`] ?? ''}`}
+                        required
+                        type='text'
+                        className='w-100  mb-2'
+                        name={`tratamiento${i+2}_${i+1}`}
+                        onChange={handleChangeInput}
+                        value={state[`tratamiento${i+2}_${i+1}`] ?? ''}
+                        placeholder='Ejemplo: Tomar una tableta cada 6 horas según sea necesario para el dolor.'
+                        />
+                    </div>
+                        
+                        );
                     })}
+                    {/* {inputs && inputs.map((element,i) => {
+                        return (
+                        <TextField key={element + 'tratamiento'}
+                        style={{ fontSize: '1.8rem', width: '50%' }}
+                        label={`Instrucciones para ${state[`medicamento${i+2}_${i+1}`] ?? ''}`}
+                        required
+                        type='text'
+                        className='w-100  mb-2'
+                        name={`tratamiento${i+2}_${i+1}`}
+                        onChange={handleChangeInput}
+                        value={state[`tratamiento${i+2}_${i+1}`] ?? ''}
+                        placeholder='Ejemplo: Tomar una tableta cada 6 horas según sea necesario para el dolor.'
+                        />);
+                    })} */}
+                    {/* </div> */}
                     <Fab onClick={handleClick} color="primary" aria-label="add">
                         <AddIcon />
                     </Fab>
                 </Item>
             </Grid>
-            <Grid xs={12}>
+            {/* <Grid xs={12}>
                     <Item className='text-start d-flex flex-column gap-2 p-2' style={{ fontSize: '2rem'}}>
                     <h3 className='flex-grow w-100'>Posología o tratamiento</h3>
 
@@ -112,7 +157,7 @@ const Cuatro = ({state,setState}) => {
                         />);
                     })}
                     </Item>
-            </Grid>
+            </Grid> */}
             </Grid>
         </Box>
         </>

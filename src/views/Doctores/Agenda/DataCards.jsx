@@ -172,7 +172,8 @@ const DataCards = ({data}) => {
                           align="center">
                             <NavLink to={`/doctores/diagnostico/${row.cedula}`}>
                                 <FaLaptopMedical 
-                                style={{ fontSize:'1.5rem', padding: 0 ,margin:0,cursor:'pointer'}} className='text-secondary' />     
+                                style={{ fontSize:'1.5rem', padding: 0 ,margin:0,cursor:'pointer'}} className='text-secondary' />
+                                Diagnostico     
                             </NavLink>
                             </StyledTableCell>
                         </StyledTableRow>

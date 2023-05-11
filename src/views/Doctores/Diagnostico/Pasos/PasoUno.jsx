@@ -112,7 +112,7 @@ const PasoUno = ({state,setState}) => {
    }
     return (
         <>
-        {loading && (<LoadingOne ancho={'100%'} textInner='Espere por favor, cargando los datos del paciente...' />)}
+        {loading && (<LoadingOne ancho={'50%'} textInner='Espere por favor, cargando los datos del paciente...' />)}
         <Box sx={{ flexGrow: 1 }}>
                 <Grid container spacing={0.25}>
                     <Grid xs={6}>
