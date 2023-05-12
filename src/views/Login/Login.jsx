@@ -19,7 +19,7 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-
+import { useAppConfig } from '../../store/configAppStore';
 const Login = () => {
     const navigate = useNavigate();
     const actionLogin = useUserStore((state) => state.login)
@@ -31,7 +31,7 @@ const Login = () => {
     const [invalidInp, setInvalidInp] = useState(false);
     const [loading, setLoading] = useState(false);
     const [userSelect,setUserSelect] = useState('');
-
+    const appConfig = useAppConfig(state => state.app);
     useEffect(() => {
         document.title = 'Clinica Yumbay | Iniciar Sesión';
     },[]);
@@ -49,7 +49,7 @@ const Login = () => {
     useEffect(() => {
         if(login){
         setError(null);
-        fetch('http://127.0.0.1:8000/api/aut',{
+        fetch(`${appConfig.hostServer}api/aut`,{
             method: 'POST',
             body: login ? new FormData(formRes) : null,
         })
@@ -95,7 +95,7 @@ const Login = () => {
     }
 
     const {data:dataEs, error:eEs, loading:carga} = useFetch({
-        path:'http://localhost:8000/api/especialidades',
+        path:`${appConfig.hostServer}api/especialidades`,
         method:'GET'
     });
     return (
