@@ -1,6 +1,4 @@
 import { Form } from "react-router-dom";
-import Footer from "../../components/Footer";
-import Header from "../../components/Header";
 import Calendario from "./Calendario";
 import './index.css';
 import { useEffect, useState } from 'react';
@@ -32,7 +30,7 @@ const Item = styled(Paper)(({ theme }) => ({
     color: theme.palette.text.secondary,
   }));
 
-const CitaMedica = () => {
+const CitaMedica = ({recepcionista=false}) => {
     const [value, setValue] = useState(null);
     const [consulta, setConsulta] = useState(null);
     const [info, setInfo] = useState(null);
@@ -43,6 +41,7 @@ const CitaMedica = () => {
     const [send,setSend] = useState(null);
     const [formData,setFormData] = useState(null);
     const {reset, setReset} = useState(false);
+    const [loading, setLoading] = useState(false);
     const [inputsDatas, setInputsDatas] = useState({
         cedula: '',
         nombres: '',
@@ -61,12 +60,14 @@ const CitaMedica = () => {
 
     useEffect(() => {
         if(consulta){
+            setLoading(true);
             fetch(appConfing.hostServer + 'api/info/paciente/' + value)
             .then(query => query.json())
             .then(setInfo)
             .catch(setError)
             .finally(() =>{
                 setConsulta(false);
+                setLoading(false);
             })
         }
     },[consulta])
@@ -151,6 +152,9 @@ const CitaMedica = () => {
     }
     return (
         <>
+        {
+            loading && (<LoadingOne ancho={'50%'} textInner="Cargando la información..." />)
+        }
         {/* cargando de ui */}
         {
             send && (<LoadingOne 
@@ -167,17 +171,20 @@ const CitaMedica = () => {
             />)
         }
 
-        <div className="container__min">
-            <Header></Header>
             <div className="flex-grow-1">
-            <Box sx={ { margin: 2 } }>
-            <Grid  spacing={0.5} >
-                <Item className='text-center'>
-                    <h4 className="text-secondary">TU SALUD NO PUEDE ESPERAR</h4>
-                    <h5 className="text-black-50">SOLICITA TU CITA MEDICA AHORA, LLENA EL SIGUIENTE FORMULARIO Y DA CLICK EN SOLICITAR CITA MEDICA</h5>
-                </Item>
-            </Grid>
-            </Box>
+                {
+                    !recepcionista && (
+                        <Box sx={ { margin: 2 } }>
+                            <Grid  spacing={0.5} >
+                                <Item className='text-center'>
+                                    <h4 className="text-secondary">TU SALUD NO PUEDE ESPERAR</h4>
+                                    <h5 className="text-black-50">SOLICITA TU CITA MEDICA AHORA, LLENA EL SIGUIENTE FORMULARIO Y DA CLICK EN SOLICITAR CITA MEDICA</h5>
+                                </Item>
+                            </Grid>
+                        </Box>
+                    )
+                }
+            
             <Form onSubmit={handleSubmit}
              className="w-75 m-auto">
             <Box sx={{ flexGrow: 1 }}>
@@ -270,8 +277,6 @@ const CitaMedica = () => {
                 
             </Form>
             </div>
-            <Footer className='mt-4'></Footer>
-        </div>
         </>
     );
 }

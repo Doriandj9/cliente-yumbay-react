@@ -16,7 +16,7 @@
  * }]
  */
 
-import CitaMedica from "../../views/CitaMedica/CitaMedica";
+import App from "../../views/CitaMedica/App";
 
 
 
@@ -29,7 +29,7 @@ import CitaMedica from "../../views/CitaMedica/CitaMedica";
 
 const routeCitaMedica = {
     path: '/cita-medica',
-    element: <CitaMedica />
+    element: <App />
 }
 
 export {routeCitaMedica};

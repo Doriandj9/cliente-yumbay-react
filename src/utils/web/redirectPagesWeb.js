@@ -1,7 +1,7 @@
 
 const pagesWeb = (permisos = null) => {
     const routesAndPermision = {
-        1: '/recepcion',
+        1: '/recepcionista',
         4: '/doctores',
         16: '/director',
         0: '/',
