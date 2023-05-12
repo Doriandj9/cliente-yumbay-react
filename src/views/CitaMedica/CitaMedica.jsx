@@ -30,7 +30,7 @@ const Item = styled(Paper)(({ theme }) => ({
     color: theme.palette.text.secondary,
   }));
 
-const CitaMedica = ({recepcionista=false}) => {
+const CitaMedica = ({recepcionista=false, cedula=null}) => {
     const [value, setValue] = useState(null);
     const [consulta, setConsulta] = useState(null);
     const [info, setInfo] = useState(null);
@@ -150,6 +150,14 @@ const CitaMedica = ({recepcionista=false}) => {
             signal: true
         });
     }
+    useEffect(() => {
+        if(recepcionista && cedula){
+            setValue(cedula);
+            setConsulta(true);
+        }
+    },[])
+
+    console.log(cedula);
     return (
         <>
         {

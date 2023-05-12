@@ -36,13 +36,18 @@ const routeRecepcionista = {
                 {
                     path:'editar',
                     element: <AppEditar />
-                }
+                },
+                {
+                    path:'agendar/:cedula',
+                    element: <AppAgenda />
+                },
             ]
         },
         {
             path: 'reportes',
             element: <AppReportes />
-        }
+        },
+        
     ]
 }
 

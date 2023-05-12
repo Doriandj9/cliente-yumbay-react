@@ -3,11 +3,16 @@ import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import {AiFillMedicineBox} from 'react-icons/ai';
 import { FaNotesMedical } from 'react-icons/fa';
 import { useEffect } from "react";
+import { useParams } from 'react-router-dom';
 const App = () => {
     const navigate = useNavigate();
+    const params = useParams();
     useEffect(() => {
-        navigate('agendar');
+        if(!params.cedula){
+            navigate('agendar');
+        }
     },[])
+   
     return (
         <>
         <h2 className='title-list mt-2 text-center'>Esta sección le permite agendar nuevas citas médicas y editarlas si el caso. </h2>
