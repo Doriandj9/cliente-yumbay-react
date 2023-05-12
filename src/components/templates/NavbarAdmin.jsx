@@ -42,7 +42,7 @@ const NavbarAdmin = () => {
                     </NavLink>
                 </li>
                 <li className='nav-item'>
-                    <NavLink to='otro'
+                    <NavLink to='reportes'
                     className={({isActive}) => {
                         return isActive ? 'nav-link text-white d-flex align-items-center gap-2 menu__item__active' 
                         : 'nav-link text-white d-flex align-items-center gap-2'

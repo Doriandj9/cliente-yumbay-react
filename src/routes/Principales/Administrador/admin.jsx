@@ -23,6 +23,8 @@ import Recepcionistas from "../../../views/Administrador/RegistroUsuarios/Recepc
 import AppEspecialidades from "../../../views/Administrador/Especialidades/App";
 import Lista from "../../../views/Administrador/Especialidades/Lista";
 import Registro from "../../../views/Administrador/Especialidades/Registro";
+import AppReportes from './../../../views/Recepcionista/Reportes/App';
+
 const routesAdmin = {
     path: 'director',
     element: <App />,
@@ -54,6 +56,10 @@ const routesAdmin = {
                     element: <Registro />
                 }
             ]
+        },
+        {
+            path: 'reportes',
+            element: <AppReportes />
         }
     ]
 
