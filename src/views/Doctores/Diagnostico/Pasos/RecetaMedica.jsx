@@ -101,16 +101,18 @@ const RecetaMedica = ({datos}) => {
                         <Text style={styles.text}>
                           Rp.
                         </Text>
-                        <Text style={{fontSize: '10px', display: 'flex' , flexDirection: 'column'}}>{
+                        <View style={{fontSize: '10px'}}>{
                           datos?.medicamentos?.split('|')?.map((element,i) => {
                             const [medicamento,tratamiento] = element.split('^^');
                             return (
-                              <Text key={i}> 
-                                {medicamento} ➡ {tratamiento}
-                              </Text>
+                              <View  key={i}>
+                                  <Text>
+                                    {medicamento} ➡ {tratamiento}
+                                  </Text>
+                                </View>
                             );
                           })
-                        }</Text>
+                        }</View>
                       </View>
 
                     </View>
