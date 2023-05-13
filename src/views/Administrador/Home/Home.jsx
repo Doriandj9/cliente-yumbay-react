@@ -7,7 +7,7 @@ const Home = () => {
         <>
             <Layout
             navbar={<NavbarAdmin />}
-            content={ <Outlet /> }
+            content={<> <Outlet /> </> }
             />
         </>
     );

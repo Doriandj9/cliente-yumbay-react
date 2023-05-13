@@ -8,8 +8,10 @@ import { useAppConfig } from './../../../store/configAppStore';
 import { useUserStore  } from './../../../store/userStore';
 import Skeleton from '@mui/material/Skeleton';
 import Stack from '@mui/material/Stack';
+import { useTitle } from '../../../utils/hooks/useTitle';
 
 const App = () => {
+    useTitle('Consultas de Pacientes');
     const [loading,setLoading] = useState(false);
     const [data,setData] = useState(null);
     const [error,setError] = useState(false);

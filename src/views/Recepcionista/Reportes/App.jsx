@@ -18,8 +18,10 @@ import { Button } from '@mui/material';
 import {TbReportSearch}from 'react-icons/tb'; 
 import { LoadingOne } from '../../../components/Loading';
 import VisualizadorPDF from './../../../utils/web/componentes/VisualizadorPDF/VisualizadorPDF'
+import { useTitle } from '../../../utils/hooks/useTitle';
 
 const App = () => {
+    useTitle('Reportes');
     const [userSelect,setUserSelect] = useState('');
     const [fechaI,setFechaI] = useState(null);
     const [fechaF, setFechaF] = useState(null);

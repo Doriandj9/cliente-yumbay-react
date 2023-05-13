@@ -4,7 +4,9 @@ import {AiFillMedicineBox} from 'react-icons/ai';
 import { FaNotesMedical } from 'react-icons/fa';
 import { useEffect } from "react";
 import { useParams } from 'react-router-dom';
+import { useTitle } from "../../../utils/hooks/useTitle";
 const App = () => {
+    useTitle('Recepcion | Citas Medicas');
     const navigate = useNavigate();
     const params = useParams();
     useEffect(() => {

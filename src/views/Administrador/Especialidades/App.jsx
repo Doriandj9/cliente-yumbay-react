@@ -3,13 +3,16 @@ import { FaList } from 'react-icons/fa';
 import {MdOutlineAddCircle} from 'react-icons/md';
 import { useEffect } from "react";
 import './index.css';
+import { useTitle } from "../../../utils/hooks/useTitle";
 
 
 const App = () => {
+    useTitle('Registro de Especialidades')
     const navigate = useNavigate();
     useEffect(() => {
         navigate('lista');
     },[])
+
     return (
         <>
         <h2 className="text-center">Selecione una opción</h2>

@@ -23,9 +23,11 @@ import TitleAlert from '../../../components/TitleAlert';
 import DialogContentTexto from '../../../components/DialogContentTexto';
 import DialogButtons from '../../../components/DialogButtons';
 import {MdOutlineError} from 'react-icons/md';
+import { useTitle } from '../../../utils/hooks/useTitle';
 
 const steps = ['REGISTRO DE ADMISIÓN', 'HISTORIA CLÍNICA', 'EXAMEN FÍSICO','PLAN DE TRATAMIENTO','FICHA'];
 const App = () => {
+  useTitle('Diagnostico del Paciente');
     const [activeStep, setActiveStep] = useState(0);
     const [skipped, setSkipped] = useState(new Set());
     const [state1,setState1] = useState(null);

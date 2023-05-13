@@ -7,8 +7,10 @@ import { Box } from "@mui/material";
 import { useUserStore } from './../../../store/userStore';
 import {HiInformationCircle} from 'react-icons/hi';
 import {FaLaptopMedical} from 'react-icons/fa';
+import { useTitle } from "../../../utils/hooks/useTitle";
 
 const App = () => {
+    useTitle('Citas Agendadas');
     const [loading,setLoading] = useState(false);
     const [data,setData] = useState(null);
     const [error,setError] = useState(false);

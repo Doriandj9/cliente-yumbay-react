@@ -54,9 +54,7 @@ const CitaMedica = ({recepcionista=false, cedula=null}) => {
         signal: false
     });
     const appConfing = useAppConfig(state => state.app);
-    useEffect(() => {
-        document.title = 'Clinica Yumbay | Cita Medica';
-    },[])
+    
 
     useEffect(() => {
         if(consulta){

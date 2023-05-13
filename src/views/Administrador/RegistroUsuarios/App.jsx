@@ -3,11 +3,14 @@ import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import {AiFillMedicineBox} from 'react-icons/ai';
 import { FaNotesMedical } from 'react-icons/fa';
 import './index.css';
+import { useTitle } from "../../../utils/hooks/useTitle";
 const App = () => {
     const navigate = useNavigate();
     useEffect(() => {
         navigate('medico');
     },[])
+    
+    useTitle('Registro de Usuarios')
     return (<>
         <h2 className="text-center">Registro de usuarios</h2>
         <p className="p-2">
