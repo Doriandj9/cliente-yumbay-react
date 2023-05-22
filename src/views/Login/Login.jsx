@@ -1,4 +1,4 @@
-import { Form } from 'react-router-dom';
+import { Form,Link } from 'react-router-dom';
 import logo from './../../assets/imgs/logo.jpg';
 import user from './../../assets/imgs/user.png';
 import { useEffect, useState } from 'react';
@@ -205,7 +205,7 @@ const Login = () => {
                                 }    
                             {/* </select> */}
                             <p className=' mt-2 item__end'>
-                               <a href="#" className='text-white'>Recuperar contraseña</a> 
+                               <Link to="/recuperar/clave" className='text-white'>Recuperar contraseña</Link> 
                             </p> 
                             <button className='btn btn-secondary text-white w-75  align-self-end me-5'>
                                 Ingresar

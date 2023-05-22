@@ -10,12 +10,12 @@ import routesAdmin from "./Principales/Administrador/admin";
 import routesDoctor, { routeDoctorCita } from "./Principales/Doctores/doctor";
 import routeRecepcionista from "./Principales/Recepcionista/recepcionista";
 import { routeCitaMedica } from "./Principales/citaMedica";
-import { routeMain, routeNosotros, routeServicios,routeLogout } from "./Principales/home";
+import { routeMain, routeNosotros, routeServicios,routeLogout,routeRecovery } from "./Principales/home";
 import { routeLogin } from "./Principales/login";
 
 const rootRoutes = [];
 rootRoutes.push(
-    routeMain,routeNosotros,routeServicios, routesDoctor,
+    routeMain,routeNosotros,routeServicios, routeRecovery, routesDoctor,
     routeCitaMedica,routeLogin,routesAdmin,routeLogout,
     routeDoctorCita,routeRecepcionista
     );

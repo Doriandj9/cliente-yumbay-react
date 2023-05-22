@@ -20,7 +20,7 @@ import App from "../../App";
 import Logout from "../../components/Logout";
 import Nosotros from "../../views/Home/Nosotros/Nosotros";
 import Servicios from "../../views/Home/Servicios/Servicios";
-
+import AppClave from "../../views/RecuperarClave/App";
 /**
  * Contine la ruta principal
  * 
@@ -48,4 +48,10 @@ const routeServicios = {
     path: '/servicios',
     element: <Servicios />
 }
-export {routeMain,routeNosotros,routeServicios,routeLogout};
+
+const routeRecovery = {
+    path: '/recuperar/clave',
+    element: <AppClave />
+}
+
+export {routeMain,routeNosotros,routeServicios,routeLogout,routeRecovery};
