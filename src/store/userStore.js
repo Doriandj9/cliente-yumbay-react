@@ -8,7 +8,13 @@ if(sessionStorage.__tok){
 
 
 const useUserStore = create((set) => ({
+    /**
+     * @var {Object} user
+     */
     user: init,
+    /**
+     * @param {Object} value
+     */
     login: (value) => set((state) => ({
         user: value
     })),

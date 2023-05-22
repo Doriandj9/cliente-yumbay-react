@@ -5,6 +5,8 @@ import { Outlet } from "react-router-dom";
 const Home = () => {
     return (
         <>
+        dasdas
+        sadas
             <Layout
             navbar={<NavbarAdmin />}
             content={<> <Outlet /> </> }

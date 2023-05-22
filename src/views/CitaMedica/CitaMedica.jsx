@@ -9,10 +9,6 @@ import Grid from '@mui/material/Unstable_Grid2';
 import { styled } from '@mui/material/styles';
 import { Button } from '@mui/material';
 import {MdSend} from 'react-icons/md';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -155,7 +151,6 @@ const CitaMedica = ({recepcionista=false, cedula=null}) => {
         }
     },[])
 
-    console.log(cedula);
     return (
         <>
         {
@@ -269,7 +264,7 @@ const CitaMedica = ({recepcionista=false, cedula=null}) => {
                         className='w-50 m-auto d-flex align-items-center gap-2'
                         variant="contained"
                         >
-                        Guardar Cita
+                        Solicitar Cita
                         <MdSend 
                         style={{
                             fontSize: '1.5rem'

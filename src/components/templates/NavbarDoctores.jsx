@@ -5,7 +5,7 @@ import espcialidadesMedicas from './../../assets/imgs/doctorEspecialidades.png';
 import pdfimg from './../../assets/imgs/pdf.png';
 import apagadoImg from './../../assets/imgs/apagado.png';
 import diagnostico  from './../../assets/imgs/diagnostico.png';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import { useAppConfig } from './../../store/configAppStore';
 
 const NavbarDoctores = ({info}) => {
@@ -18,8 +18,8 @@ const NavbarDoctores = ({info}) => {
             </div>
             <ul className='navbar-nav'>
                 <li>{info.nombres}</li>
-                <li>{info.cedula}</li>
                 <li>{info.nombre_especialidad}</li>
+                <li> <Link className='text-white' to={'perfil'}> Editar Perfil </Link> </li>
             </ul>
         </div>
         <nav className="container_menu">
@@ -31,7 +31,7 @@ const NavbarDoctores = ({info}) => {
                         : 'nav-link text-white d-flex align-items-center gap-2'
                     }}>
                         <img src={ addUserIcon } alt="nuevo usuarios" />
-                        <span>Citas médicas</span>
+                        <span>Verificación de citas médicas</span>
                     </NavLink>
                 </li>
                 <li className='nav-item'>
@@ -51,20 +51,20 @@ const NavbarDoctores = ({info}) => {
                         : 'nav-link text-white d-flex align-items-center gap-2'
                     }}>
                         <img src={espcialidadesMedicas}  alt="especialidades" />
-                        <span>Consultas de pacientes</span>
+                        <span>Pacientes FAY</span>
                     </NavLink>
                 </li>
              
-                {/* <li className='nav-item'>
-                    <NavLink to='reportes'
+                <li className='nav-item'>
+                    <NavLink to='cita-medica'
                     className={({isActive}) => {
                         return isActive ? 'nav-link text-white d-flex align-items-center gap-2 menu__item__active' 
                         : 'nav-link text-white d-flex align-items-center gap-2'
                     }}>
                         <img src={pdfimg}  alt="" />
-                        <span>Reportes</span>
+                        <span>Agendar Cita Médica</span>
                     </NavLink>
-                </li> */}
+                </li>
                 <li className='nav-item'>
                     <NavLink to='/salir'
                     className={({isActive}) => {
