@@ -91,7 +91,7 @@ const App = () => {
                }
                {
                 (data && data.ident) && (
-                    <TablePacientes data={data.data.slice(0,10)} />
+                    <TablePacientes data={data.data} />
                 )
                } 
             </div>

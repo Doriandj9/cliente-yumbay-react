@@ -8,7 +8,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import dayjs from "dayjs";
 import Ficha from "./Ficha";
-
+import Pagination from '@mui/material/Pagination';
 import { styled } from '@mui/material/styles';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -39,12 +39,27 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     },
   }));
 const FichaMedica = () => {
+  const paginationNumber = 2;
     const [loading,setLoading] = useState(false);
     const [data,setData] = useState(null);
     const [error,setError] = useState(null);
     const [day, setDay] = useState(dayjs());
     const [dataResult,setDataResult] = useState(null);
-   const {cedula} = useParams();
+    const [rowsDisplay, setRowsDisplay] = useState([]);
+    const {cedula} = useParams();
+
+
+    const handleChange = (e,page) => {
+    const init = (page - 1 ) * paginationNumber;
+    const limit = init + paginationNumber;
+    const newData = data.data.slice(init,limit);
+    setRowsDisplay(newData);
+    }
+    useEffect(() => {
+    if(data){
+    setRowsDisplay(data.data.slice(0,paginationNumber));
+    }
+    },[data])
    
   const appConfig = useAppConfig((state) => state.app);
 
@@ -54,7 +69,9 @@ const FichaMedica = () => {
     .then(query => query.json())
     .then((res) =>{
         setData(res)
-        setDataResult(res);
+        if(res.ident){
+          setDataResult(res.data[0]);
+        }
     })
     .catch(setError)
     .finally(() => {
@@ -65,19 +82,19 @@ const FichaMedica = () => {
    const handleFilter = (value,validation) => {
         setDay(value);
         const valueRes = data.data.filter((d) => d.fecha_control === value.format('YYYY-MM-DD'));
-        setDataResult({
-            ...data,
-            data: valueRes
-        });
+        setDataResult(valueRes[0]);
     }
-  
+    
+    const handleFicha = (e,dato) => {
+      setDataResult(dato);
+    }
     return (
         <>
         <h2 className='title-list '>Listado de fichas médicas </h2>
 
             <div className='d-flex justify-content-between ps-3 pe-3 pb-2 m-0'>
                 <div>
-                    Total de resultados {dataResult?.data?.length ?? 'ninguna'}
+                    Total de resultados {data?.data?.length ?? 'ninguna'}
                 </div>
                 <div>
                     <div className='busqueda'>
@@ -124,7 +141,15 @@ const FichaMedica = () => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {data.data.map((row) => (
+          {
+            data.length === 0 ?
+            <TableRow className='text-end'>
+            <TableCell colSpan={3}>
+            <span className="text-primary display-6"> No se encontro fichas médicas </span>
+            </TableCell>
+          </TableRow>
+            :
+          rowsDisplay.map((row) => (
             <StyledTableRow key={row.cedula}>
                 <StyledTableCell style={{borderRight: '1px solid #ccc', fontSize: '0.75rem',height: '1.5rem', padding:0  }} 
                align="center">{row.fecha_control}</StyledTableCell>
@@ -139,7 +164,7 @@ const FichaMedica = () => {
               <StyledTableCell style={{ width: '5px', fontSize: '0.75rem' ,height: '1.5rem', padding:0 }}
               align="center">
                
-                    <FaFileMedical 
+                    <FaFileMedical onClick={(e) => handleFicha(e,row)}
                     style={{ fontSize:'1.5rem', padding: 0 ,margin:0,cursor:'pointer'}} className='text-secondary' />     
                     Ver
                 </StyledTableCell>
@@ -147,13 +172,19 @@ const FichaMedica = () => {
             
             
           ))}
+          <TableRow className='text-end'>
+            <TableCell colSpan={3}>
+            <Pagination  onChange={handleChange}
+            className='d-flex justify-content-center' count={Math.ceil(data.data.length / paginationNumber)} size="small" />
+            </TableCell>
+          </TableRow>
         </TableBody>
       </Table>
     </TableContainer>
     <h2 className='title-list mt-2 mb-2'> Información de la ficha médica </h2>
     </>)
     }
-            {data && (<Ficha data={dataResult.data[0]} />)}
+            {data && (<Ficha data={dataResult} />)}
         </>
     );
 }
