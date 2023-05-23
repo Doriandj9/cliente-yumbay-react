@@ -15,6 +15,7 @@ import DialogContentTexto from "../../components/DialogContentTexto";
 import DialogButtons from "../../components/DialogButtons";
 const App = () =>{
     useTitle('Recuperar Contraseña');
+    const navigate = useNavigate();
     const [loading,setLoading] = useState(false);
     const [data,setData] = useState(null);
     const [error,setError] = useState(null);
@@ -46,7 +47,11 @@ const App = () =>{
     const handleClose = () => {
         setOpen(false);
     }
-    console.log(data,error);
+    const handleCloseNavigate = () => {
+        setOpen(false);
+        navigate('/login');
+    }
+   console.log(data);
     return (
         <div className="container__min">
             {
@@ -54,7 +59,7 @@ const App = () =>{
             }
             {
                 (data && data.ident) && (
-                    <AlertaExito open={open} handleClose={handleClose} message={data.mensaje} />
+                    <AlertaExito open={open} handleClose={handleCloseNavigate} message={data.mensaje} />
                 )
             }
             {
@@ -101,10 +106,11 @@ const App = () =>{
                             {/* </select> */}
                             <p className=' mt-2 item__end'>
                                <span> </span>
-                            </p> 
+                            </p>
                             <button className='btn btn-secondary text-white w-75  align-self-end me-5'>
                                 Recuperar
                             </button>
+
                         </Form>
                 </div>
             </div>

@@ -5,6 +5,7 @@ import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Unstable_Grid2';
 import { styled } from '@mui/material/styles';
 import { useEffect } from 'react';
+import { useUserStore } from '../../../../store/userStore';
 
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -18,6 +19,7 @@ const Item = styled(Paper)(({ theme }) => ({
 
 
 const PasoDos = ({state,setState}) => {
+    const user = useUserStore((state) => state.user);
     useEffect(() => {
 
         if(!state){
@@ -75,6 +77,11 @@ const PasoDos = ({state,setState}) => {
                     onChange={handleChangeInput}
                     placeholder='Por ejemplo: Dolor en el pecho y dificultad para respirar'
                     />
+                    {
+                        (user?.nombre_especialidad?.toUpperCase()?.includes('ODONTOLOGIA')) ? '' :
+                        
+                    (
+                    <>
                     <TextField
                     style={{ fontSize: '1.8rem' }}
                     label='Antecedentes médicos'
@@ -132,7 +139,9 @@ const PasoDos = ({state,setState}) => {
                     value={state?.otros_antecedentes ?? ''}
                     placeholder='Por ejemplo: Padre y abuelo paterno fallecidos por enfermedad cardiovascular'
                     />
-            
+                    </>
+                    )
+                    }
                 </Item>
             </Grid>
             </Grid>

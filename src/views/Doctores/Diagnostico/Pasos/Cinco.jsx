@@ -208,6 +208,8 @@ const Cinco = ({state1,state2,state3,state4}) => {
                                 }    
                             </p>
                         </article>
+                        {
+                        (user?.nombre_especialidad?.toUpperCase()?.includes('ODONTOLOGIA')) ? '' :
                         <article>
                             <h6>MOTIVO DE CONSULTA</h6>
                             <p>
@@ -216,7 +218,25 @@ const Cinco = ({state1,state2,state3,state4}) => {
                                 }
                             </p>
                         </article>
+                        }
                     </div>
+                    {
+                        (user?.nombre_especialidad?.toUpperCase()?.includes('ODONTOLOGIA')) && 
+                        <div className='parte2__interno'>
+                             <article style={{ width: '100%' }}>
+                            <h6>MOTIVO DE CONSULTA</h6>
+                            <p>
+                                {
+                                    state2?.motivo ?? ''
+                                }
+                            </p>
+                        </article>
+                        </div>
+                    }
+
+                {
+                (user?.nombre_especialidad?.toUpperCase()?.includes('ODONTOLOGIA')) ? '' :
+                <>
                     <div  className='parte2__interno'>
                         <article>
                             <h6>ANTECEDENTES MÉDICOS</h6>
@@ -263,7 +283,11 @@ const Cinco = ({state1,state2,state3,state4}) => {
                             </p>
                         </article>
                     </div>
+                    </>
+                }
                 </div>
+                {
+                     (user?.nombre_especialidad?.toUpperCase()?.includes('ODONTOLOGIA')) ? '' : 
                 <div className='parte3'>
                 <h5>3 EXAMEN FÍSICO</h5>
                 <div className='parte3_fila'>
@@ -331,8 +355,9 @@ const Cinco = ({state1,state2,state3,state4}) => {
                         </article>
                     </div>
                 </div>
+                }
                 <div className='parte4'>
-                    <h5> PLAN DE TRATAMIENTO </h5>
+                    <h5>4 PLAN DE TRATAMIENTO </h5>
                     <div className='parte4__interno'>
                         <article>
                             <h6 style={ { textTransform: 'uppercase' } }>Medicamentos</h6>

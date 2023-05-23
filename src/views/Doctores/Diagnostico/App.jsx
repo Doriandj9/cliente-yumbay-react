@@ -24,8 +24,9 @@ import DialogContentTexto from '../../../components/DialogContentTexto';
 import DialogButtons from '../../../components/DialogButtons';
 import {MdOutlineError} from 'react-icons/md';
 import { useTitle } from '../../../utils/hooks/useTitle';
+import { useUserStore } from '../../../store/userStore';
 
-const steps = ['REGISTRO DE ADMISIÓN', 'HISTORIA CLÍNICA', 'EXAMEN FÍSICO','PLAN DE TRATAMIENTO','FICHA'];
+let steps = ['REGISTRO DE ADMISIÓN', 'HISTORIA CLÍNICA', 'EXAMEN FÍSICO','PLAN DE TRATAMIENTO','FICHA'];
 const App = () => {
   useTitle('Diagnostico del Paciente');
     const [activeStep, setActiveStep] = useState(0);
@@ -44,7 +45,8 @@ const App = () => {
     const [open,setOpen] = useState(false);
     const [pdf ,setPdf] = useState(false);
     const [datosReport,setDatosReport] = useState(null);
-    const elementos = [<PasoUno state={state1} setState={setState1} />,
+    const user = useUserStore((state) => state.user);
+    let elementos = [<PasoUno state={state1} setState={setState1} />,
      <PasoDos state={state2} setState={setState2} />,
       <PasoTres state={state3} setState={setState3} />, 
       <Cuatro state={state4} setState={setState4} />, 
@@ -53,6 +55,12 @@ const App = () => {
       state3={state3}
       state4={state4}
       />];
+      if(user?.nombre_especialidad?.toUpperCase()?.includes('ODONTOLOGIA')){
+        delete elementos[2];
+        elementos = elementos.filter(e => e !== '');
+        steps = steps.filter(el => el !== 'EXAMEN FÍSICO');
+        console.log(elementos, steps);
+      }
     const appConfig = useAppConfig((state) => state.app);
     const isStepOptional = (step) => {
       return step >= 1 && step < steps.length - 1;
