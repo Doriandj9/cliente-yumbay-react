@@ -4,19 +4,22 @@ import addUserIcon from './../../assets/imgs/doctorIconMenu.png';
 import espcialidadesMedicas from './../../assets/imgs/doctorEspecialidades.png';
 import pdfimg from './../../assets/imgs/pdf.png';
 import apagadoImg from './../../assets/imgs/apagado.png';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
+import { useAppConfig } from './../../store/configAppStore';
 
-const NavbarAdmin = () => {
+const NavbarAdmin = ({info}) => {
+    const appConfig = useAppConfig((state) => state.app);
+
     return (<>
         <div className="container__nav">
         <div className="container__description">
             <div className='container__icon'>
-            <img className='icon__doctor' src={doctor} alt="" />
+            <img className='icon__doctor' src={`${appConfig.hostServer}storage/${info.imagen}`} alt="director" />
             </div>
             <ul className='navbar-nav'>
-                <li>Jose Perez</li>
-                <li>Odontologi</li>
-                <li>algo</li>
+                <li>{info.nombres}</li>
+                <li>Director</li>
+                <li> <Link className='text-white' to={'perfil'}> Editar Perfil </Link> </li>
             </ul>
         </div>
         <nav className="container_menu">

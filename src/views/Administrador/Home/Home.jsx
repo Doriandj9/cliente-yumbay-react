@@ -2,13 +2,11 @@ import Layout from "../../../components/templates/Layout";
 import NavbarAdmin from "../../../components/templates/NavbarAdmin";
 import { Outlet } from "react-router-dom";
 
-const Home = () => {
+const Home = ({datos}) => {
     return (
         <>
-        dasdas
-        sadas
             <Layout
-            navbar={<NavbarAdmin />}
+            navbar={<NavbarAdmin info={datos} />}
             content={<> <Outlet /> </> }
             />
         </>

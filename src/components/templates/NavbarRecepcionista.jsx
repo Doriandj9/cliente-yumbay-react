@@ -6,7 +6,7 @@ import pdfimg from './../../assets/imgs/pdf.png';
 import citamedica from './../../assets/imgs/cita-medica.png';
 import apagadoImg from './../../assets/imgs/apagado.png';
 import diagnostico  from './../../assets/imgs/diagnostico.png';
-import { NavLink } from 'react-router-dom';
+import { NavLink,Link } from 'react-router-dom';
 import { useAppConfig } from './../../store/configAppStore';
 
 const NavbarDoctores = ({info}) => {
@@ -21,6 +21,7 @@ const NavbarDoctores = ({info}) => {
                 <li>{info.nombres}</li>
                 <li>{info.cedula}</li>
                 <li>Recepcionista</li>
+                <li> <Link className='text-white' to={'perfil'}> Editar Perfil </Link> </li>
             </ul>
         </div>
         <nav className="container_menu">

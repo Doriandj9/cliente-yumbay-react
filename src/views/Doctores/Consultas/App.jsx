@@ -9,13 +9,16 @@ import { useUserStore  } from './../../../store/userStore';
 import Skeleton from '@mui/material/Skeleton';
 import Stack from '@mui/material/Stack';
 import { useTitle } from '../../../utils/hooks/useTitle';
+import { LoadingOne } from '../../../components/Loading';
 
 const App = () => {
     useTitle('Consultas de Pacientes');
     const [loading,setLoading] = useState(false);
+    const [loadingConsulta,setLoadingConsulta] = useState(false);
     const [data,setData] = useState(null);
     const [error,setError] = useState(false);
     const [consulta,setConsulta] = useState(false);
+    const [paciente,setPaciente] = useState(null);
     const appConfig = useAppConfig((state) => state.app);
     const user = useUserStore((state) => state.user)
     useEffect(() => {
@@ -29,8 +32,24 @@ const App = () => {
         })
     },[])
     
+    useEffect(() => {
+        if(consulta){
+            setLoadingConsulta(true);
+            fetch(`${appConfig.hostServer}api/`)
+            .then(query => query.json())
+            .then(setPaciente)
+            .catch(setError)
+            .finally(() => {
+                setConsulta(false);
+                setLoadingConsulta(false);
+            })
+        }
+    },[consulta])
     return(
         <>
+        {
+            loadingConsulta && <LoadingOne ancho={'50%'} textInner='Cargando fichas...' />
+        }
             <h2 className='title-list'> Listado de pacientes registrados </h2>
             <h6 className='leyenda'> Leyenda de iconos </h6>
             <div className='d-flex gap-2'>

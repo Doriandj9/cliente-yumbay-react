@@ -18,7 +18,7 @@ const App = () => {
         }
     },[])
     return (
-        <Home></Home>
+        <Home datos={user} ></Home>
     );
 }
 

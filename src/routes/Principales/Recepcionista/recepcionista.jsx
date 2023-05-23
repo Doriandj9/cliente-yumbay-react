@@ -20,7 +20,7 @@ import AppReportes from './../../../views/Recepcionista/Reportes/App';
 import AppCitas from './../../../views/Recepcionista/CitaMedica/App';
 import AppAgenda from '../../../views/Recepcionista/CitaMedica/Agenda/Agendar';
 import AppEditar from './../../../views/Recepcionista/CitaMedica/Editar/App';
-
+import Perfil from '../../../components/Perfil';
 const routeRecepcionista = {
     path: 'recepcionista',
     element: <App />,
@@ -46,6 +46,10 @@ const routeRecepcionista = {
         {
             path: 'reportes',
             element: <AppReportes />
+        },
+        {
+            path: 'perfil',
+            element: <Perfil />
         },
         
     ]

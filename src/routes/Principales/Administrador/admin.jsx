@@ -24,7 +24,7 @@ import AppEspecialidades from "../../../views/Administrador/Especialidades/App";
 import Lista from "../../../views/Administrador/Especialidades/Lista";
 import Registro from "../../../views/Administrador/Especialidades/Registro";
 import AppReportes from './../../../views/Recepcionista/Reportes/App';
-
+import AppPeril from './../../../components/Perfil';
 const routesAdmin = {
     path: 'director',
     element: <App />,
@@ -60,7 +60,11 @@ const routesAdmin = {
         {
             path: 'reportes',
             element: <AppReportes />
-        }
+        },
+        {
+            path: 'perfil',
+            element: <AppPeril />
+        },
     ]
 
 }
