@@ -32,9 +32,6 @@ const Login = () => {
     const [loading, setLoading] = useState(false);
     const [userSelect,setUserSelect] = useState('');
     const appConfig = useAppConfig(state => state.app);
-    useEffect(() => {
-        document.title = 'Clinica Yumbay | Iniciar Sesión';
-    },[]);
 
   const handleClickOpen = () => {
     setOpen(true);

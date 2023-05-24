@@ -10,7 +10,7 @@ import Skeleton from '@mui/material/Skeleton';
 import Stack from '@mui/material/Stack';
 import { useTitle } from '../../../utils/hooks/useTitle';
 import { LoadingOne } from '../../../components/Loading';
-
+import { CEDULA_REG_EXPRE } from './../../../utils/web/componentes/ConstExpres';
 const App = () => {
     useTitle('Consultas de Pacientes');
     const [loading,setLoading] = useState(false);
@@ -20,6 +20,7 @@ const App = () => {
     const [consulta,setConsulta] = useState(false);
     const [paciente,setPaciente] = useState(null);
     const appConfig = useAppConfig((state) => state.app);
+    const [cedula,setCedula] = useState(null);
     const user = useUserStore((state) => state.user)
     useEffect(() => {
         setLoading(true);
@@ -35,9 +36,9 @@ const App = () => {
     useEffect(() => {
         if(consulta){
             setLoadingConsulta(true);
-            fetch(`${appConfig.hostServer}api/`)
+            fetch(`${appConfig.hostServer}api/fichas/${user.id_especialidad}/${cedula}`)
             .then(query => query.json())
-            .then(setPaciente)
+            .then(setData)
             .catch(setError)
             .finally(() => {
                 setConsulta(false);
@@ -45,6 +46,14 @@ const App = () => {
             })
         }
     },[consulta])
+
+    const handleSearch = (e) => {
+        if(CEDULA_REG_EXPRE.test(e.target.value.trim())){
+            setCedula(e.target.value.trim());
+            setConsulta(true);
+        }
+    }
+    console.log(data);
     return(
         <>
         {
@@ -74,7 +83,7 @@ const App = () => {
                         <AiOutlineSearch className='text-secondary'
                         style={{ fontSize:'1.2rem' }}
                          /></span> 
-                        <input  type="search"  placeholder='Ingrese el número de cédula del paciente...' />
+                        <input  type="search" onChange={handleSearch}  placeholder='Ingrese el número de cédula del paciente...' />
                     </div>
                 </div>
             </div>

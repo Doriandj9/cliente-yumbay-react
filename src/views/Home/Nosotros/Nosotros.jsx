@@ -2,11 +2,10 @@ import Footer from "../../../components/Footer";
 import Header from "../../../components/Header";
 import { useEffect } from 'react';
 import { useFetch } from "../../../utils/hooks/useFetch";
+import { useTitle } from "../../../utils/hooks/useTitle";
 
 const Nosotros = () => {
-    useEffect(() => {
-        document.title = 'Clinica Yumbay | Sobre Nosotros';
-    },[])
+    useTitle('Sobre Nosotros');
     return (
         <>
         <Header />

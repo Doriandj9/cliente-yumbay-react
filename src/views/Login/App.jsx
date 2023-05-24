@@ -6,7 +6,9 @@ import { useNavigate } from "react-router-dom";
 import { pagesWeb } from "../../utils/web/redirectPagesWeb";
 import { useUserStore } from "../../store/userStore";
 import { useEffect } from "react";
+import { useTitle } from "../../utils/hooks/useTitle";
 const App = () => {
+    useTitle('Iniciar Sesión');
     const navigate = useNavigate();
     const user = useUserStore((state) => state.user);
     useEffect(()=> {

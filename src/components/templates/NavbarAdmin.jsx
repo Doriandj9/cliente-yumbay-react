@@ -3,6 +3,8 @@ import doctor from './../../assets/imgs/doctorIcon.png';
 import addUserIcon from './../../assets/imgs/doctorIconMenu.png';
 import espcialidadesMedicas from './../../assets/imgs/doctorEspecialidades.png';
 import pdfimg from './../../assets/imgs/pdf.png';
+import doctores from './../../assets/imgs/consulta.png';
+
 import apagadoImg from './../../assets/imgs/apagado.png';
 import { NavLink, Link } from 'react-router-dom';
 import { useAppConfig } from './../../store/configAppStore';
@@ -42,6 +44,16 @@ const NavbarAdmin = ({info}) => {
                     }}>
                         <img src={espcialidadesMedicas}  alt="especialidades" />
                         <span>Especialidades medicas</span>
+                    </NavLink>
+                </li>
+                <li className='nav-item'>
+                    <NavLink to='usuarios'
+                    className={({isActive}) => {
+                        return isActive ? 'nav-link text-white d-flex align-items-center gap-2 menu__item__active' 
+                        : 'nav-link text-white d-flex align-items-center gap-2'
+                    }}>
+                        <img src={doctores}  alt="especialidades" />
+                        <span>Habilitar usuarios</span>
                     </NavLink>
                 </li>
                 <li className='nav-item'>

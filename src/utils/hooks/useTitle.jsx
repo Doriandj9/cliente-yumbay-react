@@ -2,7 +2,7 @@ import { useEffect } from "react"
 
 const useTitle = (title)=>{
     useEffect(() => {
-        document.title = 'Clinica Yumbay | ' + title;
+        document.title = 'Fundación Arturo Yumbay | ' + title;
     },[]);
 }
 

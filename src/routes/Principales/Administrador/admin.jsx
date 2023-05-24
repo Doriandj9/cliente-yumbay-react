@@ -25,6 +25,7 @@ import Lista from "../../../views/Administrador/Especialidades/Lista";
 import Registro from "../../../views/Administrador/Especialidades/Registro";
 import AppReportes from './../../../views/Recepcionista/Reportes/App';
 import AppPeril from './../../../components/Perfil';
+import AppUsuarios from "../../../views/Administrador/Usuarios/App";
 const routesAdmin = {
     path: 'director',
     element: <App />,
@@ -56,6 +57,10 @@ const routesAdmin = {
                     element: <Registro />
                 }
             ]
+        },
+        {
+            path: 'usuarios',
+            element: <AppUsuarios />
         },
         {
             path: 'reportes',

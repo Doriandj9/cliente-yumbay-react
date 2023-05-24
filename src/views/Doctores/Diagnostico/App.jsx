@@ -59,7 +59,6 @@ const App = () => {
         delete elementos[2];
         elementos = elementos.filter(e => e !== '');
         steps = steps.filter(el => el !== 'EXAMEN FÍSICO');
-        console.log(elementos, steps);
       }
     const appConfig = useAppConfig((state) => state.app);
     const isStepOptional = (step) => {
@@ -216,6 +215,31 @@ const App = () => {
             </DialogAlert>
         )
     }
+    { (data && data.ident === 0 && !data.errores ) && (
+            <DialogAlert
+            open={open}
+            handleClose={handleClose}
+            >
+                <DialogContentTexto 
+                textContent={
+                <>
+                <MdOutlineError className='display-1 text-danger m-auto d-block' />
+                {data.mensaje}
+                </>
+                }
+                cssCont='ps-4 pe-4'
+                />
+                <DialogButtons 
+                handleClose={handleClose}
+                btnClose={true}
+                btnTextClose='Regresar'
+                css='mb-3'
+                variantBtnClose='outlined'
+                colorBtnClose='error'
+                />
+            </DialogAlert>
+        )
+    }
         {
           (data && data.ident) && 
           (<>
@@ -226,6 +250,8 @@ const App = () => {
             />
           </>)
         }
+
+
         <article>
             <h2 className='text-center'>Registro de fichas clinicas</h2>
             <p className='p-2'>

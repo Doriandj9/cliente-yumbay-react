@@ -10,13 +10,10 @@ import otorrinolaringologia from './../../../assets/imgs/otoscopio.png';
 import {FaHandHoldingMedical} from 'react-icons/fa';
 import audiologia from './../../../assets/imgs/oido.png';
 import { Link, useLoaderData } from 'react-router-dom';
+import { useTitle } from "../../../utils/hooks/useTitle";
 
 const Servicios = () => {
-
-    useEffect(() => {
-        document.title = 'Clinica Yumbay | Servicios';
-    },[])
-
+    useTitle('Servicios');
     return (
         <>
         <Header></Header>

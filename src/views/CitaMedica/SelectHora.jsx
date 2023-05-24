@@ -39,6 +39,7 @@ const SelectHora = ({fecha,info,especialidad,reset}) => {
 useEffect(()=>{
   //console.log(fecha,horario,data);
   if(fecha !== null && horario !== null && data){
+    if(info === 'none') return;
     const [days,hours] = horario.split('|');
     const [h_i,h_f] = hours.split('-');
     const resp = getDatesHabilitis(fecha+h_i,fecha+h_f,days,data.citas);
@@ -82,7 +83,7 @@ useEffect(() => {
           />)
         }
         {
-        (horas && !loading) ? (
+        (horas && !loading &&  info !== 'none') ? (
         <FormControl variant="outlined" className='w-100 mb-2' style={{
           // border: 'none',
           // outline: 'none',
@@ -114,7 +115,7 @@ useEffect(() => {
         </FormControl>
         ) : (
         <TextField 
-        label={info ? 'Cargando...' : 'Selecionar la hora'}
+        label={(info && info !== 'none' )? 'Cargando...' : 'Selecionar la hora'}
         disabled
         className='w-100 mb-2'
         />

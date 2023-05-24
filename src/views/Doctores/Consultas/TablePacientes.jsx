@@ -34,7 +34,6 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 
-
 const  TablePacientes = ({data}) =>{
   const paginationNumber = 6;
   const [rowsDisplay, setRowsDisplay] = useState([]);

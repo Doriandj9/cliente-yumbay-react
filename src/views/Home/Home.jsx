@@ -4,10 +4,9 @@ import 'animate.css';
 import Header from '../../components/Header';
 import Footer from '../../components/Footer';
 import { useEffect, useState } from 'react';
+import { useTitle } from '../../utils/hooks/useTitle';
 const Home = () => {
-    useEffect(() => {
-        document.title = 'Clinica Yumbay | Inicio';
-    },[])
+    useTitle('Inicio');
     return (
     <>
     <Header></Header>

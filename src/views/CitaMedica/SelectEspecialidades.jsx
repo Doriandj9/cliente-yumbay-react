@@ -27,6 +27,7 @@ const SelectEspecialidades = ({fecha,reset,setReset}) => {
     useEffect(() => {
       if(reset.signal){
         setData(null);
+        setValue('');
         setReset({
           ...reset,
           signal: false
@@ -65,7 +66,7 @@ const SelectEspecialidades = ({fecha,reset,setReset}) => {
           </Select>
         </FormControl>
         ) : <TextField 
-          label={fecha ? 'Cargando...' : 'Selecione la especialidad'}
+          label={fecha  ? 'Cargando...' : 'Selecione la especialidad'}
           disabled
           className='w-100 mb-2'
         />

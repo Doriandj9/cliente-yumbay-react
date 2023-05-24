@@ -31,25 +31,25 @@ const Footer = ({className=''}) => {
                                 <div className='contact-icon'>
                                 <FaClinicMedical className='font-1 text-white'></FaClinicMedical>
                                 </div>
-                                Clinica Yumbay
+                                Fundación Arturo Yumbay
                             </li>
                             <li className='d-flex list-group-item align-items-center gap-2 bg-t__footer border-0'>
                                 <div className='contact-icon'>
                                 <BsTelephoneFill className='font-1 text-white'></BsTelephoneFill>
                                 </div>
-                                09899604712
+                                0968401786
                             </li>
                             <li className='d-flex list-group-item align-items-center gap-2 bg-t__footer border-0'>
                                 <div className='contact-icon'>
                                 <MdEmail className='font-1 text-white'></MdEmail>
                                 </div>
-                                clinica-yumbay@gmail.com
+                                rinayumbaytaris@gmail.com
                             </li>
                             <li className='d-flex list-group-item align-items-center gap-2 bg-t__footer border-0'>
                                 <div className='contact-icon'>
                                 <HiLocationMarker className='font-1 text-white'></HiLocationMarker>
                                 </div>
-                                15 de Mayo y Selva Alegre
+                                Guaranda, Solanda y 7 de Mayo
                             </li>
                         </ul>
       </div>
@@ -58,7 +58,7 @@ const Footer = ({className=''}) => {
           Siguenos</h5>
         <ul className="list-unstyled">
           <li className="mb-2">
-            <a className='text-secondary' href="#">
+            <a className='text-secondary' target='__black' href="https://www.facebook.com/FundacionArturoYumbay">
             <FaFacebookSquare className='font-1'></FaFacebookSquare>
             Facebook
             </a>
