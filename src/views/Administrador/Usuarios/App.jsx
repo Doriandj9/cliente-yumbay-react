@@ -21,6 +21,7 @@ import { useAppConfig } from "../../../store/configAppStore";
 import { CEDULA_REG_EXPRE } from '../../../utils/web/componentes/ConstExpres';
 import Button from '@mui/material/Button';
 import { LoadingOne } from '../../../components/Loading';
+import AlertaExito from '../../../components/AlertaExito';
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
   ...theme.typography.body2,
@@ -39,6 +40,7 @@ const App = () => {
     const [info,setInfo] = useState(null);
     const [update,setUpdate] = useState(true);
     const appConfig = useAppConfig((state) => state.app);
+    const [open,setOpen] = useState(false);
     const paginationNumber = 3;
     const [rowsDisplay, setRowsDisplay] = useState(null);
     const handleChange = (e,page) => {
@@ -76,6 +78,10 @@ const App = () => {
             setRowsDisplay(filter);
            }
         }
+
+        if(e.target.value === ''){
+          setRowsDisplay(data.data.slice(0,paginationNumber));
+        }
     }
     const handleCheck = (e) => {
         if(e.target.checked){
@@ -98,7 +104,7 @@ const App = () => {
         if(change){
         setLoading(true);
         const formData = new FormData();
-        formData.append('usuarios',[...checkboxes]);
+        formData.append('usuarios',JSON.stringify({data:[...checkboxes]}));
         fetch(`${appConfig.hostServer}api/option/user`,{method: 'POST',body: formData})
         .then(query => query.json())
         .then(setInfo)
@@ -106,12 +112,22 @@ const App = () => {
         .finally(() => {
             setLoading(false);
             setChange(false);
+            setOpen(true);
             setUpdate(true);
         })
         }
     },[change])
+    const handleClose = () => {
+      setOpen(false);
+      setInfo(null);
+      document.querySelectorAll('input[type=checkbox]:checked').forEach(e => e.checked = false);
+      setCheckboxes(new Set());
+    }
     return (
         <>
+        {
+          (info && info.ident) && <AlertaExito message={info.mensaje} open={open} handleClose={handleClose} />
+        }
         {
             loading && <LoadingOne textInner='Cargando...' ancho={'50%'} />
         }
@@ -168,7 +184,7 @@ const App = () => {
                   <TableCell align="left">{row.nombres}</TableCell>
                   <TableCell align="left">{row.apellidos}</TableCell>
                   <TableCell align="left">
-                   {row?.estado}
+                   {row?.estado ? 'Activo' : 'Inactivo'}
                     </TableCell>
                   <TableCell align="center">  
                       

@@ -15,9 +15,12 @@ import Grid from '@mui/material/Unstable_Grid2';
 import { styled } from '@mui/material/styles';
 import Stack from '@mui/material/Stack';
 import {MdOutlineAddCircle} from 'react-icons/md';
-import {NavLink} from 'react-router-dom';
+import {Form, NavLink} from 'react-router-dom';
 import { Edit } from '@mui/icons-material'
 import Button from '@mui/material/Button';
+import EditEspecialidad from './EditEspecialidad';
+import { LoadingOne } from '../../../components/Loading';
+import AlertaExito from '../../../components/AlertaExito';
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
   ...theme.typography.body2,
@@ -29,8 +32,20 @@ const Item = styled(Paper)(({ theme }) => ({
 const Lista = () =>{
   const paginationNumber = 3;
   const appConfig = useAppConfig((state) => state.app);
-  const { data,error } = useFetch({ path: appConfig.hostServer + 'api/especialidades', method: 'GET' });
+  const [data,setData ] = useState(null);
     const [rowsDisplay, setRowsDisplay] = useState(null);
+    const [edit,setEdit] = useState(null);
+    const [view,setView] = useState(false);
+    const [open,setOpen] = useState(false);
+    const [send,setSend] = useState(false);
+    const [loading,setLoading] = useState(false);
+    const [loadingUpdate,setLoadingUpdate] = useState(false);
+    const [dataEdit,setDataEdit] = useState(null);
+    const [errorUp,setErrorUp] = useState(null);
+    const [openNoti,setOpenNoti] = useState(false);
+    const [error,setError] = useState(null);
+    const [formData,setFormData] = useState(null);
+    const [reload,setReload] = useState(true);
     const handleChange = (e,page) => {
             const init = (page - 1 ) * paginationNumber;
             const limit = init + paginationNumber;
@@ -38,12 +53,74 @@ const Lista = () =>{
             setRowsDisplay(newData);
     }
     useEffect(() => {
+        if(reload){
+          setLoading(true);
+          fetch(`${appConfig.hostServer}api/especialidades`)
+          .then(query => query.json())
+          .then(setData)
+          .catch(setError)
+          .finally(() => {
+            setReload(false);
+            setLoading(false);
+          })
+
+        }
+    },[reload])
+    useEffect(() => {
       if(data){
         setRowsDisplay(data.data.slice(0,paginationNumber));
       }
     },[data])
+    const handleClose = () => {
+      setOpen(false);
+      setView(false);
+      setEdit(null);
+
+    }
+    const handleClick = (e,obj) => {
+      setEdit(obj);
+      setView(true);
+      setOpen(true);
+    }
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      const formData = new FormData(e.target);
+      setFormData(formData);
+      handleClose();
+      setSend(true);
+    }
+
+    useEffect(() => {
+      if(send){
+        setLoadingUpdate(true);
+        fetch(`${appConfig.hostServer}api/especialidades/edit`,{method: 'POST',body: formData})
+        .then(query => query.json())
+        .then(setDataEdit)
+        .catch(setErrorUp)
+        .finally(() => {
+          setSend(false);
+          setLoadingUpdate(false);
+          setOpenNoti(true);
+          setReload(true);
+        })
+      }
+    },[send])
+    const handleCloseNoti = () => {
+      setOpenNoti(false);
+    }
   return (
     <>
+    {
+      loadingUpdate && <LoadingOne ancho={'50%'}  textInner='Actualizando, espere por favor...' />
+    }
+    {
+      (dataEdit && dataEdit.ident) && 
+      <AlertaExito 
+        open={openNoti}
+        handleClose={handleCloseNoti}
+        message={dataEdit.mensaje}
+      />
+    }
     { rowsDisplay ?
     (
       <>
@@ -82,10 +159,12 @@ const Lista = () =>{
               <TableCell align="left">{row.nombre}</TableCell>
               <TableCell align="left">{row.descripcion}</TableCell>
               <TableCell align="left">
-               <img src={row.img} alt={ 'imagen  '+ row.nombre} className='img__table' />
+               <img src={`${row.img.includes('http') ? '' : appConfig.hostServer.slice(0,-1)}${row.img}`} 
+               alt={ 'imagen  '+ row.nombre} className='img__table' />
                 </TableCell>
               <TableCell align="center">  
-                  <Button variant="outlined" startIcon={<Edit />}>
+                  <Button onClick={(e) => handleClick(e,row)}
+                  variant="outlined" startIcon={<Edit />}>
                     Editar
                   </Button> 
               </TableCell>
@@ -119,6 +198,11 @@ const Lista = () =>{
         </Stack>
       </>
     )}
+
+{
+      (view && edit) && 
+        <EditEspecialidad info={edit} open={open} handleClose={handleClose} handleSubmit={handleSubmit} /> 
+    }
     </>
   );
 }
