@@ -48,7 +48,7 @@ const PasoDos = ({state,setState}) => {
                 <Grid container spacing={0.25}>
                     <Grid xs={12}>
                     <Item className='text-start d-flex flex-column gap-2 p-2' style={{ fontSize: '2rem'}}>
-                        <TextField
+                        {/* <TextField
                         style={{ fontSize: '1.8rem' }}
                             id="time"
                             required
@@ -65,7 +65,7 @@ const PasoDos = ({state,setState}) => {
                             inputProps={{
                             step: 300, // 5 min
                             }}
-                        />
+                        /> */}
                     <TextField
                     style={{ fontSize: '1.8rem' }}
                     label='Motivo de consulta'

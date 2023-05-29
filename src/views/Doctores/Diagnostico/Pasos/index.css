@@ -218,3 +218,6 @@ div.parte2__interno {
     justify-content: center;
     align-items: center;
 }
+.notificacion > img{
+ max-width: 100%;
+}

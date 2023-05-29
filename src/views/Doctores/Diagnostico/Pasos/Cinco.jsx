@@ -1,7 +1,17 @@
 import './index.css';
 import { useUserStore } from './../../../../store/userStore';
 import dayjs from 'dayjs';
+import { useState, useEffect } from 'react';
+import Button from '@mui/material/Button';
+import Dialog from '@mui/material/Dialog';
+import DialogActions from '@mui/material/DialogActions';
+import DialogContent from '@mui/material/DialogContent';
+import DialogContentText from '@mui/material/DialogContentText';
+import DialogTitle from '@mui/material/DialogTitle';
+import imgGif from './../../../../assets/imgs/diagnosticoNoti.gif';
 const Cinco = ({state1,state2,state3,state4}) => {
+    const [message,setMessage] = useState(localStorage.showNoti ? JSON.parse(localStorage.showNoti).op : true );
+    const [open,setOpen] = useState(false);
     const user = useUserStore((state) => state.user);
     const objt =  {...state4};
     delete objt.inputs;
@@ -36,8 +46,30 @@ const Cinco = ({state1,state2,state3,state4}) => {
             const [medi,tra] = valor;
             return acum + medi + '^^' + tra + '|';        
     },'').slice(0,-1);
+
+    const handleClose = () => {
+        setOpen(false);
+    }
+
+    const handleChange = (e) => {
+        if(e.target.checked){
+            setMessage(false);
+        }else{
+            setMessage(true);
+        }
+    }
+    useEffect(() => {
+            localStorage.showNoti = JSON.stringify({op: message})
+    },[message]);
+
+    useEffect(() => {
+        if(message){
+            setOpen(true);
+        }
+    },[])
     return (
         <>
+        
             <div className='contenedor'>
                 <div className='titulo'>
                     <article style={{ width: '25%' }}>
@@ -200,14 +232,14 @@ const Cinco = ({state1,state2,state3,state4}) => {
                 <div className='parte2'>
                     <h5>2  HISTORIA CLÍNICA</h5>
                     <div className='parte2__interno'>
-                        <article>
+                        {/* <article>
                             <h6>HORA</h6>
                             <p>
                                 {
                                     state2?.hora ?? ''
                                 }    
                             </p>
-                        </article>
+                        </article> */}
                         {
                         (user?.nombre_especialidad?.toUpperCase()?.includes('ODONTOLOGIA')) ? '' :
                         <article>
@@ -410,18 +442,45 @@ const Cinco = ({state1,state2,state3,state4}) => {
                             {user.nombres} {user.apellidos.split(' ')[0]}
                         </p>
                     </article>
-                    <article>
-                        <h6>FIRMA</h6>
-                        <p></p>
-                    </article>
                 </div>
                 </div>
             </div>
             {/* Datsos unidos de los medicamentos y los tratamientos */}
             <input id='medicamentos-results' type="hidden" name='medicamentos' value={backendValues} />
-            {
 
-            }
+{
+            open && (<>
+            <Dialog
+        open={open}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">
+          {"Consideraciones a tomar en cuenta."}
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description" className='mt-0'>
+            Esta pantalla despliega la previsualizacion final de la ficha medica,
+            si desea cambiar algun campo debe retroceder y modificarlo el paso donde 
+            desea editarlo la siguiente imagen animada le presenta ese proceso
+          </DialogContentText>
+            <div className='notificacion'>
+                <img src={imgGif} alt="description" />
+            </div>
+            <div className='d-flex align-items-center gap-2 mt-2'>
+                <input style={{display: 'block', width: '1.2rem', height: '1.2rem' }}
+                type="checkbox" value={!message} id='show' onChange={handleChange}  />
+                <label style={{display:'block'}} className='text-black-50' htmlFor="show">No volver a mostrar</label>
+            </div>
+        </DialogContent>
+        <DialogActions>
+          <Button variant='contained' color='success' onClick={handleClose} autoFocus>
+            Entendido
+          </Button>
+        </DialogActions>
+      </Dialog>
+            </>)
+        }
         </>
     );
 }

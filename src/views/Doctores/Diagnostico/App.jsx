@@ -56,6 +56,7 @@ const App = () => {
       state4={state4}
       />];
       if(user?.nombre_especialidad?.toUpperCase()?.includes('ODONTOLOGIA')){
+        console.log('odonto');
         delete elementos[2];
         elementos = elementos.filter(e => e !== '');
         steps = steps.filter(el => el !== 'EXAMEN FÍSICO');
@@ -83,7 +84,8 @@ const App = () => {
     const handleSumbit = (e) => {
       e.stopPropagation();
       e.preventDefault();
-
+      if(!window.confirm('Esta registrar la ficha médica, ya no podra realizar cambios')) return;
+      
       const form = new FormData(e.target);
       [state1,state2,state3].forEach(state => {
         for(let index in state){
@@ -250,7 +252,6 @@ const App = () => {
             />
           </>)
         }
-
 
         <article>
             <h2 className='text-center'>Registro de fichas clinicas</h2>
