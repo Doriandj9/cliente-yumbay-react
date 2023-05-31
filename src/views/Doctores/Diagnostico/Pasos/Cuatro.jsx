@@ -66,7 +66,7 @@ const Cuatro = ({state,setState}) => {
                         />
                         <TextField
                         style={{ fontSize: '1.8rem', width: '50%' }}
-                        label={`Instrucciones para ${state?.medicamento_0 ?? ''}`}
+                        label={`Indicación para ${state?.medicamento_0 ?? ''}`}
                         required
                         type='text'
                         className='w-100 mb-2'

@@ -25,8 +25,8 @@ import DialogButtons from '../../../components/DialogButtons';
 import {MdOutlineError} from 'react-icons/md';
 import { useTitle } from '../../../utils/hooks/useTitle';
 import { useUserStore } from '../../../store/userStore';
-
-let steps = ['REGISTRO DE ADMISIÓN', 'HISTORIA CLÍNICA', 'EXAMEN FÍSICO','PLAN DE TRATAMIENTO','FICHA'];
+import Examen from './Examen/App';
+let steps = ['REGISTRO DE ADMISIÓN', 'HISTORIA CLÍNICA', 'ALGO', 'EXAMEN FÍSICO','PLAN DE TRATAMIENTO','FICHA'];
 const App = () => {
   useTitle('Diagnostico del Paciente');
     const [activeStep, setActiveStep] = useState(0);
@@ -260,6 +260,7 @@ const App = () => {
             que se encuentran en la parte inferior. Al final, se presentará la ficha 008 con todos los datos previamente ingresados. <br />
             Es importante asegurarse de completar todos los pasos para garantizar la precisión de la información registrada en la ficha médica
             </p>
+            <Examen state={state1} />
         </article>
       <Box sx={{ width: '100%' }}>
       <Form onSubmit={handleSumbit} className='p-3'>
@@ -318,13 +319,14 @@ const App = () => {
                  (activeStep !== steps.length - 1) && (<Button onClick={handleNext}>Siguiente </Button>)
                 }
                 {
-                 activeStep === steps.length - 1 && (<Button type='submit'> Finalizar </Button>)
+                 activeStep === steps.length - 1 && (<Button type='submit'>Finalizar </Button>)
                 }
             </Box>
           </>
         )}
         </Form>
       </Box>
+
       </>
 
     );

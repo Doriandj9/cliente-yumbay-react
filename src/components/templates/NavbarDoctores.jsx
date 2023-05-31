@@ -51,7 +51,7 @@ const NavbarDoctores = ({info}) => {
                         : 'nav-link text-white d-flex align-items-center gap-2'
                     }}>
                         <img src={espcialidadesMedicas}  alt="especialidades" />
-                        <span>Pacientes FAY</span>
+                        <span>Listado de pacientes</span>
                     </NavLink>
                 </li>
              
