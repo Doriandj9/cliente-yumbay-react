@@ -26,7 +26,10 @@ import {MdOutlineError} from 'react-icons/md';
 import { useTitle } from '../../../utils/hooks/useTitle';
 import { useUserStore } from '../../../store/userStore';
 import Examen from './Examen/App';
-let steps = ['REGISTRO DE ADMISIÓN', 'HISTORIA CLÍNICA', 'ALGO', 'EXAMEN FÍSICO','PLAN DE TRATAMIENTO','FICHA'];
+import Antecedentes from './Pasos/Antecedentes';
+import EnfermedadActual from './Pasos/EnfermedadActual';
+
+let steps = ['REGISTRO DE ADMISIÓN', 'MOTIVO DE CONSULTA', 'ENFERMEDAD ACTUAL','ANTECENDENTES', 'EXAMEN FÍSICO','PLAN DE TRATAMIENTO','FICHA'];
 const App = () => {
   useTitle('Diagnostico del Paciente');
     const [activeStep, setActiveStep] = useState(0);
@@ -35,7 +38,8 @@ const App = () => {
     const [state2,setState2] = useState(null);
     const [state3,setState3] = useState(null);
     const [state4,setState4] = useState(null);
-    const [state5,setState5] = useState(null);
+    const [stateAntecedentes,setStateAntecedentes] = useState(null);
+    const [stateEnfermedad,setStateEnfermedad] = useState(null);
     const [final,setFinal] = useState(null);
     const [data,setData] = useState(null);
     const [send, setSend] = useState(false);
@@ -48,12 +52,16 @@ const App = () => {
     const user = useUserStore((state) => state.user);
     let elementos = [<PasoUno state={state1} setState={setState1} />,
      <PasoDos state={state2} setState={setState2} />,
+     <EnfermedadActual state={stateEnfermedad} setState={setStateEnfermedad} />,
+     <Antecedentes state={stateAntecedentes} setState={setStateAntecedentes} />,
       <PasoTres state={state3} setState={setState3} />, 
       <Cuatro state={state4} setState={setState4} />, 
       <Cinco state1={state1}
       state2={state2}
       state3={state3}
       state4={state4}
+      stateAntec={stateAntecedentes}
+      stateEnfer={stateEnfermedad}
       />];
       if(user?.nombre_especialidad?.toUpperCase()?.includes('ODONTOLOGIA')){
         console.log('odonto');
@@ -87,11 +95,13 @@ const App = () => {
       if(!window.confirm('Esta registrar la ficha médica, ya no podra realizar cambios')) return;
       
       const form = new FormData(e.target);
-      [state1,state2,state3].forEach(state => {
+      [state1,state2,state3,stateAntecedentes,stateEnfermedad].forEach(state => {
         for(let index in state){
           form.append(index,state[index]);
         }
       })
+
+      console.log([...formData]);
       setFormData(form);
       setSend(true);
     };
@@ -122,6 +132,8 @@ const App = () => {
       setState2(null);
       setState3(null);
       setState4(null);
+      setStateEnfermedad(null)
+      setStateAntecedentes(null);
     };
     
     useEffect(() => {

@@ -294,7 +294,7 @@ const Ficha = ({data}) => {
                     </div>
                 </div>
                 <div className='parte4'>
-                    <h5> PLAN DE TRATAMIENTO </h5>
+                    <h5>4 PLAN DE TRATAMIENTO </h5>
                     <div className='parte4__interno'>
                         <article>
                             <h6 style={ { textTransform: 'uppercase' } }>Medicamentos</h6>
@@ -328,6 +328,27 @@ const Ficha = ({data}) => {
                         </article>
                     </div>
                 </div>
+                <div className='parte2'>
+                    <h5>5 OTROS MOTIVOS</h5>
+                        <div className='parte2__interno flex-column'  >
+                            <article style={{ width: '100%' }}>
+                            <h6>ANTECEDENTES</h6>
+                            <p>
+                                {
+                                    DataView?.antecedentes_paso ?? ''
+                                }
+                            </p>
+                        </article>
+                        <article style={{ width: '100%' }}>
+                            <h6>ENFERMEDAD ACTUAL</h6>
+                            <p>
+                                {
+                                    data?.enfermedad_actual ?? ''
+                                }
+                            </p>
+                        </article>
+                        </div>
+                </div>
                 <div className='parte5'>
                 <div className='parte3_fila footer__ficha'>
                     <article>
@@ -340,16 +361,13 @@ const Ficha = ({data}) => {
                         <h6>HORA DE FINALIZACIÓN</h6>
                         <p>{data?.hora_finalizacion}</p>
                     </article>
-                    <article>
+                    <article className='w-50'>
                         <h6>PROFESIONAL Y CÓDIGO</h6>
                         <p>
                             {user.nombres} {user.apellidos.split(' ')[0]}
                         </p>
                     </article>
-                    <article>
-                        <h6>FIRMA</h6>
-                        <p></p>
-                    </article>
+
                 </div>
                 </div>
             </div>

@@ -89,6 +89,7 @@ useEffect(() => {
           // outline: 'none',
           // borderRadius: '0.5rem'
         }} >
+          <input type="hidden" value={cedula} name='cedula_doctor' />
           <input type="hidden" name='fecha' value={fecha ? fecha.replaceAll('/','-') : ''} />
           <InputLabel required id="demo-simple-select-standard-label">Selecione la hora</InputLabel>
           <Select name='horas' 

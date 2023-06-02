@@ -9,7 +9,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import imgGif from './../../../../assets/imgs/diagnosticoNoti.gif';
-const Cinco = ({state1,state2,state3,state4}) => {
+const Cinco = ({state1,state2,state3,state4,stateAntec,stateEnfer}) => {
     const [message,setMessage] = useState(localStorage.showNoti ? JSON.parse(localStorage.showNoti).op : true );
     const [open,setOpen] = useState(false);
     const user = useUserStore((state) => state.user);
@@ -75,7 +75,7 @@ const Cinco = ({state1,state2,state3,state4}) => {
                     <article style={{ width: '25%' }}>
                         <h6>INSTITUCIÓN DEL SISTEMA</h6>
                         <section className='cont'>
-                            Clinica Yumbay 
+                            Fundación Arturo Yumbay 
                         </section>
                     </article>
                     <article style={{ width: '25%' }} >
@@ -112,7 +112,7 @@ const Cinco = ({state1,state2,state3,state4}) => {
                     <article style={{ width: '25%' }}>
                         <h6>NÚMERO DE HISTORIA CLÍNICA</h6>
                         <section  className='cont'>
-                            Clinica Yumbay 
+                            Fundación Arturo Yumbay 
                         </section>
                     </article>
                 </div>
@@ -423,6 +423,27 @@ const Cinco = ({state1,state2,state3,state4}) => {
                         </article>
                     </div>
                 </div>
+                <div className='parte2'>
+                    <h5>5 OTROS MOTIVOS</h5>
+                        <div className='parte2__interno flex-column'>
+                             <article style={{ width: '100%' }}>
+                            <h6>ANTECEDENTES</h6>
+                            <p>
+                                {
+                                    stateAntec?.antecedentes_paso ?? ''
+                                }
+                            </p>
+                        </article>
+                        <article style={{ width: '100%' }}>
+                            <h6>ENFERMEDAD ACTUAL</h6>
+                            <p>
+                                {
+                                    stateEnfer?.enfermedad_actual ?? ''
+                                }
+                            </p>
+                        </article>
+                        </div>
+                </div>
                 <div className='parte5'>
                 <div className='parte3_fila footer__ficha'>
                     <article>
@@ -436,7 +457,7 @@ const Cinco = ({state1,state2,state3,state4}) => {
                         <p>{dayjs().format('HH:mm')}</p>
                         <input type="hidden" name='hora_finalizacion' value={dayjs().format('HH:mm')} />
                     </article>
-                    <article>
+                    <article className='w-50'>
                         <h6>PROFESIONAL Y CÓDIGO</h6>
                         <p>
                             {user.nombres} {user.apellidos.split(' ')[0]}
@@ -444,6 +465,7 @@ const Cinco = ({state1,state2,state3,state4}) => {
                     </article>
                 </div>
                 </div>
+                
             </div>
             {/* Datsos unidos de los medicamentos y los tratamientos */}
             <input id='medicamentos-results' type="hidden" name='medicamentos' value={backendValues} />
