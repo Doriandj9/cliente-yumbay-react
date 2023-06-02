@@ -145,6 +145,7 @@ const PasoTres = ({state, setState}) => {
                     className='w-100 mb-2'
                     onChange={handleChangeInput}
                     name='otros_hallasgos'
+                    multiline
                     value={state?.otros_hallasgos ?? ''}
                     placeholder='Por ejemplo: No se observan edemas en extremidades inferiores, no se palpan adenomegalias ni hepatomegalia'
                     />

@@ -37,6 +37,7 @@ const EnfermedadActual = ({state,setState}) => {
                     style={{ fontSize: '1.8rem'}}
                     label='Descripción'
                     required
+                    multiline
                     type='text'
                     className='w-100 mb-2'
                     name='enfermedad_actual'

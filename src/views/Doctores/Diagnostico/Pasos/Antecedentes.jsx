@@ -37,6 +37,7 @@ const Antecedentes = ({state,setState}) => {
                     label='Descripción'
                     required
                     type='text'
+                    multiline
                     className='w-100 mb-2'
                     name='antecedentes_paso'
                     value={state?.antecedentes_paso ?? ''}

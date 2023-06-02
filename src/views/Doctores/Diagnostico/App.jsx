@@ -64,8 +64,8 @@ const App = () => {
       stateEnfer={stateEnfermedad}
       />];
       if(user?.nombre_especialidad?.toUpperCase()?.includes('ODONTOLOGIA')){
-        console.log('odonto');
-        delete elementos[2];
+       
+        delete elementos[4];
         elementos = elementos.filter(e => e !== '');
         steps = steps.filter(el => el !== 'EXAMEN FÍSICO');
       }
@@ -100,8 +100,6 @@ const App = () => {
           form.append(index,state[index]);
         }
       })
-
-      console.log([...formData]);
       setFormData(form);
       setSend(true);
     };
@@ -175,7 +173,7 @@ const App = () => {
         setSkipped(newSkipped);
       }
     }
-    console.log(data);
+   
     return (
         <>
         {

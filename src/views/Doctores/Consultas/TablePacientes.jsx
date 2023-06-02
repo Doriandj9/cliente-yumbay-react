@@ -57,12 +57,10 @@ const  TablePacientes = ({data}) =>{
     },[data])
   const handleInformacion = (e,cedula) => {
     const res = data.filter(pacein => pacein.cedula === cedula)[0];
-    console.log(cedula,res);
     setPaciente(res);
     setInfo(true);
     setOpen(true);
   }
-  console.log(paceinte);
   return (
     <> 
     {

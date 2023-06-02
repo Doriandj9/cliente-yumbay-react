@@ -14,7 +14,18 @@ import TableCell, { tableCellClasses } from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
+import {FaUserCheck} from 'react-icons/fa';
 import { NavLink } from 'react-router-dom';
+import { Button } from '@material-ui/core';
+
+const stydisable = {
+  width:' 100%',
+  height:' 100%',
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  backgroundColor: 'rgba(255, 255, 255, 0.5) ',}
+
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
     ...theme.typography.body2,
@@ -49,6 +60,7 @@ const DataCards = ({data}) => {
     const [idState,setIdState] = useState(null);
     const [loading,setLoading] = useState(false);
     const appConfig = useAppConfig((state) => state.app);
+    const day = dayjs();
     const colors = {
         1: 'red',
         2: 'black',
@@ -60,9 +72,11 @@ const DataCards = ({data}) => {
         year: 'numeric',
         day: 'numeric'
     }).format
-
+    /**
+     * @param {Event} e
+     */
     const handleClick = (e) => {
-       const idRef = parseInt(e.target.dataset.id);
+       const idRef =  parseInt(e.target.getAttribute('data-id'));
        const newDatos = datos.filter(dato => dato.id !== idRef);
        setDatos(newDatos);
        //peticion
@@ -83,6 +97,7 @@ const DataCards = ({data}) => {
         }
     },[send]);
     let index = 0;
+    console.log(info);
     return (
         <>
         {
@@ -94,50 +109,6 @@ const DataCards = ({data}) => {
             )
         }
         { datos &&
-            // datos.map((dato) => {
-            //     if(index > 4){
-            //         index = 0;
-            //     }
-            //     index++;
-            //            return (
-            //            <Box key={dato.id}
-            //             sx={{ minWidth: 275 }}>
-            //                 <Card
-            //                  variant="outlined">
-            //                     <CardContent>
-            //                     <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
-            //                         Cita Médica Pendiente
-            //                     </Typography>
-            //                     <Typography variant="h5" component="div">
-            //                     <Avatar sx={{ bgcolor: colors[index] }}>{dato.nombres.split(' ')[0].substring(0,2)}</Avatar>
-            //                     </Typography>
-            //                     <Typography sx={{ mb: 1.5 }} color="text.secondary">
-            //                         Nombre: {dato.nombres}  {dato.apellidos} <br/>
-            //                         Cédula: {dato.cedula}
-            //                     </Typography>
-            //                     <Typography variant="body2">
-            //                         <span className='d-flex align-items-center gap-2'>
-            //                         <BsFillCalendarDateFill style={{fontSize: '1.25rem' }}
-            //                         className='text-black-50' /> {format(dayjs(dato.fecha))}
-            //                         </span>
-                                    
-            //                         <br />
-            //                         <span className='d-flex align-items-center gap-2'>
-            //                         <MdAccessTimeFilled style={{fontSize: '1.25rem' }}
-            //                         className='text-black-50' /> {dato.horas.split('|')[0]} a {dato.horas.split('|')[1]}
-            //                         </span>
-            //                     </Typography>
-            //                     </CardContent>
-            //                     <CardActions>
-            //                         <Button data-id={dato.id} onClick={handleClick}
-            //                          className='text-success' size="small">No mostrar</Button>
-            //                     </CardActions>
-            //                 </Card>
-            //             </Box>
-            //         )
-            //     }
-            // )
-
             ( 
                 <TableContainer style={{
                   position: 'relative',
@@ -153,33 +124,93 @@ const DataCards = ({data}) => {
                         <StyledTableCell align="center">Fecha</StyledTableCell>
                         <StyledTableCell align="center">Hora </StyledTableCell>
                         <StyledTableCell align="center"> </StyledTableCell>
+                        <StyledTableCell align="center"> </StyledTableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {data.map((row,i) => (
-                        <StyledTableRow key={i}>
-                          <StyledTableCell style={{borderRight: '1px solid #ccc'  }} 
-                           align="center">{row.cedula}</StyledTableCell>
-                          <StyledTableCell style={{borderRight: '1px solid #ccc'  }}
-                          align="center">{row.nombres}</StyledTableCell>
-                          <StyledTableCell style={{borderRight: '1px solid #ccc'  }}
-                          align="center">{row.apellidos}</StyledTableCell>
-                          <StyledTableCell style={{borderRight: '1px solid #ccc'  }}
-                          align="center">{format(dayjs(row.fecha))}</StyledTableCell>
-                          <StyledTableCell style={{borderRight: '1px solid #ccc'  }}
-                          align="center">{row.horas.split('|')[0]} a {row.horas.split('|')[1]}</StyledTableCell>
-                          <StyledTableCell style={{ width: '5px'}}
+                      {data.map((row,i) => {
+                        const valid = day.format('YYYY-MM-DD') === row.fecha;
+                        return (
+                        <StyledTableRow 
+                        className={ valid ? '' : 'disable-row'}
+                        key={i}>
+                          <StyledTableCell 
+                        className={ valid ? '' : 'position-relative'}
+                          style={{borderRight: '1px solid #ccc'  }} 
+                           align="center">
+                            {row.cedula}
+                            {
+                              valid ? '' : <div style={stydisable}></div>
+                            }
+                          </StyledTableCell>
+                          <StyledTableCell
+                        className={ valid ? '' : 'position-relative'}
+                        style={{borderRight: '1px solid #ccc'  }}
+                          align="center">{row.nombres}
+                          {
+                              valid ? '' : <div style={stydisable}></div>
+                            }
+                          </StyledTableCell>
+                          <StyledTableCell 
+                        className={ valid ? '' : 'position-relative'}
+                        style={{borderRight: '1px solid #ccc'  }}
+                          align="center">
+                            {row.apellidos}
+                            {
+                              valid ? '' : <div style={stydisable}></div>
+                            }
+                            </StyledTableCell>
+                            
+                          <StyledTableCell 
+                        className={ valid ? '' : 'position-relative'}
+                        style={{borderRight: '1px solid #ccc'  }}
+                          align="center">{format(dayjs(row.fecha))}
+                          {
+                              valid ? '' : <div style={stydisable}></div>
+                            }
+                          </StyledTableCell>
+                          <StyledTableCell 
+                        className={ valid ? '' : 'position-relative'}
+                        style={{borderRight: '1px solid #ccc'  }}
+                          align="center">{row.horas.split('|')[0]} a {row.horas.split('|')[1]}
+                          {
+                              valid ? '' : <div style={stydisable}></div>
+                            }
+                          </StyledTableCell>
+                          <StyledTableCell 
+                        className={ valid ? '' : 'position-relative'}
+                        style={{ width: '5px',borderRight: '1px solid #ccc' }}
                           align="center">
                             <NavLink to={`/doctores/diagnostico/${row.cedula}`}>
                                 <FaLaptopMedical 
                                 style={{ fontSize:'1.5rem', padding: 0 ,margin:0,cursor:'pointer'}} className='text-secondary' />
                                 Diagnostico     
                             </NavLink>
+                            {
+                              valid ? '' : <div style={stydisable}></div>
+                            }
                             </StyledTableCell>
+                            <StyledTableCell 
+                        className={ valid ? '' : 'position-relative'}
+                        style={{borderRight: '1px solid #ccc'  }}
+                          align="center">
+                            
+                            <Button disabled={valid ? false : true}
+                            data-id={row.id} onClick={handleClick} variant='contained'
+                            color='primary'
+                                      className='' size="small">
+                                        <FaUserCheck 
+                                style={{ fontSize:'1.5rem', padding: 0,cursor:'pointer'}} className='me-1' />
+                                        Atendido
+                            </Button>
+                            {
+                              valid ? '' : <div style={stydisable}></div>
+                            }
+                          </StyledTableCell>
                         </StyledTableRow>
                         
                         
-                      ))}
+                      )})}
                     </TableBody>
                   </Table>
                 </TableContainer>)

@@ -53,7 +53,7 @@ const App = () => {
             setConsulta(true);
         }
     }
-    console.log(data);
+    
     return(
         <>
         {

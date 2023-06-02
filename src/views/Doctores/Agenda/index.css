@@ -1,0 +1,27 @@
+.disable-row{
+    position: relative !important;
+}
+
+.position-row{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+    background-color: rgba(255, 255, 255, 0.25) !important;
+    z-index: 99999;
+}
+
+.disable-td{
+    background-color: rgba(255, 255, 255, 0.25) !important;;
+}
+
+.top-td{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    height: 100% !important;
+    background-color: rgba(255, 255, 255, 0.25) !important;
+    z-index: 99999;
+}
