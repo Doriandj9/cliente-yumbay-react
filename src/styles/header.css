@@ -68,13 +68,19 @@ a.item-activo:hover{
   background-color:  #e5eef0;
 }
 
-
+.movil_op{
+  flex-direction: row;
+}
 
 @media screen and (max-width: 828px) {
   .responsive__nav {
     flex-wrap: wrap;
+    flex-direction: column;
   }
   .item-unique{
     margin-bottom: 1rem;
+  }
+  .movil_op{
+    flex-direction: column;
   }
 }

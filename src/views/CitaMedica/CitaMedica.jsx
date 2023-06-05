@@ -38,6 +38,7 @@ const CitaMedica = ({recepcionista=false, cedula=null}) => {
     const [formData,setFormData] = useState(null);
     const {reset, setReset} = useState(false);
     const [loading, setLoading] = useState(false);
+    const [columns,setColumns] = useState(6);
     const [inputsDatas, setInputsDatas] = useState({
         cedula: '',
         nombres: '',
@@ -150,7 +151,11 @@ const CitaMedica = ({recepcionista=false, cedula=null}) => {
             setConsulta(true);
         }
     },[])
-
+    useEffect(() => {
+        if(document.documentElement.clientWidth <= 500){
+            setColumns(12);
+        }
+    },[columns])
     return (
         <>
         {
@@ -190,8 +195,8 @@ const CitaMedica = ({recepcionista=false, cedula=null}) => {
              className="w-75 m-auto">
             <Box sx={{ flexGrow: 1 }}>
                 <Grid container spacing={0.25}>
-                    <Grid xs={6}>
-                    <Item>
+                    <Grid xs={columns} >
+                    <Item className="item__flex">
                     <TextField className="w-100 mb-4"
                         label='Ingrese su número de cédula'
                         placeholder="Por ejemplo: 01234556789"
@@ -251,8 +256,8 @@ const CitaMedica = ({recepcionista=false, cedula=null}) => {
                         />
                     </Item>
                     </Grid>
-                    <Grid xs={6}>
-                    <Item>
+                    <Grid xs={columns}>
+                    <Item className="item__flex">
                     <label className='text-start d-block mb-2' style={{fontSize: '1.05rem' }}  
                         htmlFor="">Selecione la fecha para la cita medica en el calendario</label>
                     <Calendario reset={inputsDatas} setReset={setInputsDatas}  />

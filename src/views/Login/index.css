@@ -58,3 +58,9 @@
     }
     
   }
+  @media screen and (max-width: 500px) {
+    .container__login{
+        width: 100%;
+    }
+    
+  }

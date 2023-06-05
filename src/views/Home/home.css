@@ -83,3 +83,25 @@ body,html{
 .ppp{
     box-shadow: 1px 1px 3px var(--color-secundario);
 }
+.img__home{
+    width: 65%;
+    object-fit:cover; 
+}
+.cards__img{
+    width: 12rem;
+}
+@media screen and (max-width:500px) {
+    .fondo-parrafo{
+        flex-direction: column;
+        align-items: center;
+    }
+    .__parrafo{
+        width: 100%;
+    }
+    .img__home {
+        width: 100%;
+    }
+    .cards__img{
+        width: 80%;
+    }
+}

@@ -34,7 +34,7 @@ const Header = () => {
             <nav className="p-0 m-0 responsive__nav">
             <div className="container-fluid p-0 m-0">
                         <ul className='m-0 bg-primary w-100 d-flex flex-row flex-wrap justify-content-around'>
-                            <div className='navbar-nav d-flex flex-row'>
+                            <div className='navbar-nav d-flex movil_op'>
                                 <li className="nav-item">
                                     <NavLink 
                                     className={({isActive}) => {

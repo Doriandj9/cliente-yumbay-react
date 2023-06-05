@@ -3,3 +3,6 @@
     display: flex;
     flex-direction: column;
 }
+.item__flex{
+    flex-direction: column !important;
+}

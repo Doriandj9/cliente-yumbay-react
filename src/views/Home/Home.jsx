@@ -11,7 +11,9 @@ const Home = () => {
     <>
     <Header></Header>
         <div className='fondo-parrafo p-2'>
-            <img src={fondo} alt="doctores" style={{ width: '65%', objectFit:'cover' }} height={ 800 }
+            <img 
+            className='img__home'
+            src={fondo} alt="doctores" height={ 800 }
             
             />
             <article className='__parrafo'>

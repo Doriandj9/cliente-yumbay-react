@@ -55,7 +55,7 @@ const Servicios = () => {
                 {
                     (!loading && data && data.ident) && 
                     data.data.map((element) => (
-                        <div key={element.id} className="card" style={{width:'12rem'}}>
+                        <div key={element.id} className="card cards__img">
                             <img src={`${element.img.includes('http') ? '' : appConfig.hostServer.slice(0,-1)}${element.img}`}  alt="" />
                             <div className="card-body">
                                 <h5 className="card-title">{element.nombre}</h5>
