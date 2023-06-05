@@ -27,6 +27,7 @@ import AppCitaMedica from "../../../views/Doctores/CitaMedica/App";
 import Perfil from "../../../components/Perfil";
 const routesDoctor = {
     path: '/doctores',
+    handle: {op:true},
     element: <App />,
     children: [
         {

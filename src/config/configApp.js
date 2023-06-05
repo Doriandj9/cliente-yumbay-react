@@ -1,6 +1,6 @@
 //hostServer: 'https://api.fundacionarturoyumbay.online/',
 const app = {
-    hostServer: 'https://api.fundacionarturoyumbay.online/',
+    hostServer: 'http://localhost:8000/',
 
 }
 

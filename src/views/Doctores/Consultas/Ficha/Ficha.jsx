@@ -1,10 +1,29 @@
 import dayjs from 'dayjs';
 import { useUserStore } from './../../../../store/userStore';
+import { Backdrop, Button, Dialog, DialogActions, DialogContent, DialogTitle, Slide } from '@mui/material';
+import { forwardRef } from 'react';
 
-const Ficha = ({data}) => {
+const Transition = forwardRef(function Transition(props, ref) {
+    return <Slide direction="up" ref={ref} {...props} />;
+  });
+
+const Ficha = ({data,open, handleClose}) => {
     const user = useUserStore((state) => state.user);
+
     return (
         <>
+        <Dialog
+        open={open}
+        fullWidth
+        maxWidth='lg'
+        onClose={handleClose}
+        TransitionComponent={Transition}
+        keepMounted
+        >
+        <DialogTitle>
+        <h2 className='title-list mt-2 mb-2'> Información de la ficha médica </h2>
+        </DialogTitle>
+        <DialogContent>
             <div className='contenedor'>
                 <div className='titulo'>
                     <article style={{ width: '25%' }}>
@@ -335,7 +354,7 @@ const Ficha = ({data}) => {
                             <h6>ANTECEDENTES</h6>
                             <p>
                                 {
-                                    DataView?.antecedentes_paso ?? ''
+                                    data?.antecedentes ?? ''
                                 }
                             </p>
                         </article>
@@ -371,6 +390,13 @@ const Ficha = ({data}) => {
                 </div>
                 </div>
             </div>
+        </DialogContent>
+        <DialogActions>
+            <Button onClick={handleClose}>
+                Atras
+            </Button>
+        </DialogActions>
+        </Dialog>
         </>
     );
 }

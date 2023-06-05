@@ -29,8 +29,8 @@ import Examen from './Examen/App';
 import Antecedentes from './Pasos/Antecedentes';
 import EnfermedadActual from './Pasos/EnfermedadActual';
 
-let steps = ['REGISTRO DE ADMISIÓN', 'MOTIVO DE CONSULTA', 'ENFERMEDAD ACTUAL','ANTECENDENTES', 'EXAMEN FÍSICO','PLAN DE TRATAMIENTO','FICHA'];
 const App = () => {
+  let steps = ['REGISTRO DE ADMISIÓN', 'MOTIVO DE CONSULTA', 'ENFERMEDAD ACTUAL','ANTECENDENTES', 'EXAMEN FÍSICO','PLAN DE TRATAMIENTO','FICHA'];
   useTitle('Diagnostico del Paciente');
     const [activeStep, setActiveStep] = useState(0);
     const [skipped, setSkipped] = useState(new Set());

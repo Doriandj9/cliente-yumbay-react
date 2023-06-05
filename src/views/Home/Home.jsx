@@ -11,7 +11,9 @@ const Home = () => {
     <>
     <Header></Header>
         <div className='fondo-parrafo p-2'>
-            <img src={fondo} alt="doctores" style={{ width: '65%' }} />
+            <img src={fondo} alt="doctores" style={{ width: '65%', objectFit:'cover' }} height={ 800 }
+            
+            />
             <article className='__parrafo'>
                 <h2 className='text-center p-2 text-primary'>
                     Bienvenido!

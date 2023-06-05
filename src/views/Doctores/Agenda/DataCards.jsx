@@ -75,10 +75,10 @@ const DataCards = ({data}) => {
     /**
      * @param {Event} e
      */
-    const handleClick = (e) => {
-       const idRef =  parseInt(e.target.getAttribute('data-id'));
+    const handleClick = (e,id) => {
+       const idRef =  parseInt(id);
        const newDatos = datos.filter(dato => dato.id !== idRef);
-       setDatos(newDatos);
+       setDatos([...newDatos]);
        //peticion
        setIdState(idRef);
        setSend(true);
@@ -97,7 +97,6 @@ const DataCards = ({data}) => {
         }
     },[send]);
     let index = 0;
-    console.log(info);
     return (
         <>
         {
@@ -108,7 +107,7 @@ const DataCards = ({data}) => {
                 />
             )
         }
-        { datos &&
+        { (datos && datos.length !== 0) &&
             ( 
                 <TableContainer style={{
                   position: 'relative',
@@ -128,7 +127,7 @@ const DataCards = ({data}) => {
                       </TableRow>
                     </TableHead>
                     <TableBody>
-                      {data.map((row,i) => {
+                      {datos.map((row,i) => {
                         const valid = day.format('YYYY-MM-DD') === row.fecha;
                         return (
                         <StyledTableRow 
@@ -196,7 +195,7 @@ const DataCards = ({data}) => {
                           align="center">
                             
                             <Button disabled={valid ? false : true}
-                            data-id={row.id} onClick={handleClick} variant='contained'
+                             onClick={(e) =>  handleClick(e,row.id)} variant='contained'
                             color='primary'
                                       className='' size="small">
                                         <FaUserCheck 

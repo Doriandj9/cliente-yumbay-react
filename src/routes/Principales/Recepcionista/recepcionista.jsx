@@ -22,6 +22,7 @@ import AppAgenda from '../../../views/Recepcionista/CitaMedica/Agenda/Agendar';
 import AppEditar from './../../../views/Recepcionista/CitaMedica/Editar/App';
 import Perfil from '../../../components/Perfil';
 const routeRecepcionista = {
+    handle: {op:true},
     path: 'recepcionista',
     element: <App />,
     children: [

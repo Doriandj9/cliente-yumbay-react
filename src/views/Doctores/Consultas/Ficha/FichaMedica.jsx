@@ -18,6 +18,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import {FaFileMedical} from 'react-icons/fa';
+import { Skeleton, Stack } from "@mui/material";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
@@ -39,13 +40,14 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     },
   }));
 const FichaMedica = () => {
-  const paginationNumber = 2;
+  const paginationNumber = 6;
     const [loading,setLoading] = useState(false);
     const [data,setData] = useState(null);
     const [error,setError] = useState(null);
     const [day, setDay] = useState(dayjs());
     const [dataResult,setDataResult] = useState(null);
     const [rowsDisplay, setRowsDisplay] = useState([]);
+    const [open,setOpen] = useState(false);
     const {cedula} = useParams();
 
 
@@ -87,6 +89,10 @@ const FichaMedica = () => {
     
     const handleFicha = (e,dato) => {
       setDataResult(dato);
+      setOpen(true);
+    }
+    const handleClose = () => {
+      setOpen(false);
     }
     return (
         <>
@@ -181,10 +187,15 @@ const FichaMedica = () => {
         </TableBody>
       </Table>
     </TableContainer>
-    <h2 className='title-list mt-2 mb-2'> Información de la ficha médica </h2>
     </>)
     }
-            {data && (<Ficha data={dataResult} />)}
+            {data && (<Ficha data={dataResult} open={open} handleClose={handleClose} />)}
+          {loading && <Stack spacing={0.25} >
+                  <Skeleton width={'100%'} variant="rectangular" height={50} />
+                  <Skeleton width={'100%'} variant="rectangular" height={50} />
+                  <Skeleton width={'100%'} variant="rectangular" height={50} />
+                  <Skeleton width={'100%'} variant="rectangular" height={50} />                  
+            </Stack>}
         </>
     );
 }

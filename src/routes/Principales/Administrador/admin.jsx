@@ -28,6 +28,7 @@ import AppPeril from './../../../components/Perfil';
 import AppUsuarios from "../../../views/Administrador/Usuarios/App";
 const routesAdmin = {
     path: 'director',
+    handle: {op:true},
     element: <App />,
     children:[
         {
