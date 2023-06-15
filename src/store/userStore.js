@@ -18,9 +18,12 @@ const useUserStore = create((set) => ({
     login: (value) => set((state) => ({
         user: value
     })),
-    logout: () => set((state) => ({
-        user: null
-    }))
+    logout: () => set((state) => {
+        sessionStorage.removeItem('__tok');
+        return {
+            user: null
+        }
+})
 }))
 
 export {useUserStore};

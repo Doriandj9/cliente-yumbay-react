@@ -194,7 +194,7 @@ const DataCards = ({data}) => {
                         style={{borderRight: '1px solid #ccc'  }}
                           align="center">
                             
-                            <Button disabled={valid ? false : true}
+                            <Button disabled={(valid || dayjs(row.fecha).unix() < day.unix() ) ? false : true}
                              onClick={(e) =>  handleClick(e,row.id)} variant='contained'
                             color='primary'
                                       className='' size="small">
@@ -203,7 +203,7 @@ const DataCards = ({data}) => {
                                         Atendido
                             </Button>
                             {
-                              valid ? '' : <div style={stydisable}></div>
+                              (valid || dayjs(row.fecha).unix() < day.unix() ) ? '' : <div style={stydisable}></div>
                             }
                           </StyledTableCell>
                         </StyledTableRow>
