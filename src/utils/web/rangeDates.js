@@ -23,10 +23,10 @@ const getDatesHabilitis = (hora_inicial, hora_fin,dias, fechas_cita) => {
     let init = dateInit;
     let dates = [];
     while(init.unix() < dateEnd.unix()){
-        init = init.minute(init.minute() + 30);
         dates.push(init.format('HH:mm') +'|'+ init.minute(init.minute() + 30).format('HH:mm'));
+        init = init.minute(init.minute() + 30);
     }
-    dates.pop();
+    // dates.pop();
     dates = dates.join('-').replace(hora_almuerzo,'').split('-');
     fechas_cita.forEach(fecha => {
         dates = dates.filter(element => element !== fecha.horas);

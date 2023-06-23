@@ -4,7 +4,6 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 import { useAppConfig } from './../../store/configAppStore';
 import { useState, useEffect } from 'react';
-import dayjs from 'dayjs';
 import { getDatesHabilitis } from '../../utils/web/rangeDates';
 import { TextField } from '@mui/material';
 import AlertWeb from '../../components/AlertWeb';

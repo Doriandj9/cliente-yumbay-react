@@ -27,7 +27,7 @@ const Item = styled(Paper)(({ theme }) => ({
   }));
 
 
-const PasoUno = ({state,setState}) => {
+const PasoUno = ({state,setState,setPaciente}) => {
     const [consulta, setConsulta] = useState(null);
     const [info, setInfo] = useState(null);
     const [error, setError] = useState(null);
@@ -72,7 +72,6 @@ const PasoUno = ({state,setState}) => {
     useEffect(()=>{
         if(info && info.ident){
             const datos = info.paciente;
-            //console.log(datos.fecha_nacimiento_fake);
             setState({
                 cedula: datos?.cedula ?? '',
                 nombres: datos?.nombres ?? '',
@@ -86,6 +85,7 @@ const PasoUno = ({state,setState}) => {
                 estado_civil: ''
             })
             setInfo(null);
+            setPaciente(info);
         }
     },[info])
     const handleChange =(e) => {

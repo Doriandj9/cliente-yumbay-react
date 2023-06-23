@@ -35,7 +35,7 @@ const EnfermedadActual = ({state,setState}) => {
                     <Item className='text-start d-flex flex-column gap-2 p-2' style={{ fontSize: '2rem'}}>
                     <TextField
                     style={{ fontSize: '1.8rem'}}
-                    label='Descripción'
+                    label='Descripción de enfermedad actual'
                     required
                     multiline
                     type='text'

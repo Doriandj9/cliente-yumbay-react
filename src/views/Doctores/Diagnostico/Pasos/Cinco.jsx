@@ -9,7 +9,7 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import imgGif from './../../../../assets/imgs/diagnosticoNoti.gif';
-const Cinco = ({state1,state2,state3,state4,stateAntec,stateEnfer}) => {
+const Cinco = ({state1,state2,state3,state4,stateAntec,stateEnfer,stateOdon,paciente}) => {
     const [message,setMessage] = useState(localStorage.showNoti ? JSON.parse(localStorage.showNoti).op : true );
     const [open,setOpen] = useState(false);
     const user = useUserStore((state) => state.user);
@@ -97,7 +97,7 @@ const Cinco = ({state1,state2,state3,state4,stateAntec,stateEnfer}) => {
                         <section className='titulo__localizacion'>
                             <div>
                                 <h6>PARROQUIA</h6>
-                                <p>boli</p>
+                                <p>GUARANDA</p>
                             </div>
                             <div>
                                 <h6>CANTÓN</h6>
@@ -112,7 +112,7 @@ const Cinco = ({state1,state2,state3,state4,stateAntec,stateEnfer}) => {
                     <article style={{ width: '25%' }}>
                         <h6>NÚMERO DE HISTORIA CLÍNICA</h6>
                         <section  className='cont'>
-                            Fundación Arturo Yumbay 
+                            { paciente ? paciente.paciente.id : '....' } 
                         </section>
                     </article>
                 </div>
@@ -140,7 +140,7 @@ const Cinco = ({state1,state2,state3,state4,stateAntec,stateEnfer}) => {
                                 <h6>PRIMER NOMBRE</h6>
                                 <p>
                                     {
-                                        state1?.nombres?.split(' ')[0] ?? ''
+                                        state1?.nombres?.split(' ').filter(el => el !== '')[0] ?? ''
                                     }
                                 </p>
                             </article>
@@ -148,7 +148,7 @@ const Cinco = ({state1,state2,state3,state4,stateAntec,stateEnfer}) => {
                                 <h6>SEGUNDO NOMBRE</h6>
                                 <p>
                                     {
-                                        state1?.nombres?.split(' ')[1] ?? ''
+                                        state1?.nombres?.split(' ').filter(el => el !== '')[1] ?? ''
                                     }
                                 </p>
                             </article>
@@ -230,98 +230,68 @@ const Cinco = ({state1,state2,state3,state4,stateAntec,stateEnfer}) => {
                     </div>
                 </div>
                 <div className='parte2'>
-                    <h5>2  HISTORIA CLÍNICA</h5>
+                    <h5>2  MOTIVO DE CONSULTA</h5>
                     <div className='parte2__interno'>
-                        {/* <article>
-                            <h6>HORA</h6>
-                            <p>
-                                {
-                                    state2?.hora ?? ''
-                                }    
-                            </p>
-                        </article> */}
-                        {
-                        (user?.nombre_especialidad?.toUpperCase()?.includes('ODONTOLOGIA')) ? '' :
-                        <article>
+                        
+                        <article style={{ width: '100%' }}>
                             <h6>MOTIVO DE CONSULTA</h6>
                             <p>
                                 {
-                                    state2?.motivo ?? ''
+                                    state2.motivo ? state2.motivo.split('\n').map(
+                                        el => (<>
+                                            {el} <br />
+                                            </>)
+                                    ) : ''
                                 }
                             </p>
                         </article>
-                        }
+                        
                     </div>
-                    {
-                        (user?.nombre_especialidad?.toUpperCase()?.includes('ODONTOLOGIA')) && 
-                        <div className='parte2__interno'>
+                </div>
+                <div className='parte2 __3'>
+                    <h5>3 ANTECEDENTES</h5>
+                        <div className='parte2__interno flex-column'>
                              <article style={{ width: '100%' }}>
-                            <h6>MOTIVO DE CONSULTA</h6>
+                            <h6>ANTECEDENTES</h6>
                             <p>
                                 {
-                                    state2?.motivo ?? ''
+                                    stateAntec?.antecedentes_paso ?? ''
                                 }
                             </p>
                         </article>
                         </div>
-                    }
-
-                {
-                (user?.nombre_especialidad?.toUpperCase()?.includes('ODONTOLOGIA')) ? '' :
-                <>
-                    <div  className='parte2__interno'>
-                        <article>
-                            <h6>ANTECEDENTES MÉDICOS</h6>
+                </div>
+                <div className='parte2 __4'>
+                    <h5>4 ENFERMEDAD ACTUAL</h5>
+                        <div className='parte2__interno flex-column'>
+                        <article style={{ width: '100%' }}>
+                            <h6>ENFERMEDAD ACTUAL</h6>
                             <p>
                                 {
-                                    state2?.antecendentes ?? ''
+                                    stateEnfer?.enfermedad_actual ?? ''
                                 }
                             </p>
                         </article>
-                        <article>
-                            <h6>TRATAMIENTO ACTUAL</h6>
-                            <p>
-                                {
-                                    state2?.tratamiento ?? ''
-                                }
-                            </p>
-                        </article>
-                    </div>
-                    <div  className='parte2__interno'>
-                        <article>
-                            <h6>ALERGIAS</h6>
-                            <p>
-                                {
-                                    state2?.alergias ?? ''
-                                }
-                            </p>
-                        </article>
-                        <article className='last'>
-                            <h6>HÁBITOS TÓXICOS</h6>
-                            <p>
-                                {
-                                    state2?.habitos ?? ''
-                                }
-                            </p>
-                        </article>
-                    </div>
-                    <div  className='parte2__interno'>
-                        <article>
-                            <h6>OTROS ANTECEDENTES RELEVANTES</h6>
-                            <p>
-                                {
-                                    state2?.otros_antecedentes ?? ''
-                                }
-                            </p>
-                        </article>
-                    </div>
-                    </>
-                }
+                        </div>
                 </div>
                 {
-                     (user?.nombre_especialidad?.toUpperCase()?.includes('ODONTOLOGIA')) ? '' : 
+                     (user?.nombre_especialidad?.toUpperCase()?.includes('ODONTOLOGIA')) ?
+                <div className='parte2 __3'>
+                     <h5>5 ODONTOGRAMA</h5>
+                         <div className='parte2__interno flex-column'>
+                              <article style={{ width: '100%' }}>
+                             <h6>ODONTOGRAMA</h6>
+                             <p>
+                                 {
+                                     stateOdon?.odontograma ?? ''
+                                 }
+                             </p>
+                         </article>
+                         </div>
+                 </div>
+                : 
                 <div className='parte3'>
-                <h5>3 EXAMEN FÍSICO</h5>
+                <h5>5 EXAMEN FÍSICO</h5>
                 <div className='parte3_fila'>
                     <article>
                         <h6>PRESIÓN ARTERIAL</h6>
@@ -364,20 +334,7 @@ const Cinco = ({state1,state2,state3,state4,stateAntec,stateEnfer}) => {
                         </p>
                     </article>
                 </div>
-                <div className='parte2__interno'>
-                        <article>
-                            <h6 style={ { textTransform: 'uppercase' } }>Auscultación cardiaca</h6>
-                            <p>
-                            { state3?.cardiaco ?? '' }
-                            </p>
-                        </article>
-                        <article className='last'>
-                        <h6 style={ { textTransform: 'uppercase' } }>Auscultación pulmonar</h6>
-                            <p>
-                            { state3?.pulmonar ?? '' }
-                            </p>
-                        </article>
-                    </div>
+                
                     <div className='parte2__interno'>
                         <article>
                             <h6 style={ { textTransform: 'uppercase' } }>Otros hallazgos relevantes</h6>
@@ -388,8 +345,9 @@ const Cinco = ({state1,state2,state3,state4,stateAntec,stateEnfer}) => {
                     </div>
                 </div>
                 }
+
                 <div className='parte4'>
-                    <h5>4 PLAN DE TRATAMIENTO </h5>
+                    <h5>6 PLAN DE TRATAMIENTO </h5>
                     <div className='parte4__interno'>
                         <article>
                             <h6 style={ { textTransform: 'uppercase' } }>Medicamentos</h6>
@@ -423,27 +381,7 @@ const Cinco = ({state1,state2,state3,state4,stateAntec,stateEnfer}) => {
                         </article>
                     </div>
                 </div>
-                <div className='parte2'>
-                    <h5>5 OTROS MOTIVOS</h5>
-                        <div className='parte2__interno flex-column'>
-                             <article style={{ width: '100%' }}>
-                            <h6>ANTECEDENTES</h6>
-                            <p>
-                                {
-                                    stateAntec?.antecedentes_paso ?? ''
-                                }
-                            </p>
-                        </article>
-                        <article style={{ width: '100%' }}>
-                            <h6>ENFERMEDAD ACTUAL</h6>
-                            <p>
-                                {
-                                    stateEnfer?.enfermedad_actual ?? ''
-                                }
-                            </p>
-                        </article>
-                        </div>
-                </div>
+                
                 <div className='parte5'>
                 <div className='parte3_fila footer__ficha'>
                     <article>

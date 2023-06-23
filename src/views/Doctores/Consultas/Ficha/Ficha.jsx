@@ -1,13 +1,13 @@
 import dayjs from 'dayjs';
 import { useUserStore } from './../../../../store/userStore';
-import { Backdrop, Button, Dialog, DialogActions, DialogContent, DialogTitle, Slide } from '@mui/material';
+import { Button, Dialog, DialogActions, DialogContent, DialogTitle, Slide } from '@mui/material';
 import { forwardRef } from 'react';
 
 const Transition = forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
   });
 
-const Ficha = ({data,open, handleClose}) => {
+const Ficha = ({data,open, handleClose,ident}) => {
     const user = useUserStore((state) => state.user);
 
     return (
@@ -29,7 +29,7 @@ const Ficha = ({data,open, handleClose}) => {
                     <article style={{ width: '25%' }}>
                         <h6>INSTITUCIÓN DEL SISTEMA</h6>
                         <section className='cont'>
-                            Clinica Yumbay 
+                            Fundación Arturo Yumbay 
                         </section>
                     </article>
                     <article style={{ width: '25%' }} >
@@ -50,7 +50,7 @@ const Ficha = ({data,open, handleClose}) => {
                         <section className='titulo__localizacion'>
                             <div>
                                 <h6>PARROQUIA</h6>
-                                <p>boli</p>
+                                <p>GUARANDA</p>
                             </div>
                             <div>
                                 <h6>CANTÓN</h6>
@@ -65,7 +65,7 @@ const Ficha = ({data,open, handleClose}) => {
                     <article style={{ width: '25%' }}>
                         <h6>NÚMERO DE HISTORIA CLÍNICA</h6>
                         <section  className='cont'>
-                            Clinica Yumbay 
+                            {ident} 
                         </section>
                     </article>
                 </div>
@@ -93,7 +93,7 @@ const Ficha = ({data,open, handleClose}) => {
                                 <h6>PRIMER NOMBRE</h6>
                                 <p>
                                     {
-                                        data?.nombres?.split(' ')[0] ?? ''
+                                        data?.nombres?.split(' ').filter(el => el !== '')[0] ?? ''
                                     }
                                 </p>
                             </article>
@@ -101,7 +101,7 @@ const Ficha = ({data,open, handleClose}) => {
                                 <h6>SEGUNDO NOMBRE</h6>
                                 <p>
                                     {
-                                        data?.nombres?.split(' ')[1] ?? ''
+                                        data?.nombres?.split(' ').filter(el => el !== '')[1] ?? ''
                                     }
                                 </p>
                             </article>
@@ -181,15 +181,7 @@ const Ficha = ({data,open, handleClose}) => {
                 <div className='parte2'>
                     <h5>2  HISTORIA CLÍNICA</h5>
                     <div className='parte2__interno'>
-                        <article>
-                            <h6>HORA</h6>
-                            <p>
-                                {
-                                    data?.hora_finalizacion ?? ''
-                                }    
-                            </p>
-                        </article>
-                        <article>
+                        <article style={{ width:'100%' }}>
                             <h6>MOTIVO DE CONSULTA</h6>
                             <p>
                                 {
@@ -198,55 +190,50 @@ const Ficha = ({data,open, handleClose}) => {
                             </p>
                         </article>
                     </div>
-                    <div  className='parte2__interno'>
-                        <article>
-                            <h6>ANTECEDENTES MÉDICOS</h6>
-                            <p>
-                                {
-                                    data?.antecedentes_medicos ?? ''
-                                }
-                            </p>
-                        </article>
-                        <article>
-                            <h6>TRATAMIENTO ACTUAL</h6>
-                            <p>
-                                {
-                                    data?.tratamiento_actual ?? ''
-                                }
-                            </p>
-                        </article>
-                    </div>
-                    <div  className='parte2__interno'>
-                        <article>
-                            <h6>ALERGIAS</h6>
-                            <p>
-                                {
-                                    data?.alergias ?? ''
-                                }
-                            </p>
-                        </article>
-                        <article className='last'>
-                            <h6>HÁBITOS TÓXICOS</h6>
-                            <p>
-                                {
-                                    data?.habitos_toxicos ?? ''
-                                }
-                            </p>
-                        </article>
-                    </div>
-                    <div  className='parte2__interno'>
-                        <article>
-                            <h6>OTROS ANTECEDENTES RELEVANTES</h6>
-                            <p>
-                                {
-                                    data?.otros_antecedentes ?? ''
-                                }
-                            </p>
-                        </article>
-                    </div>
                 </div>
+                <div className='parte2 __3'>
+                    <h5>3 ANTECEDENTES</h5>
+                        <div className='parte2__interno flex-column'  >
+                            <article style={{ width: '100%' }}>
+                            <h6>ANTECEDENTES</h6>
+                            <p>
+                                {
+                                    data?.antecedentes ?? ''
+                                }
+                            </p>
+                        </article>
+                        </div>
+                </div>
+                <div className='parte2 __4'>
+                    <h5>4 EVOLUCIÓN ACTUAL</h5>
+                        <div className='parte2__interno flex-column'  >
+                        <article style={{ width: '100%' }}>
+                            <h6>ENFERMEDAD ACTUAL</h6>
+                            <p>
+                                {
+                                    data?.enfermedad_actual ?? ''
+                                }
+                            </p>
+                        </article>
+                        </div>
+                </div>
+                {
+                (user?.nombre_especialidad?.toUpperCase()?.includes('ODONTOLOGIA')) ?
+                <div className='parte2 __3'>
+                     <h5>5 ODONTOGRAMA</h5>
+                         <div className='parte2__interno flex-column'>
+                              <article style={{ width: '100%' }}>
+                             <h6>ODONTOGRAMA</h6>
+                             <p>
+                                 {
+                                     data?.odontograma ?? ''
+                                 }
+                             </p>
+                         </article>
+                         </div>
+                 </div> :
                 <div className='parte3'>
-                <h5>3 EXAMEN FÍSICO</h5>
+                <h5>5 EXAMEN FÍSICO</h5>
                 <div className='parte3_fila'>
                     <article>
                         <h6>PRESIÓN ARTERIAL</h6>
@@ -289,22 +276,8 @@ const Ficha = ({data,open, handleClose}) => {
                         </p>
                     </article>
                 </div>
-                <div className='parte2__interno'>
-                        <article>
-                            <h6 style={ { textTransform: 'uppercase' } }>Auscultación cardiaca</h6>
-                            <p>
-                            { data?.auscultacion_cardiaca ?? '' }
-                            </p>
-                        </article>
-                        <article className='last'>
-                        <h6 style={ { textTransform: 'uppercase' } }>Auscultación pulmonar</h6>
-                            <p>
-                            { data?.auscultacion_pulmonar ?? '' }
-                            </p>
-                        </article>
-                    </div>
                     <div className='parte2__interno'>
-                        <article>
+                        <article style={{ width: '100%' }}>
                             <h6 style={ { textTransform: 'uppercase' } }>Otros hallazgos relevantes</h6>
                             <p>
                             { data?.otros_hallazgos ?? '' }
@@ -312,8 +285,10 @@ const Ficha = ({data,open, handleClose}) => {
                         </article>
                     </div>
                 </div>
+                }
+
                 <div className='parte4'>
-                    <h5>4 PLAN DE TRATAMIENTO </h5>
+                    <h5>6 PLAN DE TRATAMIENTO </h5>
                     <div className='parte4__interno'>
                         <article>
                             <h6 style={ { textTransform: 'uppercase' } }>Medicamentos</h6>
@@ -347,27 +322,7 @@ const Ficha = ({data,open, handleClose}) => {
                         </article>
                     </div>
                 </div>
-                <div className='parte2'>
-                    <h5>5 OTROS MOTIVOS</h5>
-                        <div className='parte2__interno flex-column'  >
-                            <article style={{ width: '100%' }}>
-                            <h6>ANTECEDENTES</h6>
-                            <p>
-                                {
-                                    data?.antecedentes ?? ''
-                                }
-                            </p>
-                        </article>
-                        <article style={{ width: '100%' }}>
-                            <h6>ENFERMEDAD ACTUAL</h6>
-                            <p>
-                                {
-                                    data?.enfermedad_actual ?? ''
-                                }
-                            </p>
-                        </article>
-                        </div>
-                </div>
+                
                 <div className='parte5'>
                 <div className='parte3_fila footer__ficha'>
                     <article>

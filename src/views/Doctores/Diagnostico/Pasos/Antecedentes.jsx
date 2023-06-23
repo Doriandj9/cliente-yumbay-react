@@ -33,8 +33,7 @@ const Antecedentes = ({state,setState}) => {
                     <Grid xs={12}>
                     <Item className='text-start d-flex flex-column gap-2 p-2' style={{ fontSize: '2rem'}}>
                     <TextField
-                    style={{ fontSize: '1.8rem', minHeight: '5rem' }}
-                    label='Descripción'
+                    label='Descripción de antecendentes'
                     required
                     type='text'
                     multiline

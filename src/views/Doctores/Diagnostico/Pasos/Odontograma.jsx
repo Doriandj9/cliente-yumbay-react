@@ -1,13 +1,9 @@
-import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Unstable_Grid2';
 import { styled } from '@mui/material/styles';
 import { useEffect } from 'react';
-import { useUserStore } from '../../../../store/userStore';
-
-
 const Item = styled(Paper)(({ theme }) => ({
     backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
     ...theme.typography.body2,
@@ -16,22 +12,12 @@ const Item = styled(Paper)(({ theme }) => ({
     color: theme.palette.text.secondary,
   }));
 
-
-
-const PasoDos = ({state,setState}) => {
-    const user = useUserStore((state) => state.user);
+const Odontograma = ({state,setState}) => {
     useEffect(() => {
-
         if(!state){
             setState({
-                hora: '',
-                motivo: '',
-                antecendentes: '',
-                tratamiento: '',
-                alergias: '',
-                habitos: '',
-                otros_antecedentes: ''
-            })
+                odontograma: ''
+            });
         }
     },[]);
 
@@ -48,16 +34,15 @@ const PasoDos = ({state,setState}) => {
                     <Grid xs={12}>
                     <Item className='text-start d-flex flex-column gap-2 p-2' style={{ fontSize: '2rem'}}>
                     <TextField
-                    style={{ fontSize: '1.8rem' }}
-                    label='Motivo de consulta'
+                    label='Descripción de ondontograma'
                     required
                     type='text'
-                    className='w-100 mb-2'
-                    name='motivo'
-                    value={state?.motivo ?? ''}
-                    onChange={handleChangeInput}
                     multiline
-                    placeholder='Por ejemplo: Dolor en el pecho y dificultad para respirar'
+                    className='w-100 mb-2'
+                    name='odontograma'
+                    value={state?.odontograma ?? ''}
+                    onChange={handleChangeInput}
+                    placeholder='Ingrese la descripción de los antecedentes.'
                     />
                 </Item>
             </Grid>
@@ -67,4 +52,5 @@ const PasoDos = ({state,setState}) => {
     );
 }
 
-export default PasoDos;
+
+export default Odontograma;

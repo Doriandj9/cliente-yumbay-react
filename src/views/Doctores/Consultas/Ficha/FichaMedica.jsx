@@ -48,6 +48,8 @@ const FichaMedica = () => {
     const [dataResult,setDataResult] = useState(null);
     const [rowsDisplay, setRowsDisplay] = useState([]);
     const [open,setOpen] = useState(false);
+    const [ident,setIdent] = useState(null);
+
     const {cedula} = useParams();
 
 
@@ -87,8 +89,9 @@ const FichaMedica = () => {
         setDataResult(valueRes[0]);
     }
     
-    const handleFicha = (e,dato) => {
+    const handleFicha = (e,dato,id) => {
       setDataResult(dato);
+      setIdent(id);
       setOpen(true);
     }
     const handleClose = () => {
@@ -170,7 +173,7 @@ const FichaMedica = () => {
               <StyledTableCell style={{ width: '5px', fontSize: '0.75rem' ,height: '1.5rem', padding:0 }}
               align="center">
                
-                    <FaFileMedical onClick={(e) => handleFicha(e,row)}
+                    <FaFileMedical onClick={(e) => handleFicha(e,row,row.id)}
                     style={{ fontSize:'1.5rem', padding: 0 ,margin:0,cursor:'pointer'}} className='text-secondary' />     
                     Ver
                 </StyledTableCell>
@@ -189,7 +192,7 @@ const FichaMedica = () => {
     </TableContainer>
     </>)
     }
-            {data && (<Ficha data={dataResult} open={open} handleClose={handleClose} />)}
+            {data && (<Ficha data={dataResult} ident={ident} open={open} handleClose={handleClose} />)}
           {loading && <Stack spacing={0.25} >
                   <Skeleton width={'100%'} variant="rectangular" height={50} />
                   <Skeleton width={'100%'} variant="rectangular" height={50} />

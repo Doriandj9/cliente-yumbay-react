@@ -28,9 +28,10 @@ import { useUserStore } from '../../../store/userStore';
 import Examen from './Examen/App';
 import Antecedentes from './Pasos/Antecedentes';
 import EnfermedadActual from './Pasos/EnfermedadActual';
+import Odontograma from './Pasos/Odontograma';
 
 const App = () => {
-  let steps = ['REGISTRO DE ADMISIÓN', 'MOTIVO DE CONSULTA', 'ENFERMEDAD ACTUAL','ANTECENDENTES', 'EXAMEN FÍSICO','PLAN DE TRATAMIENTO','FICHA'];
+  let steps = ['REGISTRO DE ADMISIÓN', 'MOTIVO DE CONSULTA', 'ANTECENDENTES','EVOLUCIÓN ACTUAL', 'EXAMEN FÍSICO','PLAN DE TRATAMIENTO','FICHA'];
   useTitle('Diagnostico del Paciente');
     const [activeStep, setActiveStep] = useState(0);
     const [skipped, setSkipped] = useState(new Set());
@@ -38,6 +39,8 @@ const App = () => {
     const [state2,setState2] = useState(null);
     const [state3,setState3] = useState(null);
     const [state4,setState4] = useState(null);
+    const [odontograma,setOdontograma] = useState(null);
+    const [paciente,setPaciente] = useState(null);
     const [stateAntecedentes,setStateAntecedentes] = useState(null);
     const [stateEnfermedad,setStateEnfermedad] = useState(null);
     const [final,setFinal] = useState(null);
@@ -50,10 +53,10 @@ const App = () => {
     const [pdf ,setPdf] = useState(false);
     const [datosReport,setDatosReport] = useState(null);
     const user = useUserStore((state) => state.user);
-    let elementos = [<PasoUno state={state1} setState={setState1} />,
+    let elementos = [<PasoUno state={state1} setState={setState1} setPaciente={setPaciente} />,
      <PasoDos state={state2} setState={setState2} />,
-     <EnfermedadActual state={stateEnfermedad} setState={setStateEnfermedad} />,
      <Antecedentes state={stateAntecedentes} setState={setStateAntecedentes} />,
+     <EnfermedadActual state={stateEnfermedad} setState={setStateEnfermedad} />,
       <PasoTres state={state3} setState={setState3} />, 
       <Cuatro state={state4} setState={setState4} />, 
       <Cinco state1={state1}
@@ -62,12 +65,20 @@ const App = () => {
       state4={state4}
       stateAntec={stateAntecedentes}
       stateEnfer={stateEnfermedad}
+      paciente={paciente}
+      stateOdon={odontograma}
       />];
       if(user?.nombre_especialidad?.toUpperCase()?.includes('ODONTOLOGIA')){
        
         delete elementos[4];
+        elementos[4] = <Odontograma state={odontograma} setState={setOdontograma} />
         elementos = elementos.filter(e => e !== '');
-        steps = steps.filter(el => el !== 'EXAMEN FÍSICO');
+        steps = steps.map(el => {
+          if(el === 'EXAMEN FÍSICO') {
+            return 'ODONTOGRAMA'
+          }
+          return el;
+        });
       }
     const appConfig = useAppConfig((state) => state.app);
     const isStepOptional = (step) => {
@@ -95,7 +106,7 @@ const App = () => {
       if(!window.confirm('Esta registrar la ficha médica, ya no podra realizar cambios')) return;
       
       const form = new FormData(e.target);
-      [state1,state2,state3,stateAntecedentes,stateEnfermedad].forEach(state => {
+      [state1,state2,state3,stateAntecedentes,stateEnfermedad,odontograma].forEach(state => {
         for(let index in state){
           form.append(index,state[index]);
         }
@@ -274,6 +285,7 @@ const App = () => {
         </article>
       <Box sx={{ width: '100%' }}>
       <Form onSubmit={handleSumbit} className='p-3'>
+        <input type="hidden" value={user.cedula} name='cedula_doctor' />
         <Stepper activeStep={activeStep}>
           {steps.map((label, index) => {
             const stepProps = {};

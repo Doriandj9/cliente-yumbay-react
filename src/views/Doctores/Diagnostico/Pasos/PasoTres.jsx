@@ -115,7 +115,7 @@ const PasoTres = ({state, setState}) => {
             </Grid>
             <Grid xs={12}>
                     <Item className='text-start d-flex flex-column gap-2 p-2' style={{ fontSize: '2rem'}}>
-                    <TextField
+                    {/* <TextField
                     style={{ fontSize: '1.8rem', width: '20%' }}
                     label='Auscultación cardiaca'
                     required
@@ -136,11 +136,10 @@ const PasoTres = ({state, setState}) => {
                     name='pulmonar'
                     value={state?.pulmonar ?? ''}
                     placeholder='Por ejemplo: Murmullo vesicular presente en ambos campos, sin ruidos agregados'
-                    />
+                    /> */}
                     <TextField
                     style={{ fontSize: '1.8rem', width: '20%' }}
                     label='Otros hallazgos relevantes'
-                    required
                     type='text'
                     className='w-100 mb-2'
                     onChange={handleChangeInput}

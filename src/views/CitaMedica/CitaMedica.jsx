@@ -97,6 +97,10 @@ const CitaMedica = ({recepcionista=false, cedula=null}) => {
     const handleSubmit = (e) => {
         e.preventDefault();
         const form = new FormData(e.target);
+        if(inputsDatas.cedula === form.get('cedula_doctor')){
+            alert('Lo sentimos tiene el mismo cargo que doctor no se puede agendar la cita');
+            return;
+        }
         setFormData(form);
         setSend(true);
     }
@@ -287,35 +291,5 @@ const CitaMedica = ({recepcionista=false, cedula=null}) => {
     );
 }
 
-
-
-// const FormSelect = ({data , handleChange,userSelect,label}) => {
-//         return (<>
-//           <FormControl variant="outlined" className='w-100 mb-3' style={{
-//             // border: 'none',
-//             // outline: 'none',
-//             // borderRadius: '0.5rem'
-//           }} >
-//             <InputLabel required id="demo-simple-select-standard-label">{label}</InputLabel>
-//             <Select name='hora' 
-//               labelId="demo-simple-select-standard-label"
-//               value={userSelect}
-//               onChange={handleChange}
-//               label={label}
-//               style={
-//                 {
-//                     border: 'none',
-//                     outline: 'none'
-//                 }
-//               }
-//             >
-//             {
-//                 data.map((value) => (<MenuItem key={value.id} value={value.id}>{value.start} a {value.end}</MenuItem>))
-//             }
-//             </Select>
-//           </FormControl>
-//         </>);
-//     }
-    
 
 export default CitaMedica;
