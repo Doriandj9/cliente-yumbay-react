@@ -33,7 +33,7 @@ const SelectHora = ({fecha,info,especialidad,reset}) => {
           setValue('');
         });
       }
-    },[fecha,horario,especialidad])
+    },[fecha,horario,especialidad,info])
 
 useEffect(()=>{
   //console.log(fecha,horario,data);

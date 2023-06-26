@@ -28,7 +28,7 @@ const Servicios = () => {
         <Header></Header>
             <div className="border border-1 w-100 mt-4"></div>
             <div className="mt-2">
-                    <h2 className="text-white text-center bg-secondary p-2" >Servicios clinicos.</h2>
+                    <h2 className="text-white text-center bg-secondary p-2" >Servicios clínicos.</h2>
             </div>
 
             {

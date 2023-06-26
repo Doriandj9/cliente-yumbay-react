@@ -101,6 +101,10 @@ const CitaMedica = ({recepcionista=false, cedula=null}) => {
             alert('Lo sentimos tiene el mismo cargo que doctor no se puede agendar la cita');
             return;
         }
+        if(!CEDULA_REG_EXPRE.test(inputsDatas.cedula)){
+            alert('lo sentimos el número de cédula ingresa es incorrecto.');
+            return;
+        }
         setFormData(form);
         setSend(true);
     }
